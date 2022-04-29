@@ -24,6 +24,7 @@ public class AutenticacaoService {
 		this.tokenService = tokenService;
 	}
 	
+	//Autenticação de usuário
 	public LoginResponseDto autenticar(LoginRequestDto loginDto) {
 		
 		User user = usuarioRepository.findByEmail(loginDto.getEmail());
