@@ -1,11 +1,12 @@
 package br.com.api.condomanager.condomanager.util;
 
+import org.springframework.stereotype.Service;
 import br.com.api.condomanager.condomanager.sistema.exceptions.DadosPessoaisException;
 
+@Service
 public class Util {
 	
-@SuppressWarnings("unused")
-private boolean validarCpf(String cpf) {
+	public boolean validarCpf(String cpf) {
 		
 		int multiplicador1 = 10;
 		int multiplicador2 = 11;

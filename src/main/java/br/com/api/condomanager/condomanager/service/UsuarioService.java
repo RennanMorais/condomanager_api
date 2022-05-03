@@ -43,18 +43,18 @@ public class UsuarioService {
 		return dto;
 	}
 	
-	private boolean validarEmailExistente(String email) {
+	public boolean validarEmailExistente(String email) {
 		
-		if(usuarioRepository.findByEmail(email) == null) {
+		if(usuarioRepository.findByEmail(email) != null) {
 			throw new DadosPessoaisException("E-mail já cadastrado!");
 		}
 		
 		return true;
 	}
 	
-	private boolean validarCpfExistente(String cpf) {
+	public boolean validarCpfExistente(String cpf) {
 		
-		if(usuarioRepository.findByCpf(cpf) == null) {
+		if(usuarioRepository.findByCpf(cpf) != null) {
 			throw new DadosPessoaisException("CPF já cadastrado!");
 		}
 		
