@@ -4,7 +4,6 @@ import java.math.BigInteger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import br.com.api.condomanager.condomanager.model.User;
 import br.com.api.condomanager.condomanager.repository.UsuarioRepository;
@@ -21,7 +20,7 @@ public class UsuarioService {
 	@Autowired
 	PasswordEncoder encoder;
 	
-	public UserResponseDto cadastrar(UserRequestDto request) throws DadosPessoaisException , MethodArgumentNotValidException {
+	public UserResponseDto cadastrar(UserRequestDto request) throws DadosPessoaisException {
 		User user = new User();
 		user.setNome(request.getNome());
 		
@@ -39,8 +38,7 @@ public class UsuarioService {
 		
 		usuarioRepository.save(user);
 		
-		UserResponseDto dto = new UserResponseDto(request.getNome(), request.getEmail(), BigInteger.valueOf(1));
-		return dto;
+		return new UserResponseDto(request.getNome(), request.getEmail(), BigInteger.valueOf(1));
 	}
 	
 	public boolean validarEmailExistente(String email) {

@@ -1,4 +1,4 @@
-package br.com.api.condomanager.condomanager.sistema.dto.response;
+package br.com.api.condomanager.condomanager.autenticacao.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

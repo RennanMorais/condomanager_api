@@ -1,13 +1,13 @@
-package br.com.api.condomanager.condomanager;
+package br.com.api.condomanager.condomanager.cadastro;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class CondomanagerApplicationTests {
+class CadastroTest {
 	
 	@Test
 	void contextLoads() {
 	}
- 
+	
 }

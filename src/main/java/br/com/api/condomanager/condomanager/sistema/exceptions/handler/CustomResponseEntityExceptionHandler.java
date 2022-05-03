@@ -16,13 +16,13 @@ import br.com.api.condomanager.condomanager.sistema.exceptions.InvalidLoginExcep
 public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
 	@ExceptionHandler(Exception.class)
-	public final ResponseEntity<ExceptionResponse> AllException(Exception e) {
+	public final ResponseEntity<ExceptionResponse> allExceptions(Exception e) {
 		ExceptionResponse exceptionResponse = new ExceptionResponse(String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()), e.getMessage());
 		return new ResponseEntity<>(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
 	@ExceptionHandler(DadosPessoaisException.class)
-	public final ResponseEntity<ExceptionResponse> BadRequestException(DadosPessoaisException e) {
+	public final ResponseEntity<ExceptionResponse> badRequestException(DadosPessoaisException e) {
 		ExceptionResponse exceptionResponse = new ExceptionResponse(String.valueOf(HttpStatus.BAD_REQUEST.value()), e.getMessage());
 		return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
 	}

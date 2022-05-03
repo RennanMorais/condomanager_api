@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.api.condomanager.condomanager.service.UsuarioService;
 import br.com.api.condomanager.condomanager.sistema.dto.request.UserRequestDto;
 import br.com.api.condomanager.condomanager.sistema.dto.response.UserResponseDto;
+import br.com.api.condomanager.condomanager.sistema.exceptions.DadosPessoaisException;
 
 @RequestMapping("condomanager/sistema")
 @RestController
@@ -28,7 +29,8 @@ public class Cadastro {
 	}
 
 	@PostMapping(value = "cadastro", produces = "application/json")
-	private ResponseEntity<UserResponseDto> cadastroUsuario(@Validated @RequestBody UserRequestDto userRequest) throws Exception {
+	public ResponseEntity<UserResponseDto> cadastroUsuario(@Validated @RequestBody UserRequestDto userRequest) 
+			throws DadosPessoaisException {
 		return ResponseEntity.ok(usuarioService.cadastrar(userRequest));
 	}
 	

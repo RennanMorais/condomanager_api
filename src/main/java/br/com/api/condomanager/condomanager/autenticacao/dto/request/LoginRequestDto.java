@@ -1,4 +1,4 @@
-package br.com.api.condomanager.condomanager.sistema.dto.request;
+package br.com.api.condomanager.condomanager.autenticacao.dto.request;
 
 import javax.validation.constraints.Email;
 import lombok.AllArgsConstructor;
