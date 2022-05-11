@@ -2,7 +2,6 @@ package br.com.api.condomanager.condomanager.sistema;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -18,13 +17,13 @@ import br.com.api.condomanager.condomanager.sistema.dto.request.UserRequestDto;
 import br.com.api.condomanager.condomanager.sistema.dto.response.UserResponseDto;
 import br.com.api.condomanager.condomanager.sistema.exceptions.DadosPessoaisException;
 
-@RequestMapping("condomanager/sistema")
+@RequestMapping("/condomanager/sistema")
 @RestController
-public class Cadastro {
+public class CadastroResource {
 	
 	final UsuarioService usuarioService;
 	
-	public Cadastro(UsuarioService usuarioService) {
+	public CadastroResource(UsuarioService usuarioService) {
 		this.usuarioService = usuarioService;
 	}
 
@@ -33,8 +32,7 @@ public class Cadastro {
 			throws DadosPessoaisException {
 		return ResponseEntity.ok(usuarioService.cadastrar(userRequest));
 	}
-	
-	//Validação dos campos
+
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<Map<String, String>> validationException(MethodArgumentNotValidException e) {
 		Map<String, String> errors = new HashMap<>();

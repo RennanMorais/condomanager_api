@@ -32,7 +32,7 @@ public class UsuarioService {
 			user.setCpf(request.getCpf());
 		}
 		
-		user.setSenha(encoder.encode(request.getSenha()));
+		user.setSenha(this.encoder.encode(request.getSenha()));
 		user.setTelefone(request.getTelefone());
 		user.setNivelAcesso(BigInteger.valueOf(1));
 		

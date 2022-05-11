@@ -1,15 +1,27 @@
 package br.com.api.condomanager.condomanager.service;
 
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.when;
+
 import java.math.BigInteger;
 import java.util.Date;
 import java.util.Random;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 
+import br.com.api.condomanager.condomanager.model.User;
+import br.com.api.condomanager.condomanager.repository.UsuarioRepository;
 import br.com.api.condomanager.condomanager.sistema.dto.request.UserRequestDto;
 import br.com.api.condomanager.condomanager.sistema.dto.response.UserResponseDto;
 import br.com.api.condomanager.condomanager.sistema.exceptions.DadosPessoaisException;
@@ -18,37 +30,52 @@ import br.com.api.condomanager.condomanager.util.Util;
 @SpringBootTest
 class UsuarioServiceTest {
 	
-	@Autowired
+	UserRequestDto userRequest;
+	
+	UserResponseDto userResponse;
+	
+	@InjectMocks
 	UsuarioService usuarioService;
 	
-	@Autowired
+	@Mock
 	AutenticacaoService autenticacaoService;
+	
+	@Mock
+	UsuarioRepository usuarioRepository;
+	
+	@Mock
+	PasswordEncoder encoder;
 	
 	@Autowired
 	Util util;
 	
+	@BeforeEach
+	public void setUp() {
+		
+		MockitoAnnotations.openMocks(this);
+		
+		userRequest = new UserRequestDto();
+		userRequest.setNome("X");
+		userRequest.setEmail("X");
+		userRequest.setSenha("123456");
+		userRequest.setCpf("X");
+		userRequest.setTelefone("X");
+		
+		userResponse = new UserResponseDto();
+		userResponse.setNome("X");
+		userResponse.setEmail("X");
+		userResponse.setNivelAcesso(null);
+		
+	}
+ 	
 	@Test
 	void cadastroUsuarioTest() throws DadosPessoaisException, MethodArgumentNotValidException {
-		UserRequestDto userRequest = new UserRequestDto();
 		
-		userRequest.setNome("Fulano Teste");
-		userRequest.setEmail(String.valueOf(new Date()) + "@teste.com");
-		userRequest.setSenha("123456");
-		userRequest.setCpf(String.valueOf(new Random().ints(10)));
-		userRequest.setTelefone("11971833250");
-		userRequest.setNivelAcesso(BigInteger.valueOf(1));
+		UserResponseDto response = this.usuarioService.cadastrar(userRequest);
 		
-		Assertions.assertTrue(usuarioService.validarEmailExistente(userRequest.getEmail()));
-		UserResponseDto response = usuarioService.cadastrar(userRequest);
-		
-		UserResponseDto responseDto = new UserResponseDto();
-		responseDto.setNome(userRequest.getNome());
-		responseDto.setEmail(userRequest.getEmail());
-		responseDto.setNivelAcesso(userRequest.getNivelAcesso());
-		
-		Assertions.assertEquals(responseDto.getNome(), response.getNome());
-		Assertions.assertEquals(responseDto.getEmail(), response.getEmail());
-		Assertions.assertEquals(responseDto.getNivelAcesso(), response.getNivelAcesso());
+		Assertions.assertEquals(userRequest.getNome(), response.getNome());
+		Assertions.assertEquals(userRequest.getEmail(), response.getEmail());
+		Assertions.assertNotNull(response.getNivelAcesso());
 		
 	}
 	
