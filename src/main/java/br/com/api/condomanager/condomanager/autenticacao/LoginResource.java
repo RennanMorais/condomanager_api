@@ -3,6 +3,7 @@ package br.com.api.condomanager.condomanager.autenticacao;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,7 +22,7 @@ public class LoginResource {
 	}
 
 	@PostMapping(value = "login", produces = "application/json")
-	public ResponseEntity<LoginResponseDto> autenticar(@RequestBody LoginRequestDto loginDto) {
+	public ResponseEntity<LoginResponseDto> autenticar(@RequestBody LoginRequestDto loginDto, @RequestHeader String token) {
 		return ResponseEntity.ok(autenticacaoService.autenticar(loginDto));
 	}
 	

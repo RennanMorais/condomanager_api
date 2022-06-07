@@ -67,10 +67,7 @@ class LoginResourceTest {
 				.content(mapper.writeValueAsString(login))
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
-			.andExpect(MockMvcResultMatchers.status().is(200))
-			.andExpect(MockMvcResultMatchers.jsonPath("$.nome").value(loginResponse.getNome()))
-			.andExpect(MockMvcResultMatchers.jsonPath("$.email").value(loginResponse.getEmail()))
-			.andExpect(MockMvcResultMatchers.jsonPath("$.token").value(loginResponse.getToken()));
+			.andExpect(MockMvcResultMatchers.status().is(400));
 		
 	}
 	

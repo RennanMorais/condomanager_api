@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.Random;
 
 import org.springframework.stereotype.Service;
-
 import br.com.api.condomanager.condomanager.model.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -12,11 +11,9 @@ import io.jsonwebtoken.SignatureAlgorithm;
 
 @Service
 public class TokenService {
-	
-	Random numRandom = new Random();
 
     private static final long EXPIRTATION_TIME = 1800000;
-    private final String key = String.format(String.valueOf(new Date()), numRandom.doubles(999999999));
+    private final String key = String.format(String.valueOf(new Date()), new Random().doubles(999999999));
     
 
     public String generateToken(User user) {

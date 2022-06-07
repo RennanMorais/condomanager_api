@@ -1,35 +1,84 @@
 package br.com.api.condomanager.condomanager.service;
 
-import org.junit.jupiter.api.Assertions;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.when;
+
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import br.com.api.condomanager.condomanager.autenticacao.dto.request.LoginRequestDto;
 import br.com.api.condomanager.condomanager.autenticacao.dto.response.LoginResponseDto;
+import br.com.api.condomanager.condomanager.model.User;
+import br.com.api.condomanager.condomanager.repository.UsuarioRepository;
 import br.com.api.condomanager.condomanager.sistema.exceptions.InvalidLoginException;
-import br.com.api.condomanager.condomanager.util.Util;
 
 @SpringBootTest
 class AutenticacaoServiceTest {
 	
-	@Autowired
-	UsuarioService usuarioService;
-	
-	@Autowired
+	@InjectMocks
 	AutenticacaoService autenticacaoService;
 	
-	@Autowired
-	Util util;
+	@Mock
+	UsuarioRepository usuarioRepository;
 	
-	@Test
-	void autenticacaoUsuarioTest() throws InvalidLoginException {
-		LoginRequestDto login = new LoginRequestDto("fulano@teste.com", "123456");
-		LoginResponseDto response = this.autenticacaoService.autenticar(login);
-		
-		Assertions.assertEquals(login.getEmail(), response.getEmail());
-		Assertions.assertNotNull(response.getNome());
-		Assertions.assertNotNull(response.getToken());
+	@Mock
+	PasswordEncoder encoder;
+	
+	@Mock
+	TokenService tokenService;
+	
+	@BeforeEach
+	void setUp() {
+		MockitoAnnotations.openMocks(this);
 	}
 	
+//	@Test
+//	void autenticacaoUsuarioTest() throws InvalidLoginException {
+//		LoginRequestDto login = new LoginRequestDto();
+//		login.setEmail("email");
+//		login.setSenha("senha");
+//		
+//		User user = new User();
+//		user.setId(Long.valueOf("1"));
+//		user.setEmail(login.getEmail());
+//		user.setSenha("senha");
+//		
+//		String tokenGenerate = this.tokenService.generateToken(user);
+//		
+//		when(this.usuarioRepository.findByEmail(login.getEmail())).thenReturn(user);
+//		when(this.encoder.matches(user.getSenha(), login.getSenha())).thenReturn(true);
+//		when(this.tokenService.generateToken(Mockito.<User> any())).thenReturn(tokenGenerate);
+//		
+//		LoginResponseDto response = this.autenticacaoService.autenticar(login);
+//		
+//		assertEquals(login.getEmail(), response.getEmail());
+//		assertEquals(tokenGenerate, response.getToken());
+//	}
+	
+	@Test
+	void autenticacaoUsuarioInvalidoTest() throws InvalidLoginException {
+		LoginRequestDto login = new LoginRequestDto();
+		login.setEmail("email");
+		login.setSenha("senha");
+		
+		User user = new User();
+		user.setId(Long.valueOf("1"));
+		user.setEmail(login.getEmail());
+		user.setSenha(encoder.encode(login.getSenha()));
+		
+		String tokenGenerate = this.tokenService.generateToken(user);
+		
+		when(this.usuarioRepository.findByEmail(Mockito.<String> any())).thenReturn(user);
+		when(this.encoder.encode(Mockito.<String> any())).thenReturn(null);
+		when(this.tokenService.generateToken(Mockito.<User> any())).thenReturn(tokenGenerate);
+		
+		assertThrows(InvalidLoginException.class, () -> this.autenticacaoService.autenticar(login));
+	}
 }
