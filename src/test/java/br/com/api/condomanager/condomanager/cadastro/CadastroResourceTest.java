@@ -1,7 +1,6 @@
 package br.com.api.condomanager.condomanager.cadastro;
 
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,9 +15,10 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.validation.Validator;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import br.com.api.condomanager.condomanager.autenticacao.dto.request.LoginRequestDto;
-import br.com.api.condomanager.condomanager.autenticacao.dto.response.LoginResponseDto;
 import br.com.api.condomanager.condomanager.service.AutenticacaoService;
 import br.com.api.condomanager.condomanager.service.UsuarioService;
 import br.com.api.condomanager.condomanager.sistema.CadastroResource;
