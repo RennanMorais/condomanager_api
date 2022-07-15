@@ -1,4 +1,4 @@
-package br.com.api.condomanager.condomanager.sistema.dto;
+package br.com.api.condomanager.condomanager.sistema.cadastro;
 
 import java.io.Serializable;
 

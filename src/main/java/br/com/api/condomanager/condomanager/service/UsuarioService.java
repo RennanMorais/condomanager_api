@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 
 import br.com.api.condomanager.condomanager.model.User;
 import br.com.api.condomanager.condomanager.repository.UsuarioRepository;
-import br.com.api.condomanager.condomanager.sistema.dto.request.UserRequestDto;
-import br.com.api.condomanager.condomanager.sistema.dto.response.UserResponseDto;
+import br.com.api.condomanager.condomanager.sistema.cadastro.dto.request.UserRequestDto;
+import br.com.api.condomanager.condomanager.sistema.cadastro.dto.response.UserResponseDto;
 import br.com.api.condomanager.condomanager.sistema.exceptions.DadosPessoaisException;
 
 @Service

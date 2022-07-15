@@ -1,7 +1,9 @@
-package br.com.api.condomanager.condomanager.sistema;
+package br.com.api.condomanager.condomanager.sistema.cadastro;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -13,19 +15,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import br.com.api.condomanager.condomanager.service.UsuarioService;
-import br.com.api.condomanager.condomanager.sistema.dto.request.UserRequestDto;
-import br.com.api.condomanager.condomanager.sistema.dto.response.UserResponseDto;
+import br.com.api.condomanager.condomanager.sistema.cadastro.dto.request.UserRequestDto;
+import br.com.api.condomanager.condomanager.sistema.cadastro.dto.response.UserResponseDto;
 import br.com.api.condomanager.condomanager.sistema.exceptions.DadosPessoaisException;
 
 @RequestMapping("/condomanager/sistema")
 @RestController
 public class CadastroResource {
 	
-	final UsuarioService usuarioService;
-	
-	public CadastroResource(UsuarioService usuarioService) {
-		this.usuarioService = usuarioService;
-	}
+	@Autowired
+	UsuarioService usuarioService;
 
 	@PostMapping(value = "cadastro", produces = "application/json")
 	public ResponseEntity<UserResponseDto> cadastroUsuario(@Validated @RequestBody UserRequestDto userRequest) 

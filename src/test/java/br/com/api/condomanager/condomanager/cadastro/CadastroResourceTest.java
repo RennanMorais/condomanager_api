@@ -21,9 +21,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import br.com.api.condomanager.condomanager.autenticacao.dto.request.LoginRequestDto;
 import br.com.api.condomanager.condomanager.service.AutenticacaoService;
 import br.com.api.condomanager.condomanager.service.UsuarioService;
-import br.com.api.condomanager.condomanager.sistema.CadastroResource;
-import br.com.api.condomanager.condomanager.sistema.dto.request.UserRequestDto;
-import br.com.api.condomanager.condomanager.sistema.dto.response.UserResponseDto;
+import br.com.api.condomanager.condomanager.sistema.cadastro.CadastroResource;
+import br.com.api.condomanager.condomanager.sistema.cadastro.dto.request.UserRequestDto;
+import br.com.api.condomanager.condomanager.sistema.cadastro.dto.response.UserResponseDto;
 
 @ExtendWith(MockitoExtension.class)
 class CadastroResourceTest {

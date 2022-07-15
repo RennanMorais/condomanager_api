@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import br.com.api.condomanager.condomanager.sistema.dto.ExceptionResponse;
+import br.com.api.condomanager.condomanager.sistema.cadastro.ExceptionResponse;
 import br.com.api.condomanager.condomanager.sistema.exceptions.DadosPessoaisException;
 import br.com.api.condomanager.condomanager.sistema.exceptions.InvalidLoginException;
 

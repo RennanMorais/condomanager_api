@@ -44,6 +44,9 @@ public class AutenticacaoService {
 		response.setEmail(user.getEmail());
 		response.setToken(tokenService.generateToken(user));
 		
+		user.setToken(response.getToken());
+		usuarioRepository.save(user);
+		
 		return response;
 	}
 	

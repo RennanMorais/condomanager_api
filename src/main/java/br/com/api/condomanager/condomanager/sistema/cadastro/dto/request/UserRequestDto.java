@@ -1,4 +1,4 @@
-package br.com.api.condomanager.condomanager.sistema.dto.request;
+package br.com.api.condomanager.condomanager.sistema.cadastro.dto.request;
 
 import java.math.BigInteger;
 import javax.validation.constraints.Email;
