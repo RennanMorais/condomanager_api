@@ -1,4 +1,4 @@
-package br.com.api.condomanager.condomanager.service;
+package br.com.api.condomanager.condomanager.autenticacao;
 
 import java.util.Date;
 
@@ -35,12 +35,12 @@ public class AutenticacaoService {
 		
 		User user = usuarioRepository.findByEmail(loginDto.getEmail());
 		
-		if(!encoder.matches(loginDto.getSenha(), user.getSenha())) {
+		if(!encoder.matches(loginDto.getPassword(), user.getPassword())) {
 			throw new InvalidLoginException("Usuario e/ou senha, incorretos!");
 		}
 		
 		LoginResponseDto response = new LoginResponseDto();
-		response.setNome(user.getNome());
+		response.setName(user.getName());
 		response.setEmail(user.getEmail());
 		response.setToken(tokenService.generateToken(user));
 		

@@ -14,6 +14,6 @@ public class LoginRequestDto {
 
 	@Email(message = "E-mail inválido.")
 	private String email;
-	private String senha;
+	private String password;
 	
 }

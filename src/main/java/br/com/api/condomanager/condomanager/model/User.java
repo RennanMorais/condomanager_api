@@ -21,17 +21,17 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	private String nome;
+	private String name;
 	
 	private String email;
 	
-	private String senha;
+	private String password;
 	
 	private String rg;
 	
 	private String cpf;
 	
-	private String telefone;
+	private String phone;
 	
 	private Long idCondominio;
 	

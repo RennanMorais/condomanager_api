@@ -1,5 +1,6 @@
 package br.com.api.condomanager.condomanager.service;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
@@ -12,7 +13,10 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import br.com.api.condomanager.condomanager.autenticacao.AutenticacaoService;
+import br.com.api.condomanager.condomanager.autenticacao.TokenService;
 import br.com.api.condomanager.condomanager.autenticacao.dto.request.LoginRequestDto;
+import br.com.api.condomanager.condomanager.autenticacao.dto.response.LoginResponseDto;
 import br.com.api.condomanager.condomanager.model.User;
 import br.com.api.condomanager.condomanager.repository.UsuarioRepository;
 import br.com.api.condomanager.condomanager.sistema.exceptions.InvalidLoginException;
@@ -37,39 +41,39 @@ class AutenticacaoServiceTest {
 		MockitoAnnotations.openMocks(this);
 	}
 	
-//	@Test
-//	void autenticacaoUsuarioTest() throws InvalidLoginException {
-//		LoginRequestDto login = new LoginRequestDto();
-//		login.setEmail("email");
-//		login.setSenha("senha");
-//		
-//		User user = new User();
-//		user.setId(Long.valueOf("1"));
-//		user.setEmail(login.getEmail());
-//		user.setSenha("senha");
-//		
-//		String tokenGenerate = this.tokenService.generateToken(user);
-//		
-//		when(this.usuarioRepository.findByEmail(login.getEmail())).thenReturn(user);
-//		when(this.encoder.matches(user.getSenha(), login.getSenha())).thenReturn(true);
-//		when(this.tokenService.generateToken(Mockito.<User> any())).thenReturn(tokenGenerate);
-//		
-//		LoginResponseDto response = this.autenticacaoService.autenticar(login);
-//		
-//		assertEquals(login.getEmail(), response.getEmail());
-//		assertEquals(tokenGenerate, response.getToken());
-//	}
+	@Test
+	void autenticacaoUsuarioTest() throws InvalidLoginException {
+		LoginRequestDto login = new LoginRequestDto();
+		login.setEmail("email");
+		login.setPassword("senha");
+		
+		User user = new User();
+		user.setId(Long.valueOf("1"));
+		user.setEmail(login.getEmail());
+		user.setPassword("senha");
+		
+		String tokenGenerate = this.tokenService.generateToken(user);
+		
+		when(this.usuarioRepository.findByEmail(login.getEmail())).thenReturn(user);
+		when(this.encoder.matches(user.getPassword(), login.getPassword())).thenReturn(true);
+		when(this.tokenService.generateToken(Mockito.<User> any())).thenReturn(tokenGenerate);
+		
+		LoginResponseDto response = this.autenticacaoService.autenticar(login);
+		
+		assertEquals(login.getEmail(), response.getEmail());
+		assertEquals(tokenGenerate, response.getToken());
+	}
 	
 	@Test
 	void autenticacaoUsuarioInvalidoTest() throws InvalidLoginException {
 		LoginRequestDto login = new LoginRequestDto();
 		login.setEmail("email");
-		login.setSenha("senha");
+		login.setPassword("senha");
 		
 		User user = new User();
 		user.setId(Long.valueOf("1"));
 		user.setEmail(login.getEmail());
-		user.setSenha(encoder.encode(login.getSenha()));
+		user.setPassword(encoder.encode(login.getPassword()));
 		
 		String tokenGenerate = this.tokenService.generateToken(user);
 		

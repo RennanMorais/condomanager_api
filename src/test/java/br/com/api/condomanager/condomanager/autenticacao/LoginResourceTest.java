@@ -22,7 +22,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import br.com.api.condomanager.condomanager.autenticacao.dto.request.LoginRequestDto;
 import br.com.api.condomanager.condomanager.autenticacao.dto.response.LoginResponseDto;
 import br.com.api.condomanager.condomanager.repository.UsuarioRepository;
-import br.com.api.condomanager.condomanager.service.AutenticacaoService;
 
 @SpringBootTest
 class LoginResourceTest {
@@ -53,10 +52,10 @@ class LoginResourceTest {
 		
 		LoginRequestDto login = new LoginRequestDto();
 		login.setEmail("X");
-		login.setSenha("X");
+		login.setPassword("X");
 		
 		LoginResponseDto loginResponse = new LoginResponseDto();
-		loginResponse.setNome("X");
+		loginResponse.setName("X");
 		loginResponse.setEmail("X");
 		loginResponse.setToken("X");
 		

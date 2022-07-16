@@ -1,4 +1,4 @@
-package br.com.api.condomanager.condomanager.service;
+package br.com.api.condomanager.condomanager.autenticacao;
 
 import java.util.Date;
 import java.util.Random;

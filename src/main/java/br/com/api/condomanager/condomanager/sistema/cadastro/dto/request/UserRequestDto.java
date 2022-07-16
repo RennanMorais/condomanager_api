@@ -21,20 +21,20 @@ public class UserRequestDto {
 	
 	@NotEmpty(message = "O nome não pode estar vazio.")
 	@NotNull(message = "O nome não pode ser nulo.")
-	private String nome;
+	private String name;
 	
 	@Email(message = "E-mail inválido.")
 	private String email;
 	
 	@Size(min = 6, message = "A senha deve ter no mínimo 6 caracteres.")
-	private String senha;
+	private String password;
 	
 	@CPF(message = "CPF inválido.")
 	private String cpf;
 	
 	@Pattern(regexp = "[0-9]+" , message = "Telefone inválido.")
 	@NotEmpty(message = "O telefone não pode estar vazio.")
-	private String telefone;
+	private String phone;
 	
 	private BigInteger nivelAcesso;
 }

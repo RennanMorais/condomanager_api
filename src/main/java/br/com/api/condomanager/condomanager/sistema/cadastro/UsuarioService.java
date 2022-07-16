@@ -1,4 +1,4 @@
-package br.com.api.condomanager.condomanager.service;
+package br.com.api.condomanager.condomanager.sistema.cadastro;
 
 import java.math.BigInteger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ public class UsuarioService {
 	
 	public UserResponseDto cadastrar(UserRequestDto request) throws DadosPessoaisException {
 		User user = new User();
-		user.setNome(request.getNome());
+		user.setName(request.getName());
 		
 		if(validarEmailExistente(request.getEmail())) {
 			user.setEmail(request.getEmail());
@@ -32,13 +32,13 @@ public class UsuarioService {
 			user.setCpf(request.getCpf());
 		}
 		
-		user.setSenha(this.encoder.encode(request.getSenha()));
-		user.setTelefone(request.getTelefone());
+		user.setPassword(this.encoder.encode(request.getPassword()));
+		user.setPhone(request.getPhone());
 		user.setNivelAcesso(BigInteger.valueOf(1));
 		
 		usuarioRepository.save(user);
 		
-		return new UserResponseDto(request.getNome(), request.getEmail(), BigInteger.valueOf(1));
+		return new UserResponseDto(request.getName(), request.getEmail(), BigInteger.valueOf(1));
 	}
 	
 	public boolean validarEmailExistente(String email) {

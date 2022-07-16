@@ -11,7 +11,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 
+import br.com.api.condomanager.condomanager.autenticacao.AutenticacaoService;
 import br.com.api.condomanager.condomanager.repository.UsuarioRepository;
+import br.com.api.condomanager.condomanager.sistema.cadastro.UsuarioService;
 import br.com.api.condomanager.condomanager.sistema.cadastro.dto.request.UserRequestDto;
 import br.com.api.condomanager.condomanager.sistema.cadastro.dto.response.UserResponseDto;
 import br.com.api.condomanager.condomanager.sistema.exceptions.DadosPessoaisException;
@@ -45,11 +47,11 @@ class UsuarioServiceTest {
 		MockitoAnnotations.openMocks(this);
 		
 		userRequest = new UserRequestDto();
-		userRequest.setNome("X");
+		userRequest.setName("X");
 		userRequest.setEmail("X");
-		userRequest.setSenha("123456");
+		userRequest.setPassword("123456");
 		userRequest.setCpf("X");
-		userRequest.setTelefone("X");
+		userRequest.setPhone("X");
 		
 		userResponse = new UserResponseDto();
 		userResponse.setNome("X");
@@ -63,7 +65,7 @@ class UsuarioServiceTest {
 		
 		UserResponseDto response = this.usuarioService.cadastrar(userRequest);
 		
-		Assertions.assertEquals(userRequest.getNome(), response.getNome());
+		Assertions.assertEquals(userRequest.getName(), response.getNome());
 		Assertions.assertEquals(userRequest.getEmail(), response.getEmail());
 		Assertions.assertNotNull(response.getNivelAcesso());
 		
