@@ -1,6 +1,7 @@
 package br.com.api.condomanager.condomanager.sistema.cadastro;
 
 import java.math.BigInteger;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -34,7 +35,7 @@ public class UsuarioService {
 		
 		user.setPassword(this.encoder.encode(request.getPassword()));
 		user.setPhone(request.getPhone());
-		user.setNivelAcesso(BigInteger.valueOf(1));
+		user.setIdAccess(BigInteger.valueOf(1));
 		
 		usuarioRepository.save(user);
 		

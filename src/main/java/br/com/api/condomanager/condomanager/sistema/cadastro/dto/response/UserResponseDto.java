@@ -1,6 +1,7 @@
 package br.com.api.condomanager.condomanager.sistema.cadastro.dto.response;
 
 import java.math.BigInteger;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
