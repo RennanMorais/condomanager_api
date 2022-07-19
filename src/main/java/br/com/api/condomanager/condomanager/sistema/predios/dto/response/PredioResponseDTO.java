@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class PredioResponse {
+public class PredioResponseDTO {
 	
 	private String bloco;
 	private int andares;

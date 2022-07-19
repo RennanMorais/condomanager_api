@@ -1,4 +1,4 @@
-package br.com.api.condomanager.condomanager.cadastro;
+package br.com.api.condomanager.condomanager.sistema.cadastro;
 
 import static org.mockito.Mockito.when;
 
@@ -23,8 +23,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.com.api.condomanager.condomanager.autenticacao.AutenticacaoService;
 import br.com.api.condomanager.condomanager.autenticacao.dto.request.LoginRequestDto;
-import br.com.api.condomanager.condomanager.sistema.cadastro.CadastroResource;
-import br.com.api.condomanager.condomanager.sistema.cadastro.UsuarioService;
 import br.com.api.condomanager.condomanager.sistema.cadastro.dto.request.UserRequestDto;
 import br.com.api.condomanager.condomanager.sistema.cadastro.dto.response.UserResponseDto;
 

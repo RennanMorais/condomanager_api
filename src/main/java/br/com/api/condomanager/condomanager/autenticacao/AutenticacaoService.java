@@ -3,6 +3,7 @@ package br.com.api.condomanager.condomanager.autenticacao;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -46,6 +47,9 @@ public class AutenticacaoService {
 		
 		user.setToken(response.getToken());
 		usuarioRepository.save(user);
+		
+		HttpHeaders header = new HttpHeaders();
+		header.add("Authorization", response.getToken());
 		
 		return response;
 	}

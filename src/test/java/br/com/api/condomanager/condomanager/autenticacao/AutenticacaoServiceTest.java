@@ -1,4 +1,4 @@
-package br.com.api.condomanager.condomanager.service;
+package br.com.api.condomanager.condomanager.autenticacao;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -13,8 +13,6 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import br.com.api.condomanager.condomanager.autenticacao.AutenticacaoService;
-import br.com.api.condomanager.condomanager.autenticacao.TokenService;
 import br.com.api.condomanager.condomanager.autenticacao.dto.request.LoginRequestDto;
 import br.com.api.condomanager.condomanager.autenticacao.dto.response.LoginResponseDto;
 import br.com.api.condomanager.condomanager.model.User;

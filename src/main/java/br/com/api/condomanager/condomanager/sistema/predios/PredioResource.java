@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.api.condomanager.condomanager.sistema.predios.dto.response.PredioResponse;
+import br.com.api.condomanager.condomanager.sistema.predios.dto.response.PredioResponseDTO;
 
 @RequestMapping("/condomanager/sistema")
 @RestController
@@ -15,8 +15,8 @@ public class PredioResource {
 	@Autowired
 	PredioService predioservice;
 	
-	@PostMapping("cadPredio")
-	public ResponseEntity<PredioResponse> cadastrarPredio() {
+	@PostMapping("/predio/cadastrar")
+	public ResponseEntity<PredioResponseDTO> cadastrarPredio() {
 		return ResponseEntity.ok(predioservice.cadastrarPredio());
 	}
 	

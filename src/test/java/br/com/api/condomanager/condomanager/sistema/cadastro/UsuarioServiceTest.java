@@ -1,4 +1,4 @@
-package br.com.api.condomanager.condomanager.service;
+package br.com.api.condomanager.condomanager.sistema.cadastro;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,7 +13,6 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import br.com.api.condomanager.condomanager.autenticacao.AutenticacaoService;
 import br.com.api.condomanager.condomanager.repository.UsuarioRepository;
-import br.com.api.condomanager.condomanager.sistema.cadastro.UsuarioService;
 import br.com.api.condomanager.condomanager.sistema.cadastro.dto.request.UserRequestDto;
 import br.com.api.condomanager.condomanager.sistema.cadastro.dto.response.UserResponseDto;
 import br.com.api.condomanager.condomanager.sistema.exceptions.DadosPessoaisException;
