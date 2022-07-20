@@ -5,7 +5,7 @@ import java.util.Random;
 
 import org.springframework.stereotype.Service;
 
-import br.com.api.condomanager.condomanager.model.User;
+import br.com.api.condomanager.condomanager.model.UserEntity;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -17,7 +17,7 @@ public class TokenService {
     private final String key = String.format(String.valueOf(new Date()), new Random().doubles(999999999));
     
 
-    public String generateToken(User user) {
+    public String generateToken(UserEntity user) {
         return Jwts.builder()
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setSubject(String.valueOf(user.getId()))

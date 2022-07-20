@@ -15,7 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import br.com.api.condomanager.condomanager.autenticacao.dto.request.LoginRequestDto;
 import br.com.api.condomanager.condomanager.autenticacao.dto.response.LoginResponseDto;
-import br.com.api.condomanager.condomanager.model.User;
+import br.com.api.condomanager.condomanager.model.UserEntity;
 import br.com.api.condomanager.condomanager.repository.UsuarioRepository;
 import br.com.api.condomanager.condomanager.sistema.exceptions.InvalidLoginException;
 
@@ -45,7 +45,7 @@ class AutenticacaoServiceTest {
 		login.setEmail("email");
 		login.setPassword("senha");
 		
-		User user = new User();
+		UserEntity user = new UserEntity();
 		user.setId(Long.valueOf("1"));
 		user.setEmail(login.getEmail());
 		user.setPassword("senha");
@@ -54,7 +54,7 @@ class AutenticacaoServiceTest {
 		
 		when(this.usuarioRepository.findByEmail(login.getEmail())).thenReturn(user);
 		when(this.encoder.matches(user.getPassword(), login.getPassword())).thenReturn(true);
-		when(this.tokenService.generateToken(Mockito.<User> any())).thenReturn(tokenGenerate);
+		when(this.tokenService.generateToken(Mockito.<UserEntity> any())).thenReturn(tokenGenerate);
 		
 		LoginResponseDto response = this.autenticacaoService.autenticar(login);
 		
@@ -68,7 +68,7 @@ class AutenticacaoServiceTest {
 		login.setEmail("email");
 		login.setPassword("senha");
 		
-		User user = new User();
+		UserEntity user = new UserEntity();
 		user.setId(Long.valueOf("1"));
 		user.setEmail(login.getEmail());
 		user.setPassword(encoder.encode(login.getPassword()));
@@ -77,7 +77,7 @@ class AutenticacaoServiceTest {
 		
 		when(this.usuarioRepository.findByEmail(Mockito.<String> any())).thenReturn(user);
 		when(this.encoder.encode(Mockito.<String> any())).thenReturn(null);
-		when(this.tokenService.generateToken(Mockito.<User> any())).thenReturn(tokenGenerate);
+		when(this.tokenService.generateToken(Mockito.<UserEntity> any())).thenReturn(tokenGenerate);
 		
 		assertThrows(InvalidLoginException.class, () -> this.autenticacaoService.autenticar(login));
 	}

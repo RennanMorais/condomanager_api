@@ -14,7 +14,7 @@ import lombok.Setter;
 @Table(name="predios")
 @Getter
 @Setter
-public class Predio {
+public class PredioEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

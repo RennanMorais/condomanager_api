@@ -45,7 +45,7 @@ class CadastroResourceTest {
 	Map<String, String> errors;
 	
 	@BeforeEach
-	public void setUp() {
+	void setUp() {
 		this.mockMvc = MockMvcBuilders.standaloneSetup(cadastroResource).setValidator(Mockito.mock(Validator.class)).build();
 		errors = new HashMap<>();
 		errors.put("1", "Teste");

@@ -7,12 +7,12 @@ import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import br.com.api.condomanager.condomanager.model.User;
+import br.com.api.condomanager.condomanager.model.UserEntity;
 
 @SpringBootTest
 public class TokenServiceTest {
 	
-	User user;
+	UserEntity user;
 
 	@InjectMocks
 	TokenService tokenService;
@@ -20,7 +20,7 @@ public class TokenServiceTest {
 	@BeforeEach
 	void setUp() {
 		MockitoAnnotations.openMocks(this);
-		user = new User();
+		user = new UserEntity();
 		user.setId(1L);
 	}
 	

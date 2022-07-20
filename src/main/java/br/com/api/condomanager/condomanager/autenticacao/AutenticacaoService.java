@@ -3,13 +3,12 @@ package br.com.api.condomanager.condomanager.autenticacao;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import br.com.api.condomanager.condomanager.autenticacao.dto.request.LoginRequestDto;
 import br.com.api.condomanager.condomanager.autenticacao.dto.response.LoginResponseDto;
-import br.com.api.condomanager.condomanager.model.User;
+import br.com.api.condomanager.condomanager.model.UserEntity;
 import br.com.api.condomanager.condomanager.repository.UsuarioRepository;
 import br.com.api.condomanager.condomanager.sistema.exceptions.ExpiredTokenException;
 import br.com.api.condomanager.condomanager.sistema.exceptions.InvalidLoginException;
@@ -34,7 +33,7 @@ public class AutenticacaoService {
 	//Autenticação de usuário
 	public LoginResponseDto autenticar(LoginRequestDto loginDto) {
 		
-		User user = usuarioRepository.findByEmail(loginDto.getEmail());
+		UserEntity user = usuarioRepository.findByEmail(loginDto.getEmail());
 		
 		if(!encoder.matches(loginDto.getPassword(), user.getPassword())) {
 			throw new InvalidLoginException("Usuario e/ou senha, incorretos!");
@@ -47,9 +46,6 @@ public class AutenticacaoService {
 		
 		user.setToken(response.getToken());
 		usuarioRepository.save(user);
-		
-		HttpHeaders header = new HttpHeaders();
-		header.add("Authorization", response.getToken());
 		
 		return response;
 	}
@@ -68,5 +64,22 @@ public class AutenticacaoService {
             throw new InvalidTokenException("Token inválido!");
         }
     }
+	
+	public boolean validaUserToken(String token) {
+		
+		if(token != null) {
+			try {
+				UserEntity user = this.usuarioRepository.findByToken(token);
+				
+				if(user.getToken().equalsIgnoreCase(token)) {
+					return true;
+				}
+			} catch(Exception e) {
+				throw new InvalidTokenException("Token Inválido");
+			}
+		}
+		
+		return false;
+	}
 	
 }

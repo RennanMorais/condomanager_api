@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import br.com.api.condomanager.condomanager.model.User;
+import br.com.api.condomanager.condomanager.model.UserEntity;
 import br.com.api.condomanager.condomanager.repository.UsuarioRepository;
 import br.com.api.condomanager.condomanager.sistema.cadastro.dto.request.UserRequestDto;
 import br.com.api.condomanager.condomanager.sistema.cadastro.dto.response.UserResponseDto;
@@ -22,7 +22,7 @@ public class UsuarioService {
 	PasswordEncoder encoder;
 	
 	public UserResponseDto cadastrar(UserRequestDto request) throws DadosPessoaisException {
-		User user = new User();
+		UserEntity user = new UserEntity();
 		user.setName(request.getName());
 		
 		if(validarEmailExistente(request.getEmail())) {
