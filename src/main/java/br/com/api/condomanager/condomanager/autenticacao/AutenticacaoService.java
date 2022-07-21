@@ -71,11 +71,11 @@ public class AutenticacaoService {
 			try {
 				UserEntity user = this.usuarioRepository.findByToken(token);
 				
-				if(user.getToken().equalsIgnoreCase(token)) {
+				if(user.getToken().equalsIgnoreCase(token) && this.validate(token)) {
 					return true;
 				}
 			} catch(Exception e) {
-				throw new InvalidTokenException("Token Inválido");
+				throw new InvalidTokenException("Token Inválido ou expirado");
 			}
 		}
 		
