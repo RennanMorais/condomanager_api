@@ -2,6 +2,9 @@ package br.com.api.condomanager.condomanager.sistema.condominios;
 
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -18,12 +21,14 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.request.CondominiosRequestDTO;
+import br.com.api.condomanager.condomanager.sistema.condominios.dto.response.CondominioResponse;
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.response.CondominiosResponseDTO;
 
 class CondominioResourceTest {
 	
 	CondominiosRequestDTO request;
 	CondominiosResponseDTO response;
+	List<CondominioResponse> listResponse;
 
 	@InjectMocks
 	CondominioResource condominioResource;
@@ -48,6 +53,12 @@ class CondominioResourceTest {
 		response = new CondominiosResponseDTO();
 		response.setCodigo(200);
 		response.setMensagem("O condominio '"+ request.getNome() +"' foi salvo com sucesso!");
+	
+		CondominioResponse responseGet = new CondominioResponse();
+		responseGet.setNome("X");
+		
+		listResponse = new ArrayList<>();
+		listResponse.add(responseGet);
 	}
 	
 	@Test
@@ -65,6 +76,20 @@ class CondominioResourceTest {
 			.andExpect(MockMvcResultMatchers.status().is(200))
 			.andExpect(MockMvcResultMatchers.jsonPath("$.codigo").value(response.getCodigo()))
 			.andExpect(MockMvcResultMatchers.jsonPath("$.mensagem").value(response.getMensagem()));
+	}
+	
+	@Test
+	void getCondominiosTest() throws JsonProcessingException, Exception {
+		
+		when(this.condominioService.getCondominios(Mockito.<String>any())).thenReturn(listResponse);
+		
+		mockMvc.perform(MockMvcRequestBuilders
+				.get("/condomanager/sistema/condominio")
+				.header("authorization", "")
+				.contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
+			.andExpect(MockMvcResultMatchers.status().is(200));
+		
 	}
 	
 }

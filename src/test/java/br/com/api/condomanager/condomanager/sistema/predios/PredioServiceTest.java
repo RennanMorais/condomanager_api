@@ -16,6 +16,7 @@ import org.mockito.MockitoAnnotations;
 
 import br.com.api.condomanager.condomanager.autenticacao.AutenticacaoService;
 import br.com.api.condomanager.condomanager.model.CondominioEntity;
+import br.com.api.condomanager.condomanager.model.PredioEntity;
 import br.com.api.condomanager.condomanager.repository.CondominioRepository;
 import br.com.api.condomanager.condomanager.repository.PredioRepository;
 import br.com.api.condomanager.condomanager.sistema.exceptions.CondomanagerException;
@@ -27,6 +28,7 @@ class PredioServiceTest {
 	PredioResponseDTO response;
 	List<PredioResponseDTO> listResponse;
 	Optional<CondominioEntity> condominio;
+	List<PredioEntity> listPredios;
 	
 	@InjectMocks
 	PredioService predioService;
@@ -60,6 +62,15 @@ class PredioServiceTest {
 		condominio.get().setComplemento("x");
 		condominio.get().setEndereco("x");
 		condominio.get().setNumero("1");
+		
+		PredioEntity predio = new PredioEntity();
+		predio.setId(1L);
+		predio.setNome("X");
+		predio.setCondominio("X");
+		predio.setIdCondominio(1L);
+		
+		listPredios = new ArrayList<>();
+		listPredios.add(predio);
 	}
 	
 	@Test
@@ -95,5 +106,22 @@ class PredioServiceTest {
 		Assertions.assertThrows(CondomanagerException.class, () -> this.predioService.cadastrarPredio(request, token));
 		
 		
+	}
+	
+	@Test
+	void getPrediosTest() {
+		String token = "token";
+		when(this.autenticationService.validaUserToken(token)).thenReturn(true);
+		when(this.predioRepository.findAll()).thenReturn(listPredios);
+		Assertions.assertDoesNotThrow(() -> this.predioService.getPredios(token));
+	}
+	
+	@Test
+	void getPrediosThrowTest() {
+		String token = "token";
+		listPredios.remove(0);
+		when(this.autenticationService.validaUserToken(token)).thenReturn(true);
+		when(this.predioRepository.findAll()).thenReturn(listPredios);
+		Assertions.assertThrows(CondomanagerException.class, () -> this.predioService.getPredios(token));
 	}
 }
