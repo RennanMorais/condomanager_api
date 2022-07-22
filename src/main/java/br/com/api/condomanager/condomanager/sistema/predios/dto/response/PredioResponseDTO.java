@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class PredioResponseDTO {
 	
-	private String bloco;
-	private int andares;
+	private String nome;
+	private String condominio;
 	
 }

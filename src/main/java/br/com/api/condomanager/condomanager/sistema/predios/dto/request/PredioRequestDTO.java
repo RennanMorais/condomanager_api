@@ -7,6 +7,7 @@ import lombok.Setter;
 @Setter
 public class PredioRequestDTO {
 	
-	private String bloco;
+	private String nome;
+	private Long idCondominio;
 	
 }

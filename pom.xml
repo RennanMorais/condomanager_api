@@ -15,9 +15,17 @@
 	<description>API CondoManager</description>
 	<properties>
 		<java.version>11</java.version>
-		<sonar.exclusions>*DTO.java, *Dto.java, *Entity.java</sonar.exclusions>
+		<sonar.projectName>${project.name}</sonar.projectName>
+	    <sonar.projectVersion>1.0.0</sonar.projectVersion>
+	    <sonar.sources>${project.basedir}/src/main</sonar.sources>
+	    <sonar.tests>${project.basedir}/src/test</sonar.tests>
+	    <sonar.exclusions>*/*Dto.java, */DTO.java, */Exception.java, */Configuration.java, */Enum.java, */Entity.java, */Mapper.java, */CwsKafkaRequest.java, */CwsClientParameters.java, */books/*.java</sonar.exclusions>
+	    <sonar.coverage.exclusions>*/domain/, */books/**</sonar.coverage.exclusions>
+	    <sonar.cpd.exclusions>*/domain/, */books/**</sonar.cpd.exclusions>
 	</properties>
 	<dependencies>
+	
+	
 	
 		<dependency>
 	      <groupId>org.springframework.boot</groupId>

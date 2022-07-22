@@ -46,9 +46,9 @@ public class CondominioService {
 			response.setMensagem("O condominio '"+ request.getNome() +"' foi salvo com sucesso!");
 			
 			return response;
-		} else {
-			throw new CondomanagerException("Não foi possivel salvar o condomínio, verifique os dados e tente novamente.");
 		}
+		
+		throw new CondomanagerException("Não foi possivel salvar o condomínio, verifique os dados e tente novamente.");
 		
 	}
 	
@@ -59,26 +59,30 @@ public class CondominioService {
 		List<CondominioEntity> listCondominios = new ArrayList<>();
 		listCondominios = condominioRepository.findAll();
 		
-		List<CondominioResponse> response = new ArrayList<>();
-		
-		for(int i=0; i < listCondominios.size(); i++) { 
-			CondominioResponse cond = new CondominioResponse();
-			Endereco endereco = new Endereco();
-			cond.setNome(listCondominios.get(i).getNome());
-			cond.setCnpj(listCondominios.get(i).getCnpj());
-			cond.setEmail(listCondominios.get(i).getEmail());
+		if(listCondominios.size() > 0) {
+			List<CondominioResponse> response = new ArrayList<>();
 			
-			endereco.setEndereco(listCondominios.get(i).getEndereco());
-			endereco.setBairro(listCondominios.get(i).getBairro());
-			endereco.setNumero(listCondominios.get(i).getNumero());
-			endereco.setComplemento(listCondominios.get(i).getComplemento());
+			for(int i=0; i < listCondominios.size(); i++) { 
+				CondominioResponse cond = new CondominioResponse();
+				Endereco endereco = new Endereco();
+				cond.setNome(listCondominios.get(i).getNome());
+				cond.setCnpj(listCondominios.get(i).getCnpj());
+				cond.setEmail(listCondominios.get(i).getEmail());
+				
+				endereco.setEndereco(listCondominios.get(i).getEndereco());
+				endereco.setBairro(listCondominios.get(i).getBairro());
+				endereco.setNumero(listCondominios.get(i).getNumero());
+				endereco.setComplemento(listCondominios.get(i).getComplemento());
+				
+				cond.setEndereco(endereco);
+				
+				response.add(cond);
+			}
 			
-			cond.setEndereco(endereco);
-			
-			response.add(cond);
+			return response;
 		}
 		
-		return response;
+		throw new CondomanagerException("Nenhum condomínio cadastrado!");
 	}
 	
 }
