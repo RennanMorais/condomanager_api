@@ -1,4 +1,4 @@
-package br.com.api.condomanager.condomanager.sistema.dto.response;
+package br.com.api.condomanager.condomanager.autenticacao.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,7 +11,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class LoginResponseDto {
 	
-	private String nome;
+	private String name;
 	
 	private String email;
 	

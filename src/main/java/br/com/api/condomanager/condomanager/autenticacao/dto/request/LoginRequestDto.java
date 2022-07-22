@@ -1,6 +1,7 @@
-package br.com.api.condomanager.condomanager.sistema.dto.request;
+package br.com.api.condomanager.condomanager.autenticacao.dto.request;
 
 import javax.validation.constraints.Email;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,6 +15,6 @@ public class LoginRequestDto {
 
 	@Email(message = "E-mail inválido.")
 	private String email;
-	private String senha;
+	private String password;
 	
 }

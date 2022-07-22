@@ -16,8 +16,8 @@ public class CondomanagerApplication {
 	
 	@Bean
 	public PasswordEncoder passordEncoder() {
-		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-		return encoder;
+		
+		return new BCryptPasswordEncoder();
 	}
 
 }

@@ -1,7 +1,6 @@
 package br.com.api.condomanager.condomanager.model;
 
-import java.math.BigInteger;
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,34 +11,34 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name="users")
+@Table(name="condominios")
 @Getter
 @Setter
-public class User {
+public class CondominioEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@Column(name="nome")
 	private String nome;
 	
+	@Column(name="cnpj")
+	private String cnpj;
+	
+	@Column(name="email")
 	private String email;
 	
-	private String senha;
+	@Column(name="endereco")
+	private String endereco;
 	
-	private String rg;
+	@Column(name="numero")
+	private String numero;
 	
-	private String cpf;
+	@Column(name="complemento")
+	private String complemento;
 	
-	private String telefone;
+	@Column(name="bairro")
+	private String bairro;
 	
-	private Long idCondominio;
-	
-	private String predio;
-	
-	private String apto;
-	
-	private BigInteger nivelAcesso;
-	
-	private String token;
 }

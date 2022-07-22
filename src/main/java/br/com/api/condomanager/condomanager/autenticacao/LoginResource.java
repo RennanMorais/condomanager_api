@@ -5,17 +5,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import br.com.api.condomanager.condomanager.service.AutenticacaoService;
-import br.com.api.condomanager.condomanager.sistema.dto.request.LoginRequestDto;
-import br.com.api.condomanager.condomanager.sistema.dto.response.LoginResponseDto;
+
+import br.com.api.condomanager.condomanager.autenticacao.dto.request.LoginRequestDto;
+import br.com.api.condomanager.condomanager.autenticacao.dto.response.LoginResponseDto;
 
 @RequestMapping("condomanager/sistema")
 @RestController
-public class Login {
+public class LoginResource {
 	
 	final AutenticacaoService autenticacaoService;
 	
-	public Login(AutenticacaoService autenticacaoService) {
+	public LoginResource(AutenticacaoService autenticacaoService) {
 		this.autenticacaoService = autenticacaoService;
 	}
 
