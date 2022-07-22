@@ -16,7 +16,7 @@ import br.com.api.condomanager.condomanager.sistema.condominios.dto.response.Con
 import br.com.api.condomanager.condomanager.sistema.exceptions.CondomanagerException;
 import br.com.api.condomanager.condomanager.util.Endereco;
 
-public class CondominioServiceTest {
+class CondominioServiceTest {
 
 	CondominiosRequestDTO request;
 	CondominiosResponseDTO response;
