@@ -1,10 +1,13 @@
 package br.com.api.condomanager.condomanager.sistema.cadastro;
 
+import static org.mockito.Mockito.when;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,9 +15,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import br.com.api.condomanager.condomanager.autenticacao.AutenticacaoService;
+import br.com.api.condomanager.condomanager.model.UserEntity;
 import br.com.api.condomanager.condomanager.repository.UsuarioRepository;
 import br.com.api.condomanager.condomanager.sistema.cadastro.dto.request.UserRequestDto;
 import br.com.api.condomanager.condomanager.sistema.cadastro.dto.response.UserResponseDto;
+import br.com.api.condomanager.condomanager.sistema.exceptions.CondomanagerException;
 import br.com.api.condomanager.condomanager.sistema.exceptions.DadosPessoaisException;
 import br.com.api.condomanager.condomanager.util.Util;
 
@@ -68,6 +73,24 @@ class UsuarioServiceTest {
 		Assertions.assertEquals(userRequest.getEmail(), response.getEmail());
 		Assertions.assertNotNull(response.getNivelAcesso());
 		
+	}
+	
+	@Test
+	void validarEmailExistenteTest() {
+		String email = "X";
+		UserEntity user = new UserEntity();
+		user.setEmail(email);
+		when(usuarioRepository.findByEmail(Mockito.<String>any())).thenReturn(user);
+		Assertions.assertThrows(DadosPessoaisException.class, () -> this.usuarioService.validarEmailExistente(email));
+	}
+	
+	@Test
+	void validarCpfExistente() {
+		String cpf = "X";
+		UserEntity user = new UserEntity();
+		user.setCpf(cpf);
+		when(usuarioRepository.findByCpf(Mockito.<String>any())).thenReturn(user);
+		Assertions.assertThrows(DadosPessoaisException.class, () -> this.usuarioService.validarCpfExistente(cpf));
 	}
 	
 	@Test

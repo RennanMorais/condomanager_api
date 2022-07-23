@@ -2,6 +2,9 @@ package br.com.api.condomanager.condomanager.sistema.condominios;
 
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,6 +13,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import br.com.api.condomanager.condomanager.autenticacao.AutenticacaoService;
+import br.com.api.condomanager.condomanager.model.CondominioEntity;
 import br.com.api.condomanager.condomanager.repository.CondominioRepository;
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.request.CondominiosRequestDTO;
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.response.CondominiosResponseDTO;
@@ -20,6 +24,7 @@ class CondominioServiceTest {
 
 	CondominiosRequestDTO request;
 	CondominiosResponseDTO response;
+	List<CondominioEntity> listCondominios;
 	
 	@InjectMocks
 	CondominioService condominioService;
@@ -51,6 +56,17 @@ class CondominioServiceTest {
 		response = new CondominiosResponseDTO();
 		response.setCodigo(200);
 		response.setMensagem("O condominio '"+ request.getNome() +"' foi salvo com sucesso!");
+		
+		CondominioEntity condominio = new CondominioEntity();
+		condominio.setBairro("X");
+		condominio.setCnpj("X");
+		condominio.setComplemento("X");
+		condominio.setEmail("X");
+		condominio.setEndereco("X");
+		condominio.setId(1L);
+		
+		listCondominios = new ArrayList<>();
+		listCondominios.add(condominio);
 	}
 	
 	@Test
@@ -72,6 +88,22 @@ class CondominioServiceTest {
 		when(this.autenticationService.validaUserToken(token)).thenReturn(true);
 		Assertions.assertThrows(CondomanagerException.class, () -> this.condominioService.cadastrarCondominio(request, token));
 		
+	}
+	
+	@Test
+	void getCondominiosTest() {
+		String token = "token";
+		when(this.autenticationService.validaUserToken(token)).thenReturn(true);
+		when(this.condominioRepository.findAll()).thenReturn(listCondominios);
+		Assertions.assertDoesNotThrow(() -> this.condominioService.getCondominios(token));
+	}
+	
+	@Test
+	void getCondominiosThrowTest() {
+		String token = "token";
+		listCondominios.remove(0);
+		when(this.autenticationService.validaUserToken(token)).thenReturn(true);
+		Assertions.assertThrows(CondomanagerException.class, () -> this.condominioService.getCondominios(token));
 	}
 	
 }
