@@ -39,7 +39,7 @@ public class PredioService {
 			
 			Optional<CondominioEntity> condominio = this.condominioRepository.findById(request.getIdCondominio());
 			
-			if(!condominio.isEmpty()) {
+			if(condominio != null) {
 				predio.setCondominio(condominio.get().getNome());
 				predio.setIdCondominio(condominio.get().getId());
 			} else {
