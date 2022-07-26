@@ -4,9 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
-import java.util.Date;
-import java.util.Random;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -20,10 +17,7 @@ import br.com.api.condomanager.condomanager.autenticacao.dto.request.LoginReques
 import br.com.api.condomanager.condomanager.autenticacao.dto.response.LoginResponseDto;
 import br.com.api.condomanager.condomanager.model.UserEntity;
 import br.com.api.condomanager.condomanager.repository.UsuarioRepository;
-import br.com.api.condomanager.condomanager.sistema.exceptions.ExpiredTokenException;
 import br.com.api.condomanager.condomanager.sistema.exceptions.InvalidLoginException;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
 
 @SpringBootTest
 class AutenticacaoServiceTest {
