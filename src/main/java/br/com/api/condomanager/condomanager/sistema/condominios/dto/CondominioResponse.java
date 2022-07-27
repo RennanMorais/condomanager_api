@@ -1,4 +1,4 @@
-package br.com.api.condomanager.condomanager.sistema.condominios.dto.response;
+package br.com.api.condomanager.condomanager.sistema.condominios.dto;
 
 import br.com.api.condomanager.condomanager.util.Endereco;
 import lombok.Getter;

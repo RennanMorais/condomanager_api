@@ -1,4 +1,4 @@
-package br.com.api.condomanager.condomanager.sistema.predios;
+package br.com.api.condomanager.condomanager.sistema.condominios.predios;
 
 import static org.mockito.Mockito.when;
 
@@ -19,9 +19,9 @@ import br.com.api.condomanager.condomanager.model.CondominioEntity;
 import br.com.api.condomanager.condomanager.model.PredioEntity;
 import br.com.api.condomanager.condomanager.repository.CondominioRepository;
 import br.com.api.condomanager.condomanager.repository.PredioRepository;
+import br.com.api.condomanager.condomanager.sistema.condominios.dto.request.PredioRequestDTO;
+import br.com.api.condomanager.condomanager.sistema.condominios.dto.response.PredioResponseDTO;
 import br.com.api.condomanager.condomanager.sistema.exceptions.CondomanagerException;
-import br.com.api.condomanager.condomanager.sistema.predios.dto.request.PredioRequestDTO;
-import br.com.api.condomanager.condomanager.sistema.predios.dto.response.PredioResponseDTO;
 
 class PredioServiceTest {
 	PredioRequestDTO request;

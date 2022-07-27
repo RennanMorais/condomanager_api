@@ -1,4 +1,4 @@
-package br.com.api.condomanager.condomanager.sistema.predios;
+package br.com.api.condomanager.condomanager.sistema.condominios.areacomum;
 
 import static org.mockito.Mockito.when;
 
@@ -20,20 +20,19 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import br.com.api.condomanager.condomanager.sistema.predios.dto.request.PredioRequestDTO;
-import br.com.api.condomanager.condomanager.sistema.predios.dto.response.PredioResponseDTO;
+import br.com.api.condomanager.condomanager.sistema.condominios.dto.request.AreaComumRequestDTO;
+import br.com.api.condomanager.condomanager.sistema.condominios.dto.response.AreaComumResponseDTO;
 
-class PredioResourceTest {
-
-	PredioRequestDTO request;
-	PredioResponseDTO response;
-	List<PredioResponseDTO> listResponse;
+class AreaComumResourceTest {
+	AreaComumRequestDTO request;
+	AreaComumResponseDTO response;
+	List<AreaComumResponseDTO> listResponse;
 
 	@InjectMocks
-	PredioResource predioResource;
+	AreaComumResource areaComumResource;
 	
 	@Mock
-	PredioService predioService;
+	AreaComumService areaComumService;
 	
 	private MockMvc mockMvc;
 	
@@ -42,14 +41,14 @@ class PredioResourceTest {
 	@BeforeEach
 	void setUp() {
 		MockitoAnnotations.openMocks(this);
-		this.mockMvc = MockMvcBuilders.standaloneSetup(predioResource).build();
+		this.mockMvc = MockMvcBuilders.standaloneSetup(areaComumResource).build();
 		
-		request = new PredioRequestDTO();
-		request.setNome("x");
+		request = new AreaComumRequestDTO();
+		request.setArea("x");
 		request.setIdCondominio(1L);
 		
-		response = new PredioResponseDTO();
-		response.setNome("X");
+		response = new AreaComumResponseDTO();
+		response.setArea("X");
 		response.setCondominio("X");
 		
 		listResponse = new ArrayList<>();
@@ -57,34 +56,33 @@ class PredioResourceTest {
 	}
 	
 	@Test
-	void cadastrarCondominioTest() throws JsonProcessingException, Exception  {
+	void cadastrarAreaComumTest() throws JsonProcessingException, Exception  {
 		
-		when(this.predioService.cadastrarPredio(Mockito.<PredioRequestDTO>any(), 
+		when(this.areaComumService.cadastrarAreaComum(Mockito.<AreaComumRequestDTO>any(), 
 				Mockito.<String>any())).thenReturn(response);
 		
 		mockMvc.perform(MockMvcRequestBuilders
-				.post("/condomanager/sistema/predio/cadastrar")
+				.post("/condomanager/sistema/areacomum/cadastrar")
 				.content(mapper.writeValueAsString(request))
 				.header("authorization", "")
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
 			.andExpect(MockMvcResultMatchers.status().is(200))
-			.andExpect(MockMvcResultMatchers.jsonPath("$.nome").value(response.getNome()))
+			.andExpect(MockMvcResultMatchers.jsonPath("$.area").value(response.getArea()))
 			.andExpect(MockMvcResultMatchers.jsonPath("$.condominio").value(response.getCondominio()));
 	}
 	
 	@Test
-	void getPrediosTest() throws JsonProcessingException, Exception {
+	void getAreaComumTest() throws JsonProcessingException, Exception {
 		
-		when(this.predioService.getPredios(Mockito.<String>any())).thenReturn(listResponse);
+		when(this.areaComumService.getAreaComum(Mockito.<String>any())).thenReturn(listResponse);
 		
 		mockMvc.perform(MockMvcRequestBuilders
-				.get("/condomanager/sistema/predios", "")
+				.get("/condomanager/sistema/areacomum", "")
 				.header("authorization", "")
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
 			.andExpect(MockMvcResultMatchers.status().is(200));
 		
 	}
-	
 }

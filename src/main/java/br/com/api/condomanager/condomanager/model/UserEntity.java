@@ -1,7 +1,5 @@
 package br.com.api.condomanager.condomanager.model;
 
-import java.math.BigInteger;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -59,7 +57,7 @@ public class UserEntity {
 	private String apto;
 	
 	@Column(name = "id_access")
-	private BigInteger idAccess;
+	private Long idAccess;
 	
 	@Column(name = "nome_access")
 	private String nomeAccess;

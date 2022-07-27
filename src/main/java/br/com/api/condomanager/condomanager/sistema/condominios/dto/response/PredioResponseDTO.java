@@ -1,4 +1,4 @@
-package br.com.api.condomanager.condomanager.sistema.predios.dto.response;
+package br.com.api.condomanager.condomanager.sistema.condominios.dto.response;
 
 import lombok.Getter;
 import lombok.Setter;

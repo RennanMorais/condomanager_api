@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import br.com.api.condomanager.condomanager.enums.AcessoEnum;
 import br.com.api.condomanager.condomanager.model.UserEntity;
 import br.com.api.condomanager.condomanager.repository.UsuarioRepository;
 import br.com.api.condomanager.condomanager.sistema.cadastro.dto.request.UserRequestDto;
@@ -35,7 +36,8 @@ public class UsuarioService {
 		
 		user.setPassword(this.encoder.encode(request.getPassword()));
 		user.setPhone(request.getPhone());
-		user.setIdAccess(BigInteger.valueOf(1));
+		user.setIdAccess(AcessoEnum.ADMINISTRADOR.getNivel());
+		user.setNomeAccess(AcessoEnum.ADMINISTRADOR.getDescricao());
 		
 		usuarioRepository.save(user);
 		
