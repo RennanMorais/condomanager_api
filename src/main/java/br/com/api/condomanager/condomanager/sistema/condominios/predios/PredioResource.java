@@ -1,4 +1,4 @@
-package br.com.api.condomanager.condomanager.sistema.predios;
+package br.com.api.condomanager.condomanager.sistema.condominios.predios;
 
 import java.util.List;
 
@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.api.condomanager.condomanager.sistema.predios.dto.request.PredioRequestDTO;
-import br.com.api.condomanager.condomanager.sistema.predios.dto.response.PredioResponseDTO;
+import br.com.api.condomanager.condomanager.sistema.condominios.dto.request.PredioRequestDTO;
+import br.com.api.condomanager.condomanager.sistema.condominios.dto.response.PredioResponseDTO;
 
 @RequestMapping("/condomanager/sistema")
 @RestController

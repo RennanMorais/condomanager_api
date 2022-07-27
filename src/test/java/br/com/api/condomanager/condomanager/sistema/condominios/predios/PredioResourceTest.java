@@ -1,4 +1,4 @@
-package br.com.api.condomanager.condomanager.sistema.condominios;
+package br.com.api.condomanager.condomanager.sistema.condominios.predios;
 
 import static org.mockito.Mockito.when;
 
@@ -20,21 +20,20 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import br.com.api.condomanager.condomanager.sistema.condominios.dto.CondominioResponse;
-import br.com.api.condomanager.condomanager.sistema.condominios.dto.request.CondominiosRequestDTO;
-import br.com.api.condomanager.condomanager.sistema.condominios.dto.response.CondominiosResponseDTO;
+import br.com.api.condomanager.condomanager.sistema.condominios.dto.request.PredioRequestDTO;
+import br.com.api.condomanager.condomanager.sistema.condominios.dto.response.PredioResponseDTO;
 
-class CondominioResourceTest {
-	
-	CondominiosRequestDTO request;
-	CondominiosResponseDTO response;
-	List<CondominioResponse> listResponse;
+class PredioResourceTest {
+
+	PredioRequestDTO request;
+	PredioResponseDTO response;
+	List<PredioResponseDTO> listResponse;
 
 	@InjectMocks
-	CondominioResource condominioResource;
+	PredioResource predioResource;
 	
 	@Mock
-	CondominioService condominioService;
+	PredioService predioService;
 	
 	private MockMvc mockMvc;
 	
@@ -43,48 +42,44 @@ class CondominioResourceTest {
 	@BeforeEach
 	void setUp() {
 		MockitoAnnotations.openMocks(this);
-		this.mockMvc = MockMvcBuilders.standaloneSetup(condominioResource).build();
+		this.mockMvc = MockMvcBuilders.standaloneSetup(predioResource).build();
 		
-		request = new CondominiosRequestDTO();
+		request = new PredioRequestDTO();
 		request.setNome("x");
-		request.setCnpj("x");
-		request.setEmail("x");
+		request.setIdCondominio(1L);
 		
-		response = new CondominiosResponseDTO();
-		response.setCodigo(200);
-		response.setMensagem("O condominio '"+ request.getNome() +"' foi salvo com sucesso!");
-	
-		CondominioResponse responseGet = new CondominioResponse();
-		responseGet.setNome("X");
+		response = new PredioResponseDTO();
+		response.setNome("X");
+		response.setCondominio("X");
 		
 		listResponse = new ArrayList<>();
-		listResponse.add(responseGet);
+		listResponse.add(response);
 	}
 	
 	@Test
 	void cadastrarCondominioTest() throws JsonProcessingException, Exception  {
 		
-		when(this.condominioService.cadastrarCondominio(Mockito.<CondominiosRequestDTO>any(), 
+		when(this.predioService.cadastrarPredio(Mockito.<PredioRequestDTO>any(), 
 				Mockito.<String>any())).thenReturn(response);
 		
 		mockMvc.perform(MockMvcRequestBuilders
-				.post("/condomanager/sistema/condominio/cadastrar", "")
+				.post("/condomanager/sistema/predio/cadastrar")
 				.content(mapper.writeValueAsString(request))
 				.header("authorization", "")
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
 			.andExpect(MockMvcResultMatchers.status().is(200))
-			.andExpect(MockMvcResultMatchers.jsonPath("$.codigo").value(response.getCodigo()))
-			.andExpect(MockMvcResultMatchers.jsonPath("$.mensagem").value(response.getMensagem()));
+			.andExpect(MockMvcResultMatchers.jsonPath("$.nome").value(response.getNome()))
+			.andExpect(MockMvcResultMatchers.jsonPath("$.condominio").value(response.getCondominio()));
 	}
 	
 	@Test
-	void getCondominiosTest() throws JsonProcessingException, Exception {
+	void getPrediosTest() throws JsonProcessingException, Exception {
 		
-		when(this.condominioService.getCondominios(Mockito.<String>any())).thenReturn(listResponse);
+		when(this.predioService.getPredios(Mockito.<String>any())).thenReturn(listResponse);
 		
 		mockMvc.perform(MockMvcRequestBuilders
-				.get("/condomanager/sistema/condominio")
+				.get("/condomanager/sistema/predios", "")
 				.header("authorization", "")
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.parseMediaType("application/json;charset=UTF-8")))

@@ -1,4 +1,4 @@
-package br.com.api.condomanager.condomanager.sistema.areacomum;
+package br.com.api.condomanager.condomanager.sistema.condominios.areacomum;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,8 +12,8 @@ import br.com.api.condomanager.condomanager.model.AreaComumEntity;
 import br.com.api.condomanager.condomanager.model.CondominioEntity;
 import br.com.api.condomanager.condomanager.repository.AreaComumRepository;
 import br.com.api.condomanager.condomanager.repository.CondominioRepository;
-import br.com.api.condomanager.condomanager.sistema.areacomum.dto.request.AreaComumRequestDTO;
-import br.com.api.condomanager.condomanager.sistema.areacomum.dto.response.AreaComumResponseDTO;
+import br.com.api.condomanager.condomanager.sistema.condominios.dto.request.AreaComumRequestDTO;
+import br.com.api.condomanager.condomanager.sistema.condominios.dto.response.AreaComumResponseDTO;
 import br.com.api.condomanager.condomanager.sistema.exceptions.CondomanagerException;
 
 @Service
@@ -66,7 +66,7 @@ public class AreaComumService {
 		List<AreaComumEntity> listAreaComum = new ArrayList<>();
 		listAreaComum = areaComumRepository.findAll();
 		
-		if(listAreaComum.size() > 0) {
+		if(!listAreaComum.isEmpty()) {
 			List<AreaComumResponseDTO> response = new ArrayList<>();
 			
 			for(int i=0; i < listAreaComum.size(); i++) { 

@@ -10,8 +10,8 @@ import org.springframework.stereotype.Service;
 import br.com.api.condomanager.condomanager.autenticacao.AutenticacaoService;
 import br.com.api.condomanager.condomanager.model.CondominioEntity;
 import br.com.api.condomanager.condomanager.repository.CondominioRepository;
+import br.com.api.condomanager.condomanager.sistema.condominios.dto.CondominioResponse;
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.request.CondominiosRequestDTO;
-import br.com.api.condomanager.condomanager.sistema.condominios.dto.response.CondominioResponse;
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.response.CondominiosResponseDTO;
 import br.com.api.condomanager.condomanager.sistema.exceptions.CondomanagerException;
 import br.com.api.condomanager.condomanager.util.Endereco;
@@ -59,7 +59,7 @@ public class CondominioService {
 		List<CondominioEntity> listCondominios = new ArrayList<>();
 		listCondominios = condominioRepository.findAll();
 		
-		if(listCondominios.size() > 0) {
+		if(!listCondominios.isEmpty()) {
 			List<CondominioResponse> response = new ArrayList<>();
 			
 			for(int i=0; i < listCondominios.size(); i++) { 

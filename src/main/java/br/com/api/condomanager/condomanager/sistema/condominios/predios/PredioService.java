@@ -1,4 +1,4 @@
-package br.com.api.condomanager.condomanager.sistema.predios;
+package br.com.api.condomanager.condomanager.sistema.condominios.predios;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,9 +12,9 @@ import br.com.api.condomanager.condomanager.model.CondominioEntity;
 import br.com.api.condomanager.condomanager.model.PredioEntity;
 import br.com.api.condomanager.condomanager.repository.CondominioRepository;
 import br.com.api.condomanager.condomanager.repository.PredioRepository;
+import br.com.api.condomanager.condomanager.sistema.condominios.dto.request.PredioRequestDTO;
+import br.com.api.condomanager.condomanager.sistema.condominios.dto.response.PredioResponseDTO;
 import br.com.api.condomanager.condomanager.sistema.exceptions.CondomanagerException;
-import br.com.api.condomanager.condomanager.sistema.predios.dto.request.PredioRequestDTO;
-import br.com.api.condomanager.condomanager.sistema.predios.dto.response.PredioResponseDTO;
 
 @Service
 public class PredioService {
@@ -66,7 +66,7 @@ public class PredioService {
 		List<PredioEntity> listPredios = new ArrayList<>();
 		listPredios = predioRepository.findAll();
 		
-		if(listPredios.size() > 0) {
+		if(!listPredios.isEmpty()) {
 			List<PredioResponseDTO> response = new ArrayList<>();
 			
 			for(int i=0; i < listPredios.size(); i++) { 

@@ -1,4 +1,4 @@
-package br.com.api.condomanager.condomanager.sistema.areacomum;
+package br.com.api.condomanager.condomanager.sistema.condominios.areacomum;
 
 import java.util.List;
 
@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.api.condomanager.condomanager.sistema.areacomum.dto.request.AreaComumRequestDTO;
-import br.com.api.condomanager.condomanager.sistema.areacomum.dto.response.AreaComumResponseDTO;
+import br.com.api.condomanager.condomanager.sistema.condominios.dto.request.AreaComumRequestDTO;
+import br.com.api.condomanager.condomanager.sistema.condominios.dto.response.AreaComumResponseDTO;
 
 @RequestMapping("/condomanager/sistema")
 @RestController

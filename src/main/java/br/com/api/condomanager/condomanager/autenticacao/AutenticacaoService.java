@@ -67,19 +67,15 @@ public class AutenticacaoService {
 	
 	public boolean validaUserToken(String token) {
 		
-		if(token != null) {
-			try {
-				UserEntity user = this.usuarioRepository.findByToken(token);
-				
-				if(user.getToken().equalsIgnoreCase(token) && this.validate(token)) {
-					return true;
-				}
-			} catch(Exception e) {
-				throw new InvalidTokenException("Token Inválido ou expirado");
+		if(token != null && !token.isEmpty()) {
+			UserEntity user = this.usuarioRepository.findByToken(token);
+			
+			if(user.getToken().equalsIgnoreCase(token) && this.validate(token)) {
+				return true;
 			}
 		}
 		
-		return false;
+		throw new InvalidTokenException("Token Inválido ou expirado");
 	}
 	
 }
