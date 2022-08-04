@@ -1,5 +1,7 @@
 package br.com.api.condomanager.condomanager.sistema.condominios.reserva;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +27,8 @@ public class ReservaService {
 		
 		if(request != null) {
 			
+			this.reservaDataCheck(request.getIdCondominio(), request.getIdArea(), request.getData());
+			
 			ReservaEntity reserva = new ReservaEntity();
 			reserva.setIdCondominio(request.getIdCondominio());
 			reserva.setIdMorador(request.getIdMorador());
@@ -45,6 +49,18 @@ public class ReservaService {
 		}
 		
 		throw new CondomanagerException("Não foi possivel finalizar a reserva, verifique os dados e tente novamente.");
+	}
+	
+	private boolean reservaDataCheck(Long idCondominio, Long idArea, Date data) {
+		
+		ReservaEntity reserva = this.reservaRepository.findByDate(idCondominio, idArea, data);
+		
+		if(reserva == null) {
+			return true;
+		}
+		
+		throw new CondomanagerException("Já existe uma reserva nesta data!");
+		
 	}
 	
 }
