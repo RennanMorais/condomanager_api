@@ -1,7 +1,6 @@
 package br.com.api.condomanager.condomanager.sistema.condominios.reserva;
 
 import java.util.Date;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -54,9 +53,9 @@ public class ReservaService {
 	
 	private boolean reservaDataCheck(Long idCondominio, Long idArea, Date data) {
 		
-		List<ReservaEntity> reserva = this.reservaRepository.findByDate(idCondominio, idArea, data);
+		ReservaEntity reserva = this.reservaRepository.findByDate(idCondominio, idArea, data);
 		
-		if(reserva.isEmpty()) {
+		if(reserva == null) {
 			return true;
 		}
 		
