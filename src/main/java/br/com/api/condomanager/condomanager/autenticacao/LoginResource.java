@@ -1,5 +1,7 @@
 package br.com.api.condomanager.condomanager.autenticacao;
 
+import javax.validation.Valid;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,7 +22,7 @@ public class LoginResource {
 	}
 
 	@PostMapping(value = "login", produces = "application/json")
-	public ResponseEntity<LoginResponseDto> autenticar(@RequestBody LoginRequestDto loginDto) {
+	public ResponseEntity<LoginResponseDto> autenticar(@RequestBody @Valid LoginRequestDto loginDto) {
 		return ResponseEntity.ok(autenticacaoService.autenticar(loginDto));
 	}
 	

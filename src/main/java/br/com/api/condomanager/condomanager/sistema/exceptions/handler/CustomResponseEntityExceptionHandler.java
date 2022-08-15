@@ -37,7 +37,6 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
 	@ExceptionHandler(CondomanagerException.class)
 	public final ResponseEntity<ExceptionResponse> condomanagerException(CondomanagerException e) {
 		ExceptionResponse exceptionResponse = new ExceptionResponse(String.valueOf(HttpStatus.UNAUTHORIZED.value()), e.getMessage());
-		return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<>(exceptionResponse, HttpStatus.UNAUTHORIZED);
 	}
-	
 }
