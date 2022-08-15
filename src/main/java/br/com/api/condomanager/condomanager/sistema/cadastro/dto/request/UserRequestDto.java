@@ -1,7 +1,5 @@
 package br.com.api.condomanager.condomanager.sistema.cadastro.dto.request;
 
-import java.math.BigInteger;
-
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -37,6 +35,4 @@ public class UserRequestDto {
 	@Pattern(regexp = "[0-9]+" , message = "Telefone inválido.")
 	@NotEmpty(message = "O telefone não pode estar vazio.")
 	private String phone;
-	
-	private BigInteger nivelAcesso;
 }
