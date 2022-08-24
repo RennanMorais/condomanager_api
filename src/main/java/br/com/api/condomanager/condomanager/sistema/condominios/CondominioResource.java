@@ -30,7 +30,7 @@ public class CondominioResource {
 	
 	@GetMapping(value = "/condominio")
 	public List<CondominioResponse> getXCondominios(@RequestHeader String authorization) {
-		return this.condominioService.getCondominios(authorization);
+		return this.condominioService.buscarCondominios(authorization);
 	}
 	
 }

@@ -95,7 +95,7 @@ class CondominioServiceTest {
 		String token = "token";
 		when(this.autenticationService.validaUserToken(token)).thenReturn(true);
 		when(this.condominioRepository.findAll()).thenReturn(listCondominios);
-		Assertions.assertDoesNotThrow(() -> this.condominioService.getCondominios(token));
+		Assertions.assertDoesNotThrow(() -> this.condominioService.buscarCondominios(token));
 	}
 	
 	@Test
@@ -103,7 +103,7 @@ class CondominioServiceTest {
 		String token = "token";
 		listCondominios.remove(0);
 		when(this.autenticationService.validaUserToken(token)).thenReturn(true);
-		Assertions.assertThrows(CondomanagerException.class, () -> this.condominioService.getCondominios(token));
+		Assertions.assertThrows(CondomanagerException.class, () -> this.condominioService.buscarCondominios(token));
 	}
 	
 }

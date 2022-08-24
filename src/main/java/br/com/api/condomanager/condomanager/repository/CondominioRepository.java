@@ -7,5 +7,7 @@ import br.com.api.condomanager.condomanager.model.CondominioEntity;
 
 @Repository
 public interface CondominioRepository extends JpaRepository<CondominioEntity, Long> {
-
+	
+	CondominioEntity findByCnpj(String cnpj);
+	
 }

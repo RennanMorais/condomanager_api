@@ -43,8 +43,6 @@ public class AutenticacaoService {
 		}
 		
 		LoginResponseDto response = new LoginResponseDto();
-		response.setName(user.getName());
-		response.setEmail(user.getEmail());
 		response.setToken(tokenService.generateToken(user));
 		
 		user.setToken(response.getToken());

@@ -81,7 +81,7 @@ class CondominioResourceTest {
 	@Test
 	void getCondominiosTest() throws JsonProcessingException, Exception {
 		
-		when(this.condominioService.getCondominios(Mockito.<String>any())).thenReturn(listResponse);
+		when(this.condominioService.buscarCondominios(Mockito.<String>any())).thenReturn(listResponse);
 		
 		mockMvc.perform(MockMvcRequestBuilders
 				.get("/condomanager/sistema/condominio")

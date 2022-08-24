@@ -55,8 +55,6 @@ class LoginResourceTest {
 		login.setPassword("X");
 		
 		LoginResponseDto loginResponse = new LoginResponseDto();
-		loginResponse.setName("X");
-		loginResponse.setEmail("X");
 		loginResponse.setToken("X");
 		
 		when(this.autenticacaoService.autenticar(Mockito.<LoginRequestDto>any())).thenReturn(loginResponse);
