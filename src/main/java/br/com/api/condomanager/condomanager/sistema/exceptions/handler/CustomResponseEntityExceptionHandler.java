@@ -1,5 +1,7 @@
 package br.com.api.condomanager.condomanager.sistema.exceptions.handler;
 
+import javax.validation.UnexpectedTypeException;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -39,4 +41,11 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
 		ExceptionResponse exceptionResponse = new ExceptionResponse(String.valueOf(HttpStatus.UNAUTHORIZED.value()), e.getMessage());
 		return new ResponseEntity<>(exceptionResponse, HttpStatus.UNAUTHORIZED);
 	}
+	
+	@ExceptionHandler(UnexpectedTypeException.class)
+	public final ResponseEntity<ExceptionResponse> validarCamposException(UnexpectedTypeException e) {
+		ExceptionResponse exceptionResponse = new ExceptionResponse(String.valueOf(HttpStatus.BAD_REQUEST.value()), e.getMessage());
+		return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
+	}
+	
 }

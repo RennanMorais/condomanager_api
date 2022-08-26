@@ -1,5 +1,7 @@
 package br.com.api.condomanager.condomanager.sistema.condominios.reserva;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,7 +21,7 @@ public class ReservaResource {
 	ReservaService reservaService;
 	
 	@PostMapping("/reservas/reservar")
-	public ResponseEntity<ReservaResponseDTO> reservar(@RequestBody ReservaRequestDTO request, 
+	public ResponseEntity<ReservaResponseDTO> reservar(@RequestBody @Valid ReservaRequestDTO request, 
 			@RequestHeader String authorization) {
 		return ResponseEntity.ok(this.reservaService.reservar(request, authorization));
 	}
