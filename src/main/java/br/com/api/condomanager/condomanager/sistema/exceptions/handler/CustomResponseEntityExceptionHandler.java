@@ -4,10 +4,10 @@ import javax.validation.UnexpectedTypeException;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import br.com.api.condomanager.condomanager.sistema.cadastro.ExceptionResponse;
 import br.com.api.condomanager.condomanager.sistema.exceptions.CondomanagerException;
@@ -16,7 +16,7 @@ import br.com.api.condomanager.condomanager.sistema.exceptions.InvalidLoginExcep
 
 @ControllerAdvice
 @RestController
-public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
+public class CustomResponseEntityExceptionHandler {
 
 	@ExceptionHandler(Exception.class)
 	public final ResponseEntity<ExceptionResponse> allExceptions(Exception e) {
@@ -48,4 +48,15 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
 		return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
 	}
 	
+	@ExceptionHandler(MethodArgumentNotValidException.class)
+	public final ResponseEntity<ExceptionResponse> validarCamposFormatoException(MethodArgumentNotValidException e) {
+		
+		String mensagem = e.getMessage();
+		int pos = mensagem.indexOf("message");
+		
+		String mensagemTratada = mensagem.substring(pos);
+		
+		ExceptionResponse exceptionResponse = new ExceptionResponse(String.valueOf(HttpStatus.BAD_REQUEST.value()), mensagemTratada);
+		return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
+	}
 }
