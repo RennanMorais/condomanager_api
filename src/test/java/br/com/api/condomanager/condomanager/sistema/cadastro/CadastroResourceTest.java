@@ -55,7 +55,7 @@ class CadastroResourceTest {
 	void testCadastroUsuario() throws Exception {
 		
 		UserResponseDto response = new UserResponseDto("Fulano Teste", "fulano@teste1.com", null);
-		UserRequestDto userRequest = new UserRequestDto("Fulano Teste", "fulano@teste1.com", "123456", "33229561058", "11971833250", null);
+		UserRequestDto userRequest = new UserRequestDto("Fulano Teste", "fulano@teste1.com", "123456", "33229561058", "11971833250");
 		
 		when(this.usuarioService.cadastrar(Mockito.<UserRequestDto>any())).thenReturn(response);
 		

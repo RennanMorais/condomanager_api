@@ -1,5 +1,6 @@
 package br.com.api.condomanager.condomanager.model;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -47,10 +48,10 @@ public class ReservaEntity {
 	private Date data;
 	
 	@Column(name = "inicio")
-	private Date inicio;
+	private LocalDateTime inicio;
 	
 	@Column(name = "termino")
-	private Date termino;
+	private LocalDateTime termino;
 	
 	@Column(name = "status")
 	private String status;

@@ -30,29 +30,34 @@ public class CondominioService {
 		this.autenticationService.validaUserToken(authorization);
 		
 		if(request != null) {
-			CondominioEntity cond = new CondominioEntity();
-			cond.setNome(request.getNome());
-			cond.setCnpj(request.getCnpj());
-			cond.setEmail(request.getEmail());
-			cond.setEndereco(request.getEndereco().getEndereco());
-			cond.setNumero(request.getEndereco().getNumero());
-			cond.setBairro(request.getEndereco().getBairro());
-			cond.setComplemento(request.getEndereco().getComplemento());
 			
-			condominioRepository.save(cond);
-			
-			CondominiosResponseDTO response = new CondominiosResponseDTO();
-			response.setCodigo(HttpStatus.OK.value());
-			response.setMensagem("O condominio '"+ request.getNome() +"' foi salvo com sucesso!");
-			
-			return response;
+			if(this.checkCondominio(request.getCnpj())) {
+				CondominioEntity cond = new CondominioEntity();
+				cond.setNome(request.getNome());
+				cond.setCnpj(request.getCnpj());
+				cond.setEmail(request.getEmail());
+				cond.setEndereco(request.getEndereco().getEndereco());
+				cond.setNumero(request.getEndereco().getNumero());
+				cond.setBairro(request.getEndereco().getBairro());
+				cond.setComplemento(request.getEndereco().getComplemento());
+				
+				condominioRepository.save(cond);
+				
+				CondominiosResponseDTO response = new CondominiosResponseDTO();
+				response.setCodigo(HttpStatus.OK.value());
+				response.setMensagem("O condominio '"+ request.getNome() +"' foi salvo com sucesso!");
+				
+				return response;
+			} else {
+				throw new CondomanagerException("Condomínio já cadastrado!");
+			}
 		}
 		
 		throw new CondomanagerException("Não foi possivel salvar o condomínio, verifique os dados e tente novamente.");
 		
 	}
 	
-	public List<CondominioResponse> getCondominios(String authorization) {
+	public List<CondominioResponse> buscarCondominios(String authorization) {
 		
 		this.autenticationService.validaUserToken(authorization);
 		
@@ -83,6 +88,17 @@ public class CondominioService {
 		}
 		
 		throw new CondomanagerException("Nenhum condomínio cadastrado!");
+	}
+	
+	private boolean checkCondominio(String cnpj) {
+		
+		CondominioEntity cond = condominioRepository.findByCnpj(cnpj);
+		if(cond == null) {
+			return true;
+		}
+		
+		return false;
+		
 	}
 	
 }

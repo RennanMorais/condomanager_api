@@ -58,7 +58,6 @@ class AutenticacaoServiceTest {
 		
 		LoginResponseDto response = this.autenticacaoService.autenticar(login);
 		
-		assertEquals(login.getEmail(), response.getEmail());
 		assertEquals(tokenGenerate, response.getToken());
 	}
 	

@@ -29,19 +29,20 @@ public class AutenticacaoService {
 	public AutenticacaoService(TokenService tokenService) {
 		this.tokenService = tokenService;
 	}
-	
-	//Autenticação de usuário
+
 	public LoginResponseDto autenticar(LoginRequestDto loginDto) {
 		
 		UserEntity user = usuarioRepository.findByEmail(loginDto.getEmail());
+		
+		if(user == null) {
+			throw new InvalidLoginException("Usuario não encontrado!");
+		}
 		
 		if(!encoder.matches(loginDto.getPassword(), user.getPassword())) {
 			throw new InvalidLoginException("Usuario e/ou senha, incorretos!");
 		}
 		
 		LoginResponseDto response = new LoginResponseDto();
-		response.setName(user.getName());
-		response.setEmail(user.getEmail());
 		response.setToken(tokenService.generateToken(user));
 		
 		user.setToken(response.getToken());
