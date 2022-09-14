@@ -21,7 +21,7 @@ public class ReservaResource {
 	ReservaService reservaService;
 	
 	@PostMapping("/reservas/reservar")
-	public ResponseEntity<ReservaResponseDTO> reservar(@RequestBody @Valid ReservaRequestDTO request, 
+	public ResponseEntity<ReservaResponseDTO> reservar(@Valid @RequestBody ReservaRequestDTO request, 
 			@RequestHeader String authorization) {
 		return ResponseEntity.ok(this.reservaService.reservar(request, authorization));
 	}

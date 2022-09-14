@@ -3,11 +3,12 @@ package br.com.api.condomanager.condomanager.sistema.cadastro;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,7 +28,7 @@ public class CadastroResource {
 	UsuarioService usuarioService;
 
 	@PostMapping(value = "cadastro", produces = "application/json")
-	public ResponseEntity<UserResponseDto> cadastroUsuario(@Validated @RequestBody UserRequestDto userRequest) 
+	public ResponseEntity<UserResponseDto> cadastroUsuario(@Valid @RequestBody UserRequestDto userRequest) 
 			throws DadosPessoaisException {
 		return ResponseEntity.ok(usuarioService.cadastrar(userRequest));
 	}

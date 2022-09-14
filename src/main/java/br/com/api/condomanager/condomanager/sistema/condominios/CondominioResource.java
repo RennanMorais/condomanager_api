@@ -2,6 +2,8 @@ package br.com.api.condomanager.condomanager.sistema.condominios;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,7 +25,7 @@ public class CondominioResource {
 	CondominioService condominioService;
 	
 	@PostMapping("/condominio/cadastrar")
-	public ResponseEntity<CondominiosResponseDTO> cadastrarCondominio(@RequestBody CondominiosRequestDTO request, 
+	public ResponseEntity<CondominiosResponseDTO> cadastrarCondominio(@Valid @RequestBody CondominiosRequestDTO request, 
 			@RequestHeader String authorization) {
 		return ResponseEntity.ok(this.condominioService.cadastrarCondominio(request, authorization));
 	}

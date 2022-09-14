@@ -13,10 +13,12 @@ import lombok.Setter;
 @Getter
 @Setter
 public class LoginRequestDto {
-
-	@NotBlank(message = "Campo não pode ser nulo ou vazio.")
-	@Email(message = "E-mail inválido.")
+	
+	@NotBlank(message = "{campo.nulo.vazio}")
+	@Email(message = "{email.valid}")
 	private String email;
+	
+	@NotBlank(message = "{campo.nulo.vazio}")
 	private String password;
 	
 }
