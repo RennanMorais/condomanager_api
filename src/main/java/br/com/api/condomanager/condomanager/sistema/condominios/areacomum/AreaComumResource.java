@@ -2,6 +2,8 @@ package br.com.api.condomanager.condomanager.sistema.condominios.areacomum;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +24,7 @@ public class AreaComumResource {
 	AreaComumService areaComumService;
 
 	@PostMapping("/areacomum/cadastrar")
-	public ResponseEntity<AreaComumResponseDTO> cadastrarAreaComum(@RequestBody AreaComumRequestDTO request, @RequestHeader String authorization) {
+	public ResponseEntity<AreaComumResponseDTO> cadastrarAreaComum(@Valid @RequestBody AreaComumRequestDTO request, @RequestHeader String authorization) {
 		return ResponseEntity.ok(this.areaComumService.cadastrarAreaComum(request, authorization));
 	}
 	

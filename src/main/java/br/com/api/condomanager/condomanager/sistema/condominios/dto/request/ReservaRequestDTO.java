@@ -3,6 +3,7 @@ package br.com.api.condomanager.condomanager.sistema.condominios.dto.request;
 import java.time.LocalDateTime;
 import java.util.Date;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import lombok.Getter;
@@ -12,25 +13,25 @@ import lombok.Setter;
 @Setter
 public class ReservaRequestDTO {
 	
-	@NotNull(message = "${campo.vazio.nulo}")
+	@NotBlank(message = "{campo.nulo.vazio}")
 	private Long idCondominio;
 	
-	@NotNull
+	@NotBlank(message = "{campo.nulo.vazio}")
 	private Long idMorador;
 	
-	@NotNull
+	@NotBlank(message = "{campo.nulo.vazio}")
 	private Long idArea;
 	
-	@NotNull
+	@NotBlank(message = "{campo.nulo.vazio}")
 	private String evento;
 	
-	@NotNull
+	@NotBlank(message = "{campo.nulo.vazio}")
 	private Date data;
 	
-	@NotNull
+	@NotBlank(message = "{campo.nulo.vazio}")
 	private LocalDateTime inicio;
 	
-	@NotNull
+	@NotBlank(message = "{campo.nulo.vazio}")
 	private LocalDateTime termino;
 	
 }
