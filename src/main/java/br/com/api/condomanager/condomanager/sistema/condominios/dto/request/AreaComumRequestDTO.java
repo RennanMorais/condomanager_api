@@ -1,6 +1,7 @@
 package br.com.api.condomanager.condomanager.sistema.condominios.dto.request;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -12,7 +13,7 @@ public class AreaComumRequestDTO {
 	@NotBlank(message = "{campo.nulo.vazio}")
 	private String area;
 	
-	@NotBlank(message = "{campo.nulo.vazio}")
+	@NotNull(message = "{campo.nulo.vazio}")
 	private Long idCondominio;
 	
 }

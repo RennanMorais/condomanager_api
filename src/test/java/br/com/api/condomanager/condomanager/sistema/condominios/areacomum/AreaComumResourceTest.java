@@ -64,7 +64,7 @@ class AreaComumResourceTest {
 		mockMvc.perform(MockMvcRequestBuilders
 				.post("/condomanager/sistema/areacomum/cadastrar")
 				.content(mapper.writeValueAsString(request))
-				.header("authorization", "")
+				.header("authorization", "X")
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
 			.andExpect(MockMvcResultMatchers.status().is(200))

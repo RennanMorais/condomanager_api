@@ -23,6 +23,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.CondominioResponse;
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.request.CondominiosRequestDTO;
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.response.CondominiosResponseDTO;
+import br.com.api.condomanager.condomanager.util.Endereco;
 
 class CondominioResourceTest {
 	
@@ -45,10 +46,14 @@ class CondominioResourceTest {
 		MockitoAnnotations.openMocks(this);
 		this.mockMvc = MockMvcBuilders.standaloneSetup(condominioResource).build();
 		
+		Endereco endereco = new Endereco();
+		endereco.setEndereco("rua teste");
+		
 		request = new CondominiosRequestDTO();
 		request.setNome("x");
-		request.setCnpj("x");
-		request.setEmail("x");
+		request.setCnpj("12312312312312");
+		request.setEmail("x@X.com");
+		request.setEndereco(endereco);
 		
 		response = new CondominiosResponseDTO();
 		response.setCodigo(200);
@@ -68,7 +73,7 @@ class CondominioResourceTest {
 				Mockito.<String>any())).thenReturn(response);
 		
 		mockMvc.perform(MockMvcRequestBuilders
-				.post("/condomanager/sistema/condominio/cadastrar", "")
+				.post("/condomanager/sistema/condominio/cadastrar")
 				.content(mapper.writeValueAsString(request))
 				.header("authorization", "")
 				.contentType(MediaType.APPLICATION_JSON)
