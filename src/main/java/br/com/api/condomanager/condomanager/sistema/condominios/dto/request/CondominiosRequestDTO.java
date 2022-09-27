@@ -18,7 +18,7 @@ public class CondominiosRequestDTO{
 	private String nome;
 	
 	@NotNull(message = "{campo.nulo.vazio}")
-	@Size(min = 14, message = "{size.valid}")
+	@Size(min = 14, max = 14, message = "{size.valid}")
 	@Pattern(regexp = "[0-9]+" , message = "{cnpj.valid}")
 	private String cnpj;
 	

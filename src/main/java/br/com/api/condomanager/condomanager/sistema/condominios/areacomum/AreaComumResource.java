@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.request.AreaComumRequestDTO;
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.response.AreaComumResponseDTO;
 
-@RequestMapping("/condomanager/sistema")
 @RestController
+@RequestMapping("/condomanager/sistema")
 public class AreaComumResource {
 	
 	@Autowired

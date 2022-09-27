@@ -13,25 +13,25 @@ import lombok.Setter;
 @Setter
 public class ReservaRequestDTO {
 	
-	@NotBlank(message = "{campo.nulo.vazio}")
+	@NotNull(message = "{campo.nulo.vazio}")
 	private Long idCondominio;
 	
-	@NotBlank(message = "{campo.nulo.vazio}")
+	@NotNull(message = "{campo.nulo.vazio}")
 	private Long idMorador;
 	
-	@NotBlank(message = "{campo.nulo.vazio}")
+	@NotNull(message = "{campo.nulo.vazio}")
 	private Long idArea;
 	
 	@NotBlank(message = "{campo.nulo.vazio}")
 	private String evento;
 	
-	@NotBlank(message = "{campo.nulo.vazio}")
+	@NotNull(message = "{campo.nulo.vazio}")
 	private Date data;
 	
-	@NotBlank(message = "{campo.nulo.vazio}")
+	@NotNull(message = "{campo.nulo.vazio}")
 	private LocalDateTime inicio;
 	
-	@NotBlank(message = "{campo.nulo.vazio}")
+	@NotNull(message = "{campo.nulo.vazio}")
 	private LocalDateTime termino;
 	
 }
