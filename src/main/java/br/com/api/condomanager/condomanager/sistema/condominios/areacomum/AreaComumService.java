@@ -28,9 +28,9 @@ public class AreaComumService {
 	@Autowired
 	CondominioRepository condominioRepository;
 	
-	public AreaComumResponseDTO cadastrarAreaComum(AreaComumRequestDTO request, String authorization) {
+	public AreaComumResponseDTO cadastrarAreaComum(AreaComumRequestDTO request, String auth) {
 		
-		this.autenticationService.validaUserToken(authorization);
+		this.autenticationService.validaUserToken(auth);
 		
 		if(request != null) {
 			

@@ -14,7 +14,7 @@ import lombok.Setter;
 @Table(name = "pets")
 @Getter
 @Setter
-public class petEntity {
+public class PetEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

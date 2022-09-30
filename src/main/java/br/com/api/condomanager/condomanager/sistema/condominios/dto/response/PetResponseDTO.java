@@ -5,11 +5,10 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class petResponseDTO {
+public class PetResponseDTO {
 	
 	private String nome;
 	private String tipo;
 	private String sexo;
-	private String morador;
 	
 }
