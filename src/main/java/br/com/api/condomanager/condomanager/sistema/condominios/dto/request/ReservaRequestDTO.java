@@ -1,7 +1,6 @@
 package br.com.api.condomanager.condomanager.sistema.condominios.dto.request;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -26,7 +25,7 @@ public class ReservaRequestDTO {
 	private String evento;
 	
 	@NotNull(message = "{campo.nulo.vazio}")
-	private Date data;
+	private String data;
 	
 	@NotNull(message = "{campo.nulo.vazio}")
 	private LocalDateTime inicio;

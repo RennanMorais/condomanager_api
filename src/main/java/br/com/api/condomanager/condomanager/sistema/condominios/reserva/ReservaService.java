@@ -44,7 +44,7 @@ public class ReservaService {
 		
 		if(request != null) {
 			
-			this.reservaDataCheck(request.getIdCondominio(), request.getIdArea(), request.getData());
+			//this.reservaDataCheck(request.getIdCondominio(), request.getIdArea(), request.getData());
 			
 			CondominioEntity condominio;
 			String nomeUsuario;
@@ -66,7 +66,7 @@ public class ReservaService {
 			reserva.setIdArea(request.getIdArea());
 			reserva.setArea(nomeAreaComum);
 			reserva.setEvento(request.getEvento());
-			reserva.setData(request.getData());
+			//reserva.setData(request.getData());
 			reserva.setInicio(request.getInicio());
 			reserva.setTermino(request.getTermino());
 			reserva.setStatus(ReservaStatusEnum.PENDENTE.getDescricao());
@@ -75,7 +75,7 @@ public class ReservaService {
 			
 			ReservaResponseDTO response = new ReservaResponseDTO();
 			response.setEvento(request.getEvento());
-			response.setData(request.getData());
+			//response.setData(request.getData());
 			
 			return response;
 			
@@ -84,17 +84,17 @@ public class ReservaService {
 		throw new CondomanagerException("Não foi possivel finalizar a reserva, verifique os dados e tente novamente.");
 	}
 	
-	private boolean reservaDataCheck(Long idCondominio, Long idArea, Date data) {
-		
-		ReservaEntity reserva = this.reservaRepository.findByDate(idCondominio, idArea, data);
-		
-		if(reserva != null) {
-			return true;
-		}
-		
-		throw new CondomanagerException("Já existe uma reserva nesta data!");
-		
-	}
+//	private boolean reservaDataCheck(Long idCondominio, Long idArea, Date data) {
+//		
+//		ReservaEntity reserva = this.reservaRepository.findByDate(idCondominio, idArea, data);
+//		
+//		if(reserva != null) {
+//			return true;
+//		}
+//		
+//		throw new CondomanagerException("Já existe uma reserva nesta data!");
+//		
+//	}
 	
 	private CondominioEntity buscarDadosCondominio(Long idCondominio) {
 		

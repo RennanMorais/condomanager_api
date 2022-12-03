@@ -69,11 +69,10 @@ public class PredioService {
 		if(!listPredios.isEmpty()) {
 			List<PredioResponseDTO> response = new ArrayList<>();
 			
-			for(int i=0; i < listPredios.size(); i++) { 
+			for(PredioEntity predioItem : listPredios) {
 				PredioResponseDTO predio = new PredioResponseDTO();
-				predio.setNome(listPredios.get(i).getNome());
-				predio.setCondominio(listPredios.get(i).getCondominio());
-				
+				predio.setNome(predioItem.getNome());
+				predio.setCondominio(predioItem.getCondominio());
 				response.add(predio);
 			}
 			
