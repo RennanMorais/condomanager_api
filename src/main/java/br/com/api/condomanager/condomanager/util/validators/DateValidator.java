@@ -1,4 +1,4 @@
-package br.com.api.condomanager.condomanager.util.validator;
+package br.com.api.condomanager.condomanager.util.validators;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

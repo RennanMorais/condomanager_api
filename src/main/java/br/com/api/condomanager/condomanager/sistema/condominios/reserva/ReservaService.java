@@ -1,5 +1,6 @@
 package br.com.api.condomanager.condomanager.sistema.condominios.reserva;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Optional;
 
@@ -44,8 +45,6 @@ public class ReservaService {
 		
 		if(request != null) {
 			
-			//this.reservaDataCheck(request.getIdCondominio(), request.getIdArea(), request.getData());
-			
 			CondominioEntity condominio;
 			String nomeUsuario;
 			String nomeAreaComum;
@@ -66,16 +65,18 @@ public class ReservaService {
 			reserva.setIdArea(request.getIdArea());
 			reserva.setArea(nomeAreaComum);
 			reserva.setEvento(request.getEvento());
-			//reserva.setData(request.getData());
-			reserva.setInicio(request.getInicio());
-			reserva.setTermino(request.getTermino());
+			
+			Date dataFormatada = coverterData(request.getData());
+			this.reservaDataCheck(request.getIdCondominio(), request.getIdArea(), dataFormatada);
+			
+			reserva.setData(dataFormatada);
 			reserva.setStatus(ReservaStatusEnum.PENDENTE.getDescricao());
 			
 			reservaRepository.save(reserva);
 			
 			ReservaResponseDTO response = new ReservaResponseDTO();
 			response.setEvento(request.getEvento());
-			//response.setData(request.getData());
+			response.setData(request.getData());
 			
 			return response;
 			
@@ -84,17 +85,17 @@ public class ReservaService {
 		throw new CondomanagerException("Não foi possivel finalizar a reserva, verifique os dados e tente novamente.");
 	}
 	
-//	private boolean reservaDataCheck(Long idCondominio, Long idArea, Date data) {
-//		
-//		ReservaEntity reserva = this.reservaRepository.findByDate(idCondominio, idArea, data);
-//		
-//		if(reserva != null) {
-//			return true;
-//		}
-//		
-//		throw new CondomanagerException("Já existe uma reserva nesta data!");
-//		
-//	}
+	private boolean reservaDataCheck(Long idCondominio, Long idArea, Date data) {
+		
+		ReservaEntity reserva = this.reservaRepository.findByDate(idCondominio, idArea, data);
+		
+		if(reserva == null) {
+			return true;
+		}
+		
+		throw new CondomanagerException("Já existe uma reserva nesta data!");
+		
+	}
 	
 	private CondominioEntity buscarDadosCondominio(Long idCondominio) {
 		
@@ -129,4 +130,19 @@ public class ReservaService {
 		throw new CondomanagerException("Falha ao consultar nome da área comum.");
 	}
 	
+	private Date coverterData(String data) {
+		Calendar c = null;
+		
+		if(data != null) {
+			int dia = Integer.valueOf(data.substring(0, 2));
+			int mes = Integer.valueOf(data.substring(3, 5));
+			int ano = Integer.valueOf(data.substring(6, 10));
+			c = Calendar.getInstance();
+			c.set(Calendar.DAY_OF_MONTH, dia);
+			c.set(Calendar.MONTH, mes - 1);
+			c.set(Calendar.YEAR, ano);
+		}
+		
+		return c.getTime();
+	}
 }
