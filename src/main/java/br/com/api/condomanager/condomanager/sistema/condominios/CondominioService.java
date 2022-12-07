@@ -48,8 +48,6 @@ public class CondominioService {
 				response.setMensagem("O condominio '"+ request.getNome() +"' foi salvo com sucesso!");
 				
 				return response;
-			} else {
-				throw new CondomanagerException("Condomínio já cadastrado!");
 			}
 		}
 		
@@ -97,7 +95,7 @@ public class CondominioService {
 			return true;
 		}
 		
-		return false;
+		throw new CondomanagerException("Condomínio já cadastrado!");
 		
 	}
 	

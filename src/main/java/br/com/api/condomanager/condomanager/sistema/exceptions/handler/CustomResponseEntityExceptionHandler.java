@@ -18,6 +18,7 @@ import br.com.api.condomanager.condomanager.sistema.cadastro.ExceptionResponse;
 import br.com.api.condomanager.condomanager.sistema.exceptions.InvalidLoginException;
 import br.com.api.condomanager.condomanager.util.ErrorDto;
 import br.com.api.condomanager.condomanager.util.ErrorDto.CodeErrorDto;
+import io.jsonwebtoken.SignatureException;
 
 @ControllerAdvice
 public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
@@ -31,6 +32,12 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
 	@ExceptionHandler(InvalidLoginException.class)
 	public ResponseEntity<Object> handleInvalidLoginException(InvalidLoginException e) {
 		ExceptionResponse exceptionResponse = new ExceptionResponse(String.valueOf(HttpStatus.UNAUTHORIZED.value()), e.getMessage());
+		return new ResponseEntity<>(exceptionResponse, HttpStatus.UNAUTHORIZED);
+	}
+	
+	@ExceptionHandler(SignatureException.class)
+	public ResponseEntity<Object> handleInvalidTokenException(SignatureException e) {
+		ExceptionResponse exceptionResponse = new ExceptionResponse(String.valueOf(HttpStatus.UNAUTHORIZED.value()), "Token invalido!");
 		return new ResponseEntity<>(exceptionResponse, HttpStatus.UNAUTHORIZED);
 	}
 	
