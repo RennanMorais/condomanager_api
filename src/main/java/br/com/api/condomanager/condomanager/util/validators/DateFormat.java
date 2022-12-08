@@ -1,4 +1,4 @@
-package br.com.api.condomanager.condomanager.util.validator;
+package br.com.api.condomanager.condomanager.util.validators;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

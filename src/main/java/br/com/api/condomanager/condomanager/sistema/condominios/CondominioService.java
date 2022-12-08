@@ -48,8 +48,6 @@ public class CondominioService {
 				response.setMensagem("O condominio '"+ request.getNome() +"' foi salvo com sucesso!");
 				
 				return response;
-			} else {
-				throw new CondomanagerException("Condomínio já cadastrado!");
 			}
 		}
 		
@@ -67,17 +65,17 @@ public class CondominioService {
 		if(!listCondominios.isEmpty()) {
 			List<CondominioResponse> response = new ArrayList<>();
 			
-			for(int i=0; i < listCondominios.size(); i++) { 
+			for(CondominioEntity condominio : listCondominios) { 
 				CondominioResponse cond = new CondominioResponse();
-				Endereco endereco = new Endereco();
-				cond.setNome(listCondominios.get(i).getNome());
-				cond.setCnpj(listCondominios.get(i).getCnpj());
-				cond.setEmail(listCondominios.get(i).getEmail());
+				cond.setNome(condominio.getNome());
+				cond.setCnpj(condominio.getCnpj());
+				cond.setEmail(condominio.getEmail());
 				
-				endereco.setEndereco(listCondominios.get(i).getEndereco());
-				endereco.setBairro(listCondominios.get(i).getBairro());
-				endereco.setNumero(listCondominios.get(i).getNumero());
-				endereco.setComplemento(listCondominios.get(i).getComplemento());
+				Endereco endereco = new Endereco();
+				endereco.setEndereco(condominio.getEndereco());
+				endereco.setBairro(condominio.getBairro());
+				endereco.setNumero(condominio.getNumero());
+				endereco.setComplemento(condominio.getComplemento());
 				
 				cond.setEndereco(endereco);
 				
@@ -97,7 +95,7 @@ public class CondominioService {
 			return true;
 		}
 		
-		return false;
+		throw new CondomanagerException("Condomínio já cadastrado!");
 		
 	}
 	

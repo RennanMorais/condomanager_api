@@ -9,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -45,6 +47,7 @@ public class ReservaEntity {
 	private String evento;
 	
 	@Column(name = "data")
+	@Temporal(TemporalType.DATE)
 	private Date data;
 	
 	@Column(name = "inicio")

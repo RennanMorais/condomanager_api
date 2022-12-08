@@ -28,9 +28,9 @@ public class AreaComumService {
 	@Autowired
 	CondominioRepository condominioRepository;
 	
-	public AreaComumResponseDTO cadastrarAreaComum(AreaComumRequestDTO request, String authorization) {
+	public AreaComumResponseDTO cadastrarAreaComum(AreaComumRequestDTO request, String auth) {
 		
-		this.autenticationService.validaUserToken(authorization);
+		this.autenticationService.validaUserToken(auth);
 		
 		if(request != null) {
 			
@@ -69,10 +69,10 @@ public class AreaComumService {
 		if(!listAreaComum.isEmpty()) {
 			List<AreaComumResponseDTO> response = new ArrayList<>();
 			
-			for(int i=0; i < listAreaComum.size(); i++) { 
+			for(AreaComumEntity areaItem : listAreaComum) { 
 				AreaComumResponseDTO area = new AreaComumResponseDTO();
-				area.setArea(listAreaComum.get(i).getArea());
-				area.setCondominio(listAreaComum.get(i).getCondominio());
+				area.setArea(areaItem.getArea());
+				area.setCondominio(areaItem.getCondominio());
 				
 				response.add(area);
 			}

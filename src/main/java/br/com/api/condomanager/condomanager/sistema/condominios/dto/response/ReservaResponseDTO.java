@@ -1,7 +1,5 @@
 package br.com.api.condomanager.condomanager.sistema.condominios.dto.response;
 
-import java.util.Date;
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,6 +8,6 @@ import lombok.Setter;
 public class ReservaResponseDTO {
 
 	private String evento;
-	private Date data;
+	private String data;
 	
 }

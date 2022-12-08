@@ -27,7 +27,7 @@ public class CadastroResource {
 	@Autowired
 	UsuarioService usuarioService;
 
-	@PostMapping(value = "cadastro", produces = "application/json")
+	@PostMapping(value = "/cadastro", produces = "application/json")
 	public ResponseEntity<UserResponseDto> cadastroUsuario(@Valid @RequestBody UserRequestDto userRequest) 
 			throws DadosPessoaisException {
 		return ResponseEntity.ok(usuarioService.cadastrar(userRequest));

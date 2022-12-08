@@ -70,9 +70,10 @@ public class AutenticacaoService {
 		
 		if(token != null && !token.isEmpty()) {
 			UserEntity user = this.usuarioRepository.findByToken(token);
-			
-			if(user.getToken().equalsIgnoreCase(token) && this.validate(token)) {
-				return true;
+			if(user != null) {
+				if(user.getToken().equalsIgnoreCase(token) && this.validate(token)) {
+					return true;
+				}
 			}
 		}
 		
