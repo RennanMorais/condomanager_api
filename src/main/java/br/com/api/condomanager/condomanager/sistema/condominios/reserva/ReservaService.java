@@ -1,7 +1,10 @@
 package br.com.api.condomanager.condomanager.sistema.condominios.reserva;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +22,7 @@ import br.com.api.condomanager.condomanager.repository.ReservaRepository;
 import br.com.api.condomanager.condomanager.repository.UsuarioRepository;
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.request.ReservaRequestDTO;
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.response.ReservaResponseDTO;
+import br.com.api.condomanager.condomanager.sistema.condominios.dto.response.ReservasDadosResponseDTO;
 import br.com.api.condomanager.condomanager.sistema.exceptions.CondomanagerException;
 
 @Service
@@ -66,7 +70,7 @@ public class ReservaService {
 			reserva.setArea(nomeAreaComum);
 			reserva.setEvento(request.getEvento());
 			
-			Date dataFormatada = coverterData(request.getData());
+			Date dataFormatada = toDate(request.getData());
 			this.reservaDataCheck(request.getIdCondominio(), request.getIdArea(), dataFormatada);
 			
 			reserva.setData(dataFormatada);
@@ -83,6 +87,32 @@ public class ReservaService {
 		}
 		
 		throw new CondomanagerException("Não foi possivel finalizar a reserva, verifique os dados e tente novamente.");
+	}
+	
+	public List<ReservasDadosResponseDTO> listarReservas(String authorization) {
+		this.autenticationService.validaUserToken(authorization);
+		
+		List<ReservasDadosResponseDTO> listaResponse = new ArrayList<>();
+		List<ReservaEntity> reservas;
+		try {
+			reservas = this.reservaRepository.findAll();
+		} catch(Exception e) {
+			throw new CondomanagerException("Nennuma reserva registrada.");
+		}
+		
+		if(reservas != null) {
+			for(ReservaEntity r : reservas) {
+				ReservasDadosResponseDTO response = new ReservasDadosResponseDTO();
+				response.setCondominio(r.getCondominio());
+				response.setMorador(r.getMorador());
+				response.setArea(r.getArea());
+				response.setData(dateToString(r.getData()));
+				response.setStatus(r.getStatus());
+				listaResponse.add(response);
+			}
+		}
+		
+		return listaResponse;
 	}
 	
 	private boolean reservaDataCheck(Long idCondominio, Long idArea, Date data) {
@@ -130,7 +160,7 @@ public class ReservaService {
 		throw new CondomanagerException("Falha ao consultar nome da área comum.");
 	}
 	
-	private Date coverterData(String data) {
+	private Date toDate(String data) {
 		Calendar c = null;
 		
 		if(data != null) {
@@ -144,5 +174,15 @@ public class ReservaService {
 		}
 		
 		return c.getTime();
+	}
+	
+	private String dateToString(Date data) {
+		String dataFormatada = "";
+		
+		if(data != null) {
+			SimpleDateFormat simpleDate = new SimpleDateFormat("dd/MM/yyyy");
+			dataFormatada = simpleDate.format(data);;
+		}
+		return dataFormatada;
 	}
 }
