@@ -2,6 +2,7 @@ package br.com.api.condomanager.condomanager.sistema.exceptions.handler;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 import org.springframework.http.HttpHeaders;
@@ -37,8 +38,14 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
 	
 	@ExceptionHandler(SignatureException.class)
 	public ResponseEntity<Object> handleInvalidTokenException(SignatureException e) {
-		ExceptionResponse exceptionResponse = new ExceptionResponse(String.valueOf(HttpStatus.UNAUTHORIZED.value()), "Token invalido!");
+		ExceptionResponse exceptionResponse = new ExceptionResponse(String.valueOf(HttpStatus.UNAUTHORIZED.value()), "Token Inválido ou expirado");
 		return new ResponseEntity<>(exceptionResponse, HttpStatus.UNAUTHORIZED);
+	}
+	
+	@ExceptionHandler(NoSuchElementException.class)
+	public ResponseEntity<Object> handleNoSuchException(NoSuchElementException e) {
+		ExceptionResponse exceptionResponse = new ExceptionResponse(String.valueOf(HttpStatus.BAD_REQUEST.value()), e.getMessage());
+		return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
 	}
 	
 	public ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,

@@ -2,7 +2,7 @@ package br.com.api.condomanager.condomanager.sistema.condominios.predios;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,11 +37,17 @@ public class PredioService {
 			PredioEntity predio = new PredioEntity();
 			predio.setNome(request.getNome());
 			
-			Optional<CondominioEntity> condominio = this.condominioRepository.findById(request.getIdCondominio());
+			CondominioEntity condominio;
+			
+			try {
+				condominio = this.condominioRepository.findById(request.getIdCondominio()).get();
+			} catch(NoSuchElementException e) {
+				throw new CondomanagerException("Condomínio invalido.");
+			}
 			
 			if(condominio != null) {
-				predio.setCondominio(condominio.get().getNome());
-				predio.setIdCondominio(condominio.get().getId());
+				predio.setCondominio(condominio.getNome());
+				predio.setIdCondominio(condominio.getId());
 			} else {
 				throw new CondomanagerException("Condomínio inexistente");
 			}
@@ -53,7 +59,6 @@ public class PredioService {
 			response.setCondominio(predio.getCondominio());
 			
 			return response;
-			
 		}
 		
 		throw new CondomanagerException("Não foi possivel salvar o prédio, verifique os dados e tente novamente.");

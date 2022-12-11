@@ -35,11 +35,11 @@ public class AutenticacaoService {
 		UserEntity user = usuarioRepository.findByEmail(loginDto.getEmail());
 		
 		if(user == null) {
-			throw new InvalidLoginException("Usuario não encontrado!");
+			throw new InvalidLoginException("Usuario não encontrado.");
 		}
 		
 		if(!encoder.matches(loginDto.getPassword(), user.getPassword())) {
-			throw new InvalidLoginException("Usuario e/ou senha, incorretos!");
+			throw new InvalidLoginException("Usuario e/ou senha, incorretos.");
 		}
 		
 		LoginResponseDto response = new LoginResponseDto();
@@ -56,13 +56,13 @@ public class AutenticacaoService {
             Claims claims = tokenService.decodeToken(token);
             
             if (claims.getExpiration().before(new Date(System.currentTimeMillis()))) {
-            	throw new ExpiredTokenException("Token expirado!");
+            	throw new ExpiredTokenException("Token expirado.");
             }
             
             return true;
             
         } catch (InvalidTokenException e) {
-            throw new InvalidTokenException("Token inválido!");
+            throw new InvalidTokenException("Token Inválido ou expirado.");
         }
     }
 	
@@ -77,7 +77,7 @@ public class AutenticacaoService {
 			}
 		}
 		
-		throw new InvalidTokenException("Token Inválido ou expirado");
+		throw new InvalidTokenException("Token Inválido ou expirado.");
 	}
 	
 }
