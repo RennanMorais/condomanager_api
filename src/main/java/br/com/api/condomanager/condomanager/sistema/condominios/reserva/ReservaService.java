@@ -20,6 +20,7 @@ import br.com.api.condomanager.condomanager.repository.AreaComumRepository;
 import br.com.api.condomanager.condomanager.repository.CondominioRepository;
 import br.com.api.condomanager.condomanager.repository.ReservaRepository;
 import br.com.api.condomanager.condomanager.repository.UsuarioRepository;
+import br.com.api.condomanager.condomanager.sistema.condominios.dto.request.AprovarReservaResponseDTO;
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.request.ReservaRequestDTO;
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.response.ReservaResponseDTO;
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.response.ReservasDadosResponseDTO;
@@ -106,6 +107,7 @@ public class ReservaService {
 				response.setCondominio(r.getCondominio());
 				response.setMorador(r.getMorador());
 				response.setArea(r.getArea());
+				response.setEvento(r.getEvento());
 				response.setData(dateToString(r.getData()));
 				response.setStatus(r.getStatus());
 				listaResponse.add(response);
@@ -184,5 +186,69 @@ public class ReservaService {
 			dataFormatada = simpleDate.format(data);;
 		}
 		return dataFormatada;
+	}
+	
+	public AprovarReservaResponseDTO aprovarReserva(Long id, String authorization) {
+		this.autenticationService.validaUserToken(authorization);
+		
+		if(id != null) {
+			Optional<ReservaEntity> reserva = reservaRepository.findById(id);
+			if(reserva.get() != null) {
+				
+				if(ReservaStatusEnum.APROVADO.getDescricao().equals(reserva.get().getStatus())
+						|| ReservaStatusEnum.CANCELADO.getDescricao().equals(reserva.get().getStatus())) {
+					AprovarReservaResponseDTO response = new AprovarReservaResponseDTO();
+					response.setCodigo("400");
+					response.setMensagem("Não é possivel aprovar uma reserva com status Aprovada ou Cancelada.");
+					
+					return response;
+				}
+				
+				reserva.get().setStatus(ReservaStatusEnum.APROVADO.getDescricao());
+				reservaRepository.save(reserva.get());
+				
+				AprovarReservaResponseDTO response = new AprovarReservaResponseDTO();
+				response.setCodigo("200");
+				response.setMensagem("Reserva do "+ reserva.get().getArea() +" do evento "+ reserva.get().getEvento() + " foi aprovada com sucesso.");
+				
+				return response;
+			}
+			
+			throw new CondomanagerException("Falha ao aprovar reserva. Reserva não encontrada.");
+		}
+		
+		throw new CondomanagerException("Falha ao aprovar reserva. Tente novamente.");
+	}
+	
+	public AprovarReservaResponseDTO cancelarReserva(Long id, String authorization) {
+		this.autenticationService.validaUserToken(authorization);
+		
+		if(id != null) {
+			Optional<ReservaEntity> reserva = reservaRepository.findById(id);
+			if(reserva.get() != null) {
+				
+				if(ReservaStatusEnum.APROVADO.getDescricao().equals(reserva.get().getStatus())
+						|| ReservaStatusEnum.CANCELADO.getDescricao().equals(reserva.get().getStatus())) {
+					AprovarReservaResponseDTO response = new AprovarReservaResponseDTO();
+					response.setCodigo("400");
+					response.setMensagem("Não é possivel aprovar uma reserva com status Aprovada ou Cancelada.");
+					
+					return response;
+				}
+				
+				reserva.get().setStatus(ReservaStatusEnum.CANCELADO.getDescricao());
+				reservaRepository.save(reserva.get());
+				
+				AprovarReservaResponseDTO response = new AprovarReservaResponseDTO();
+				response.setCodigo("200");
+				response.setMensagem("Reserva do "+ reserva.get().getArea() +" do evento "+ reserva.get().getEvento() + " foi cancelada com sucesso.");
+				
+				return response;
+			}
+			
+			throw new CondomanagerException("Falha ao cancelar reserva. Reserva não encontrada.");
+		}
+		
+		throw new CondomanagerException("Falha ao cancelar reserva. Tente novamente.");
 	}
 }
