@@ -10,6 +10,7 @@ public class ReservasDadosResponseDTO {
 	private String condominio;
 	private String morador;
 	private String area;
+	private String evento;
 	private String Data;
 	private String status;
 	

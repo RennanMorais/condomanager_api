@@ -7,12 +7,14 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.api.condomanager.condomanager.sistema.condominios.dto.request.AprovarReservaResponseDTO;
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.request.ReservaRequestDTO;
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.response.ReservaResponseDTO;
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.response.ReservasDadosResponseDTO;
@@ -35,4 +37,13 @@ public class ReservaResource {
 		return this.reservaService.listarReservas(authorization);
 	}
 	
+	@PostMapping("/reservas/aprovar/{id}")
+	public ResponseEntity<AprovarReservaResponseDTO> aprovarReserva(@PathVariable Long id, @RequestHeader String authorization) {
+		return ResponseEntity.ok(this.reservaService.aprovarReserva(id, authorization)); 
+	}
+	
+	@PostMapping("/reservas/cancelar/{id}")
+	public ResponseEntity<AprovarReservaResponseDTO> cancelarReserva(@PathVariable Long id, @RequestHeader String authorization) {
+		return ResponseEntity.ok(this.reservaService.cancelarReserva(id, authorization)); 
+	}
 }
