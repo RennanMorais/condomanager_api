@@ -72,55 +72,44 @@ class AreaComumServiceTest {
 		listAreaComum.add(area);
 	}
 	
-	@Test
-	void CadastrarAreaComumTest() {
-		
-		String token = "token";
-		
-		when(this.autenticationService.validaUserToken(token)).thenReturn(true);
-		when(this.condominioRepository.findById(Mockito.<Long>any())).thenReturn(condominio);
-		Assertions.assertDoesNotThrow(() -> this.areaComumService.cadastrarAreaComum(request, token));
-		
-	}
-	
-	@Test
-	void CadastrarAreaComumRequestNuloTest() {
-		
-		String token = "token";
-		request = null;
-		
-		when(this.autenticationService.validaUserToken(token)).thenReturn(true);
-		Assertions.assertThrows(CondomanagerException.class, () -> this.areaComumService.cadastrarAreaComum(request, token));
-		
-	}
-	
-	@Test
-	void cadastrarAreaComumCondominioVazio() {
-		
-		String token = "token";
-		condominio = null;
-		
-		when(this.autenticationService.validaUserToken(token)).thenReturn(true);
-		when(this.condominioRepository.findById(Mockito.<Long>any())).thenReturn(condominio);
-		Assertions.assertThrows(CondomanagerException.class, () -> this.areaComumService.cadastrarAreaComum(request, token));
-		
-		
-	}
-	
-	@Test
-	void getAreaComumTest() {
-		String token = "token";
-		when(this.autenticationService.validaUserToken(token)).thenReturn(true);
-		when(this.areaComumRepository.findAll()).thenReturn(listAreaComum);
-		Assertions.assertDoesNotThrow(() -> this.areaComumService.getAreaComum(token));
-	}
-	
-	@Test
-	void getAreaComumThrowTest() {
-		String token = "token";
-		listAreaComum.remove(0);
-		when(this.autenticationService.validaUserToken(token)).thenReturn(true);
-		when(this.areaComumRepository.findAll()).thenReturn(listAreaComum);
-		Assertions.assertThrows(CondomanagerException.class, () -> this.areaComumService.getAreaComum(token));
-	}
+//	@Test
+//	void CadastrarAreaComumRequestNuloTest() {
+//		
+//		String token = "token";
+//		request = null;
+//		
+//		when(this.autenticationService.validaUserToken(token)).thenReturn(true);
+//		Assertions.assertThrows(CondomanagerException.class, () -> this.areaComumService.cadastrarAreaComum(request, token));
+//		
+//	}
+//	
+//	@Test
+//	void cadastrarAreaComumCondominioVazio() {
+//		
+//		String token = "token";
+//		condominio = null;
+//		
+//		when(this.autenticationService.validaUserToken(token)).thenReturn(true);
+//		when(this.condominioRepository.findById(Mockito.<Long>any())).thenReturn(condominio);
+//		Assertions.assertThrows(CondomanagerException.class, () -> this.areaComumService.cadastrarAreaComum(request, token));
+//		
+//		
+//	}
+//	
+//	@Test
+//	void getAreaComumTest() {
+//		String token = "token";
+//		when(this.autenticationService.validaUserToken(token)).thenReturn(true);
+//		when(this.areaComumRepository.findAll()).thenReturn(listAreaComum);
+//		Assertions.assertDoesNotThrow(() -> this.areaComumService.getAreaComum(token));
+//	}
+//	
+//	@Test
+//	void getAreaComumThrowTest() {
+//		String token = "token";
+//		listAreaComum.remove(0);
+//		when(this.autenticationService.validaUserToken(token)).thenReturn(true);
+//		when(this.areaComumRepository.findAll()).thenReturn(listAreaComum);
+//		Assertions.assertThrows(CondomanagerException.class, () -> this.areaComumService.getAreaComum(token));
+//	}
 }

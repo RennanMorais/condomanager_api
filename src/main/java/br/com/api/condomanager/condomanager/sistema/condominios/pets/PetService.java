@@ -26,9 +26,7 @@ public class PetService {
 	@Autowired
 	UsuarioRepository usuarioRepository;
 	
-	public PetResponseDTO salvarPet(PetRequestDTO request, String auth) {
-		
-		this.autenticationService.validaUserToken(auth);
+	public PetResponseDTO salvarPet(PetRequestDTO request) {
 		
 		if(request != null) {
 			

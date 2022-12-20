@@ -28,10 +28,8 @@ public class AreaComumService {
 	@Autowired
 	CondominioRepository condominioRepository;
 	
-	public AreaComumResponseDTO cadastrarAreaComum(AreaComumRequestDTO request, String auth) {
-		
-		this.autenticationService.validaUserToken(auth);
-		
+	public AreaComumResponseDTO cadastrarAreaComum(AreaComumRequestDTO request) {
+
 		if(request != null) {
 			
 			AreaComumEntity area = new AreaComumEntity();
@@ -59,9 +57,7 @@ public class AreaComumService {
 		throw new CondomanagerException("Não foi possivel salvar a área comum, verifique os dados e tente novamente.");
 	}
 	
-	public List<AreaComumResponseDTO> getAreaComum(String authorization) {
-		
-		this.autenticationService.validaUserToken(authorization);
+	public List<AreaComumResponseDTO> getAreaComum() {
 		
 		List<AreaComumEntity> listAreaComum = new ArrayList<>();
 		listAreaComum = areaComumRepository.findAll();

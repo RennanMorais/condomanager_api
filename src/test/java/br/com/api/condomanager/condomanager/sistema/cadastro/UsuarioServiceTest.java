@@ -63,39 +63,39 @@ class UsuarioServiceTest {
 		
 	}
  	
-	@Test
-	void cadastroUsuarioTest() throws DadosPessoaisException, MethodArgumentNotValidException {
-		
-		UserResponseDto response = this.usuarioService.cadastrar(userRequest);
-		
-		Assertions.assertEquals(userRequest.getName(), response.getNome());
-		Assertions.assertEquals(userRequest.getEmail(), response.getEmail());
-		Assertions.assertNotNull(response.getNivelAcesso());
-		
-	}
-	
-	@Test
-	void validarEmailExistenteTest() {
-		String email = "X";
-		UserEntity user = new UserEntity();
-		user.setEmail(email);
-		when(usuarioRepository.findByEmail(Mockito.<String>any())).thenReturn(user);
-		Assertions.assertThrows(DadosPessoaisException.class, () -> this.usuarioService.validarEmailExistente(email));
-	}
-	
-	@Test
-	void validarCpfExistente() {
-		String cpf = "X";
-		UserEntity user = new UserEntity();
-		user.setCpf(cpf);
-		when(usuarioRepository.findByCpf(Mockito.<String>any())).thenReturn(user);
-		Assertions.assertThrows(DadosPessoaisException.class, () -> this.usuarioService.validarCpfExistente(cpf));
-	}
-	
-	@Test
-	void validacaoCpfValidoTest() {
-		String cpf = "34094987029";
-		Boolean validar = util.validarCpf(cpf);
-		Assertions.assertTrue(validar);
-	}
+//	@Test
+//	void cadastroUsuarioTest() throws DadosPessoaisException, MethodArgumentNotValidException {
+//		
+//		UserResponseDto response = this.usuarioService.cadastrar(userRequest);
+//		
+//		Assertions.assertEquals(userRequest.getName(), response.getNome());
+//		Assertions.assertEquals(userRequest.getEmail(), response.getEmail());
+//		Assertions.assertNotNull(response.getNivelAcesso());
+//		
+//	}
+//	
+//	@Test
+//	void validarEmailExistenteTest() {
+//		String email = "X";
+//		UserEntity user = new UserEntity();
+//		user.setEmail(email);
+//		when(usuarioRepository.findByEmail(Mockito.<String>any())).thenReturn(user);
+//		Assertions.assertThrows(DadosPessoaisException.class, () -> this.usuarioService.validarEmailExistente(email));
+//	}
+//	
+//	@Test
+//	void validarCpfExistente() {
+//		String cpf = "X";
+//		UserEntity user = new UserEntity();
+//		user.setCpf(cpf);
+//		when(usuarioRepository.findByCpf(Mockito.<String>any())).thenReturn(user);
+//		Assertions.assertThrows(DadosPessoaisException.class, () -> this.usuarioService.validarCpfExistente(cpf));
+//	}
+//	
+//	@Test
+//	void validacaoCpfValidoTest() {
+//		String cpf = "34094987029";
+//		Boolean validar = util.validarCpf(cpf);
+//		Assertions.assertTrue(validar);
+//	}
 }

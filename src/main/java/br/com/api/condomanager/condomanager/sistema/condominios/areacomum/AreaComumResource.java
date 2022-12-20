@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,13 +23,13 @@ public class AreaComumResource {
 	AreaComumService areaComumService;
 
 	@PostMapping("/areacomum/cadastrar")
-	public ResponseEntity<AreaComumResponseDTO> cadastrarAreaComum(@Valid @RequestBody AreaComumRequestDTO request, @RequestHeader String authorization) {
-		return ResponseEntity.ok(this.areaComumService.cadastrarAreaComum(request, authorization));
+	public ResponseEntity<AreaComumResponseDTO> cadastrarAreaComum(@Valid @RequestBody AreaComumRequestDTO request) {
+		return ResponseEntity.ok(this.areaComumService.cadastrarAreaComum(request));
 	}
 	
 	@GetMapping(value = "/areacomum")
-	public List<AreaComumResponseDTO> getAreaComum(@RequestHeader String authorization) {
-		return this.areaComumService.getAreaComum(authorization);
+	public List<AreaComumResponseDTO> getAreaComum() {
+		return this.areaComumService.getAreaComum();
 	}
 	
 }

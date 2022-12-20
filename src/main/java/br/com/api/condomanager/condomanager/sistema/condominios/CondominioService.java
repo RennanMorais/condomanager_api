@@ -25,9 +25,7 @@ public class CondominioService {
 	@Autowired
 	CondominioRepository condominioRepository;
 	
-	public CondominiosResponseDTO cadastrarCondominio(CondominiosRequestDTO request, String authorization) {
-		
-		this.autenticationService.validaUserToken(authorization);
+	public CondominiosResponseDTO cadastrarCondominio(CondominiosRequestDTO request) {
 		
 		if(request != null) {
 			
@@ -55,9 +53,7 @@ public class CondominioService {
 		
 	}
 	
-	public List<CondominioResponse> buscarCondominios(String authorization) {
-		
-		this.autenticationService.validaUserToken(authorization);
+	public List<CondominioResponse> buscarCondominios() {
 		
 		List<CondominioEntity> listCondominios = new ArrayList<>();
 		listCondominios = condominioRepository.findAll();

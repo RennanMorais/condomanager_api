@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.api.condomanager.condomanager.autenticacao.dto.request.LoginRequestDto;
 import br.com.api.condomanager.condomanager.autenticacao.dto.response.LoginResponseDto;
 
-@RequestMapping("condomanager/sistema")
+@RequestMapping("/condomanager/sistema")
 @RestController
 public class LoginResource {
 	

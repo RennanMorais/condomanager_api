@@ -58,13 +58,11 @@ class AreaComumResourceTest {
 	@Test
 	void cadastrarAreaComumTest() throws JsonProcessingException, Exception  {
 		
-		when(this.areaComumService.cadastrarAreaComum(Mockito.<AreaComumRequestDTO>any(), 
-				Mockito.<String>any())).thenReturn(response);
+		when(this.areaComumService.cadastrarAreaComum(Mockito.<AreaComumRequestDTO>any())).thenReturn(response);
 		
 		mockMvc.perform(MockMvcRequestBuilders
 				.post("/condomanager/sistema/areacomum/cadastrar")
 				.content(mapper.writeValueAsString(request))
-				.header("authorization", "X")
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
 			.andExpect(MockMvcResultMatchers.status().is(200))
@@ -75,11 +73,10 @@ class AreaComumResourceTest {
 	@Test
 	void getAreaComumTest() throws JsonProcessingException, Exception {
 		
-		when(this.areaComumService.getAreaComum(Mockito.<String>any())).thenReturn(listResponse);
+		when(this.areaComumService.getAreaComum()).thenReturn(listResponse);
 		
 		mockMvc.perform(MockMvcRequestBuilders
 				.get("/condomanager/sistema/areacomum", "")
-				.header("authorization", "")
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
 			.andExpect(MockMvcResultMatchers.status().is(200));

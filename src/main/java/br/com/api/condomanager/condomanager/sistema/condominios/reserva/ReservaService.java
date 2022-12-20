@@ -44,9 +44,7 @@ public class ReservaService {
 	@Autowired
 	AreaComumRepository areaComumRepository;
 	
-	public ReservaResponseDTO reservar(ReservaRequestDTO request, String authorization) {
-		
-		this.autenticationService.validaUserToken(authorization);
+	public ReservaResponseDTO reservar(ReservaRequestDTO request) {
 		
 		if(request != null) {
 			
@@ -90,8 +88,7 @@ public class ReservaService {
 		throw new CondomanagerException("Não foi possivel finalizar a reserva, verifique os dados e tente novamente.");
 	}
 	
-	public List<ReservasDadosResponseDTO> listarReservas(String authorization) {
-		this.autenticationService.validaUserToken(authorization);
+	public List<ReservasDadosResponseDTO> listarReservas() {
 		
 		List<ReservasDadosResponseDTO> listaResponse = new ArrayList<>();
 		List<ReservaEntity> reservas;
@@ -188,8 +185,7 @@ public class ReservaService {
 		return dataFormatada;
 	}
 	
-	public AprovarReservaResponseDTO aprovarReserva(Long id, String authorization) {
-		this.autenticationService.validaUserToken(authorization);
+	public AprovarReservaResponseDTO aprovarReserva(Long id) {
 		
 		if(id != null) {
 			Optional<ReservaEntity> reserva = reservaRepository.findById(id);
@@ -220,8 +216,7 @@ public class ReservaService {
 		throw new CondomanagerException("Falha ao aprovar reserva. Tente novamente.");
 	}
 	
-	public AprovarReservaResponseDTO cancelarReserva(Long id, String authorization) {
-		this.autenticationService.validaUserToken(authorization);
+	public AprovarReservaResponseDTO cancelarReserva(Long id) {
 		
 		if(id != null) {
 			Optional<ReservaEntity> reserva = reservaRepository.findById(id);

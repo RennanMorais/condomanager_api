@@ -28,9 +28,7 @@ public class PredioService {
 	@Autowired
 	CondominioRepository condominioRepository;
 
-	public PredioResponseDTO cadastrarPredio(PredioRequestDTO request, String authorization) {
-		
-		this.autenticationService.validaUserToken(authorization);
+	public PredioResponseDTO cadastrarPredio(PredioRequestDTO request) {
 		
 		if(request != null) {
 			
@@ -64,9 +62,7 @@ public class PredioService {
 		throw new CondomanagerException("Não foi possivel salvar o prédio, verifique os dados e tente novamente.");
 	}
 	
-	public List<PredioResponseDTO> getPredios(String authorization) {
-			
-		this.autenticationService.validaUserToken(authorization);
+	public List<PredioResponseDTO> getPredios() {
 		
 		List<PredioEntity> listPredios = new ArrayList<>();
 		listPredios = predioRepository.findAll();

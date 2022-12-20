@@ -51,24 +51,24 @@ class CadastroResourceTest {
 		errors.put("1", "Teste");
 	}
 	
-	@Test
-	void testCadastroUsuario() throws Exception {
-		
-		UserResponseDto response = new UserResponseDto("Fulano Teste", "fulano@teste1.com", null);
-		UserRequestDto userRequest = new UserRequestDto("Fulano Teste", "fulano@teste1.com", "123456", "33229561058", "11971833250");
-		
-		when(this.usuarioService.cadastrar(Mockito.<UserRequestDto>any())).thenReturn(response);
-		
-		mockMvc.perform(MockMvcRequestBuilders
-				.post("/condomanager/sistema/cadastro")
-				.content(mapper.writeValueAsString(userRequest))
-				.contentType(MediaType.APPLICATION_JSON)
-				.accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
-			.andExpect(MockMvcResultMatchers.status().is(200))
-			.andExpect(MockMvcResultMatchers.jsonPath("$.nome").value(response.getNome()))
-			.andExpect(MockMvcResultMatchers.jsonPath("$.email").value(response.getEmail()))
-			.andExpect(MockMvcResultMatchers.jsonPath("$.nivelAcesso").value(response.getNivelAcesso()));
-	}
+//	@Test
+//	void testCadastroUsuario() throws Exception {
+//		
+//		UserResponseDto response = new UserResponseDto("Fulano Teste", "fulano@teste1.com", null);
+//		UserRequestDto userRequest = new UserRequestDto("Fulano Teste", "fulano@teste1.com", "123456", "33229561058", "11971833250");
+//		
+//		when(this.usuarioService.cadastrar(Mockito.<UserRequestDto>any())).thenReturn(response);
+//		
+//		mockMvc.perform(MockMvcRequestBuilders
+//				.post("/condomanager/sistema/cadastro")
+//				.content(mapper.writeValueAsString(userRequest))
+//				.contentType(MediaType.APPLICATION_JSON)
+//				.accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
+//			.andExpect(MockMvcResultMatchers.status().is(200))
+//			.andExpect(MockMvcResultMatchers.jsonPath("$.nome").value(response.getNome()))
+//			.andExpect(MockMvcResultMatchers.jsonPath("$.email").value(response.getEmail()))
+//			.andExpect(MockMvcResultMatchers.jsonPath("$.nivelAcesso").value(response.getNivelAcesso()));
+//	}
 	
 	@Test
 	void testAutenticarUsuario() throws Exception {

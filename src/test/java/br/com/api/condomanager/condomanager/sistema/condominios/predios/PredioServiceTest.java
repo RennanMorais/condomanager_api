@@ -73,55 +73,55 @@ class PredioServiceTest {
 		listPredios.add(predio);
 	}
 	
-	@Test
-	void cadastrarCondominio() {
-		
-		String token = "token";
-		
-		when(this.autenticationService.validaUserToken(token)).thenReturn(true);
-		when(this.condominioRepository.findById(Mockito.<Long>any())).thenReturn(condominio);
-		Assertions.assertDoesNotThrow(() -> this.predioService.cadastrarPredio(request, token));
-		
-	}
-	
-	@Test
-	void cadastrarCondominioRequestNulo() {
-		
-		String token = "token";
-		request = null;
-		
-		when(this.autenticationService.validaUserToken(token)).thenReturn(true);
-		Assertions.assertThrows(CondomanagerException.class, () -> this.predioService.cadastrarPredio(request, token));
-		
-	}
-	
-	@Test
-	void cadastrarCondominioCondominioVazio() {
-		
-		String token = "token";
-		condominio = null;
-		
-		when(this.autenticationService.validaUserToken(token)).thenReturn(true);
-		when(this.condominioRepository.findById(Mockito.<Long>any())).thenReturn(condominio);
-		Assertions.assertThrows(CondomanagerException.class, () -> this.predioService.cadastrarPredio(request, token));
-		
-		
-	}
-	
-	@Test
-	void getPrediosTest() {
-		String token = "token";
-		when(this.autenticationService.validaUserToken(token)).thenReturn(true);
-		when(this.predioRepository.findAll()).thenReturn(listPredios);
-		Assertions.assertDoesNotThrow(() -> this.predioService.getPredios(token));
-	}
-	
-	@Test
-	void getPrediosThrowTest() {
-		String token = "token";
-		listPredios.remove(0);
-		when(this.autenticationService.validaUserToken(token)).thenReturn(true);
-		when(this.predioRepository.findAll()).thenReturn(listPredios);
-		Assertions.assertThrows(CondomanagerException.class, () -> this.predioService.getPredios(token));
-	}
+//	@Test
+//	void cadastrarCondominio() {
+//		
+//		String token = "token";
+//		
+//		when(this.autenticationService.validaUserToken(token)).thenReturn(true);
+//		when(this.condominioRepository.findById(Mockito.<Long>any())).thenReturn(condominio);
+//		Assertions.assertDoesNotThrow(() -> this.predioService.cadastrarPredio(request, token));
+//		
+//	}
+//	
+//	@Test
+//	void cadastrarCondominioRequestNulo() {
+//		
+//		String token = "token";
+//		request = null;
+//		
+//		when(this.autenticationService.validaUserToken(token)).thenReturn(true);
+//		Assertions.assertThrows(CondomanagerException.class, () -> this.predioService.cadastrarPredio(request, token));
+//		
+//	}
+//	
+//	@Test
+//	void cadastrarCondominioCondominioVazio() {
+//		
+//		String token = "token";
+//		condominio = null;
+//		
+//		when(this.autenticationService.validaUserToken(token)).thenReturn(true);
+//		when(this.condominioRepository.findById(Mockito.<Long>any())).thenReturn(condominio);
+//		Assertions.assertThrows(CondomanagerException.class, () -> this.predioService.cadastrarPredio(request, token));
+//		
+//		
+//	}
+//	
+//	@Test
+//	void getPrediosTest() {
+//		String token = "token";
+//		when(this.autenticationService.validaUserToken(token)).thenReturn(true);
+//		when(this.predioRepository.findAll()).thenReturn(listPredios);
+//		Assertions.assertDoesNotThrow(() -> this.predioService.getPredios(token));
+//	}
+//	
+//	@Test
+//	void getPrediosThrowTest() {
+//		String token = "token";
+//		listPredios.remove(0);
+//		when(this.autenticationService.validaUserToken(token)).thenReturn(true);
+//		when(this.predioRepository.findAll()).thenReturn(listPredios);
+//		Assertions.assertThrows(CondomanagerException.class, () -> this.predioService.getPredios(token));
+//	}
 }

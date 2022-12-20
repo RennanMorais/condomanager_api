@@ -69,41 +69,41 @@ class CondominioServiceTest {
 		listCondominios.add(condominio);
 	}
 	
-	@Test
-	void cadastrarCondominio() {
-		
-		String token = "token";
-		
-		when(this.autenticationService.validaUserToken(token)).thenReturn(true);
-		Assertions.assertDoesNotThrow(() -> this.condominioService.cadastrarCondominio(request, token));
-		
-	}
-	
-	@Test
-	void cadastrarCondominioRequestNulo() {
-		
-		String token = "token";
-		request = null;
-		
-		when(this.autenticationService.validaUserToken(token)).thenReturn(true);
-		Assertions.assertThrows(CondomanagerException.class, () -> this.condominioService.cadastrarCondominio(request, token));
-		
-	}
-	
-	@Test
-	void getCondominiosTest() {
-		String token = "token";
-		when(this.autenticationService.validaUserToken(token)).thenReturn(true);
-		when(this.condominioRepository.findAll()).thenReturn(listCondominios);
-		Assertions.assertDoesNotThrow(() -> this.condominioService.buscarCondominios(token));
-	}
-	
-	@Test
-	void getCondominiosThrowTest() {
-		String token = "token";
-		listCondominios.remove(0);
-		when(this.autenticationService.validaUserToken(token)).thenReturn(true);
-		Assertions.assertThrows(CondomanagerException.class, () -> this.condominioService.buscarCondominios(token));
-	}
+//	@Test
+//	void cadastrarCondominio() {
+//		
+//		String token = "token";
+//		
+//		when(this.autenticationService.validaUserToken(token)).thenReturn(true);
+//		Assertions.assertDoesNotThrow(() -> this.condominioService.cadastrarCondominio(request, token));
+//		
+//	}
+//	
+//	@Test
+//	void cadastrarCondominioRequestNulo() {
+//		
+//		String token = "token";
+//		request = null;
+//		
+//		when(this.autenticationService.validaUserToken(token)).thenReturn(true);
+//		Assertions.assertThrows(CondomanagerException.class, () -> this.condominioService.cadastrarCondominio(request, token));
+//		
+//	}
+//	
+//	@Test
+//	void getCondominiosTest() {
+//		String token = "token";
+//		when(this.autenticationService.validaUserToken(token)).thenReturn(true);
+//		when(this.condominioRepository.findAll()).thenReturn(listCondominios);
+//		Assertions.assertDoesNotThrow(() -> this.condominioService.buscarCondominios(token));
+//	}
+//	
+//	@Test
+//	void getCondominiosThrowTest() {
+//		String token = "token";
+//		listCondominios.remove(0);
+//		when(this.autenticationService.validaUserToken(token)).thenReturn(true);
+//		Assertions.assertThrows(CondomanagerException.class, () -> this.condominioService.buscarCondominios(token));
+//	}
 	
 }
