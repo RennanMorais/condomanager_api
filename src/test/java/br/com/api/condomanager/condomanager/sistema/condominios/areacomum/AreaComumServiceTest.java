@@ -1,27 +1,20 @@
 package br.com.api.condomanager.condomanager.sistema.condominios.areacomum;
 
-import static org.mockito.Mockito.when;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import br.com.api.condomanager.condomanager.autenticacao.AutenticacaoService;
 import br.com.api.condomanager.condomanager.model.AreaComumEntity;
 import br.com.api.condomanager.condomanager.model.CondominioEntity;
 import br.com.api.condomanager.condomanager.repository.AreaComumRepository;
 import br.com.api.condomanager.condomanager.repository.CondominioRepository;
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.request.AreaComumRequestDTO;
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.response.AreaComumResponseDTO;
-import br.com.api.condomanager.condomanager.sistema.exceptions.CondomanagerException;
 
 class AreaComumServiceTest {
 	AreaComumRequestDTO request;
@@ -32,9 +25,6 @@ class AreaComumServiceTest {
 	
 	@InjectMocks
 	AreaComumService areaComumService;
-	
-	@Mock
-	AutenticacaoService autenticationService;
 	
 	@Mock
 	AreaComumRepository areaComumRepository;

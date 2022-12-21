@@ -10,7 +10,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.api.condomanager.condomanager.autenticacao.AutenticacaoService;
 import br.com.api.condomanager.condomanager.enums.ReservaStatusEnum;
 import br.com.api.condomanager.condomanager.model.AreaComumEntity;
 import br.com.api.condomanager.condomanager.model.CondominioEntity;
@@ -28,9 +27,6 @@ import br.com.api.condomanager.condomanager.sistema.exceptions.CondomanagerExcep
 
 @Service
 public class ReservaService {
-
-	@Autowired
-	AutenticacaoService autenticationService;
 	
 	@Autowired
 	ReservaRepository reservaRepository;

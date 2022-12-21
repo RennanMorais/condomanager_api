@@ -1,7 +1,5 @@
 package br.com.api.condomanager.condomanager.sistema.cadastro;
 
-import static org.mockito.Mockito.when;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,19 +19,13 @@ import org.springframework.validation.Validator;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import br.com.api.condomanager.condomanager.autenticacao.AutenticacaoService;
-import br.com.api.condomanager.condomanager.autenticacao.dto.request.LoginRequestDto;
-import br.com.api.condomanager.condomanager.sistema.cadastro.dto.request.UserRequestDto;
-import br.com.api.condomanager.condomanager.sistema.cadastro.dto.response.UserResponseDto;
+import br.com.api.condomanager.condomanager.autenticacao.dto.LoginRequestDto;
 
 @ExtendWith(MockitoExtension.class)
 class CadastroResourceTest {
 	
 	@Mock
 	private  UsuarioService usuarioService;
-	
-	@Mock
-	private  AutenticacaoService autenticacaoService;
 	
 	@InjectMocks
 	private CadastroResource cadastroResource;

@@ -24,26 +24,26 @@ import br.com.api.condomanager.condomanager.sistema.exceptions.DadosPessoaisExce
 @RestController
 public class CadastroResource {
 	
-//	@Autowired
-//	UsuarioService usuarioService;
-//
-//	@PostMapping(value = "/cadastro", produces = "application/json")
-//	public ResponseEntity<UserResponseDto> cadastroUsuario(@Valid @RequestBody UserRequestDto userRequest) 
-//			throws DadosPessoaisException {
-//		return ResponseEntity.ok(usuarioService.cadastrar(userRequest));
-//	}
-//
-//	@ExceptionHandler(MethodArgumentNotValidException.class)
-//	public ResponseEntity<Map<String, String>> validationException(MethodArgumentNotValidException e) {
-//		Map<String, String> errors = new HashMap<>();
-//		
-//		e.getBindingResult().getAllErrors().forEach((error) -> {
-//			String nomeCampo = ((FieldError) error).getField();
-//			String mensagemErro = error.getDefaultMessage();
-//			errors.put(nomeCampo, mensagemErro);
-//		});
-//		
-//		return new ResponseEntity<Map<String,String>>(errors, HttpStatus.BAD_REQUEST);
-//	}
+	@Autowired
+	UsuarioService usuarioService;
+
+	@PostMapping(value = "/cadastro", produces = "application/json")
+	public ResponseEntity<UserResponseDto> cadastroUsuario(@Valid @RequestBody UserRequestDto userRequest) 
+			throws DadosPessoaisException {
+		return ResponseEntity.ok(usuarioService.cadastrar(userRequest));
+	}
+
+	@ExceptionHandler(MethodArgumentNotValidException.class)
+	public ResponseEntity<Map<String, String>> validationException(MethodArgumentNotValidException e) {
+		Map<String, String> errors = new HashMap<>();
+		
+		e.getBindingResult().getAllErrors().forEach((error) -> {
+			String nomeCampo = ((FieldError) error).getField();
+			String mensagemErro = error.getDefaultMessage();
+			errors.put(nomeCampo, mensagemErro);
+		});
+		
+		return new ResponseEntity<Map<String,String>>(errors, HttpStatus.BAD_REQUEST);
+	}
 	
 }

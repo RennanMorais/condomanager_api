@@ -7,7 +7,6 @@ import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.api.condomanager.condomanager.autenticacao.AutenticacaoService;
 import br.com.api.condomanager.condomanager.model.CondominioEntity;
 import br.com.api.condomanager.condomanager.model.PredioEntity;
 import br.com.api.condomanager.condomanager.repository.CondominioRepository;
@@ -18,9 +17,6 @@ import br.com.api.condomanager.condomanager.sistema.exceptions.CondomanagerExcep
 
 @Service
 public class PredioService {
-	
-	@Autowired
-	AutenticacaoService autenticationService;
 	
 	@Autowired
 	PredioRepository predioRepository;

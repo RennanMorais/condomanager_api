@@ -1,25 +1,16 @@
 package br.com.api.condomanager.condomanager.sistema.cadastro;
 
-import static org.mockito.Mockito.when;
-
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 
-import br.com.api.condomanager.condomanager.autenticacao.AutenticacaoService;
-import br.com.api.condomanager.condomanager.model.UserEntity;
 import br.com.api.condomanager.condomanager.repository.UsuarioRepository;
 import br.com.api.condomanager.condomanager.sistema.cadastro.dto.request.UserRequestDto;
 import br.com.api.condomanager.condomanager.sistema.cadastro.dto.response.UserResponseDto;
-import br.com.api.condomanager.condomanager.sistema.exceptions.DadosPessoaisException;
 import br.com.api.condomanager.condomanager.util.Util;
 
 @SpringBootTest
@@ -31,9 +22,6 @@ class UsuarioServiceTest {
 	
 	@InjectMocks
 	UsuarioService usuarioService;
-	
-	@Mock
-	AutenticacaoService autenticacaoService;
 	
 	@Mock
 	UsuarioRepository usuarioRepository;

@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import br.com.api.condomanager.condomanager.autenticacao.AutenticacaoService;
 import br.com.api.condomanager.condomanager.model.CondominioEntity;
 import br.com.api.condomanager.condomanager.repository.CondominioRepository;
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.CondominioResponse;
@@ -18,9 +17,6 @@ import br.com.api.condomanager.condomanager.util.Endereco;
 
 @Service
 public class CondominioService {
-
-	@Autowired
-	AutenticacaoService autenticationService;
 	
 	@Autowired
 	CondominioRepository condominioRepository;
