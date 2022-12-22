@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,23 +26,22 @@ public class ReservaResource {
 	ReservaService reservaService;
 	
 	@PostMapping("/reservas/reservar")
-	public ResponseEntity<ReservaResponseDTO> reservar(@Valid @RequestBody ReservaRequestDTO request, 
-			@RequestHeader String authorization) {
-		return ResponseEntity.ok(this.reservaService.reservar(request, authorization));
+	public ResponseEntity<ReservaResponseDTO> reservar(@Valid @RequestBody ReservaRequestDTO request) {
+		return ResponseEntity.ok(this.reservaService.reservar(request));
 	}
 	
 	@GetMapping("/reservas")
-	public List<ReservasDadosResponseDTO> listarReservas(@RequestHeader String authorization) {
-		return this.reservaService.listarReservas(authorization);
+	public List<ReservasDadosResponseDTO> listarReservas() {
+		return this.reservaService.listarReservas();
 	}
 	
 	@PostMapping("/reservas/aprovar/{id}")
-	public ResponseEntity<AprovarReservaResponseDTO> aprovarReserva(@PathVariable Long id, @RequestHeader String authorization) {
-		return ResponseEntity.ok(this.reservaService.aprovarReserva(id, authorization)); 
+	public ResponseEntity<AprovarReservaResponseDTO> aprovarReserva(@PathVariable Long id) {
+		return ResponseEntity.ok(this.reservaService.aprovarReserva(id)); 
 	}
 	
 	@PostMapping("/reservas/cancelar/{id}")
-	public ResponseEntity<AprovarReservaResponseDTO> cancelarReserva(@PathVariable Long id, @RequestHeader String authorization) {
-		return ResponseEntity.ok(this.reservaService.cancelarReserva(id, authorization)); 
+	public ResponseEntity<AprovarReservaResponseDTO> cancelarReserva(@PathVariable Long id) {
+		return ResponseEntity.ok(this.reservaService.cancelarReserva(id)); 
 	}
 }

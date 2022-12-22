@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,8 +21,8 @@ public class PetResource {
 	PetService service;
 	
 	@GetMapping("/pets")
-	public ResponseEntity<PetResponseDTO> getPets(@Valid @RequestBody PetRequestDTO request, @RequestHeader String auth) {
-		return ResponseEntity.ok(this.service.salvarPet(request, auth));
+	public ResponseEntity<PetResponseDTO> getPets(@Valid @RequestBody PetRequestDTO request) {
+		return ResponseEntity.ok(this.service.salvarPet(request));
 	}
 	
 	@PostMapping("/pets/cadastrar")

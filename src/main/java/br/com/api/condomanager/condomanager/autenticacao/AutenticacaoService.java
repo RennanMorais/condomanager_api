@@ -1,83 +1,35 @@
 package br.com.api.condomanager.condomanager.autenticacao;
 
-import java.util.Date;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Service;
 
-import br.com.api.condomanager.condomanager.autenticacao.dto.request.LoginRequestDto;
-import br.com.api.condomanager.condomanager.autenticacao.dto.response.LoginResponseDto;
-import br.com.api.condomanager.condomanager.model.UserEntity;
+import br.com.api.condomanager.condomanager.autenticacao.dto.LoginRequestDto;
+import br.com.api.condomanager.condomanager.autenticacao.dto.LoginResponseDto;
+import br.com.api.condomanager.condomanager.autenticacao.security.JwtTokenProvider;
 import br.com.api.condomanager.condomanager.repository.UsuarioRepository;
-import br.com.api.condomanager.condomanager.sistema.exceptions.ExpiredTokenException;
-import br.com.api.condomanager.condomanager.sistema.exceptions.InvalidLoginException;
 import br.com.api.condomanager.condomanager.sistema.exceptions.InvalidTokenException;
-import io.jsonwebtoken.Claims;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class AutenticacaoService {
-	
-	@Autowired
-	UsuarioRepository usuarioRepository;
-	
-	@Autowired
-	PasswordEncoder encoder;
-	
-	final TokenService tokenService;
-	
-	public AutenticacaoService(TokenService tokenService) {
-		this.tokenService = tokenService;
-	}
+
+	private final UsuarioRepository userRepository;
+	private final JwtTokenProvider jwtTokenProvider;
+	private final AuthenticationManager authenticationManager;
 
 	public LoginResponseDto autenticar(LoginRequestDto loginDto) {
-		
-		UserEntity user = usuarioRepository.findByEmail(loginDto.getEmail());
-		
-		if(user == null) {
-			throw new InvalidLoginException("Usuario não encontrado.");
-		}
-		
-		if(!encoder.matches(loginDto.getPassword(), user.getPassword())) {
-			throw new InvalidLoginException("Usuario e/ou senha, incorretos.");
-		}
-		
-		LoginResponseDto response = new LoginResponseDto();
-		response.setToken(tokenService.generateToken(user));
-		
-		user.setToken(response.getToken());
-		usuarioRepository.save(user);
-		
-		return response;
-	}
-	
-	public boolean validate(String token) {
 		try {
-            Claims claims = tokenService.decodeToken(token);
-            
-            if (claims.getExpiration().before(new Date(System.currentTimeMillis()))) {
-            	throw new ExpiredTokenException("Token expirado.");
-            }
-            
-            return true;
-            
-        } catch (InvalidTokenException e) {
-            throw new InvalidTokenException("Token Inválido ou expirado.");
-        }
-    }
-	
-	public boolean validaUserToken(String token) {
-		
-		if(token != null && !token.isEmpty()) {
-			UserEntity user = this.usuarioRepository.findByToken(token);
-			if(user != null) {
-				if(user.getToken().equalsIgnoreCase(token) && this.validate(token)) {
-					return true;
-				}
-			}
+			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword()));
+			
+			LoginResponseDto response = new LoginResponseDto();
+			response.setToken(jwtTokenProvider.gerarToken(loginDto.getEmail(), userRepository.findByEmail(loginDto.getEmail()).getNomeAccess()));
+			
+			return response;
+		} catch (AuthenticationException e) {
+			throw new InvalidTokenException("Invalid username/password supplied");
 		}
-		
-		throw new InvalidTokenException("Token Inválido ou expirado.");
 	}
-	
 }

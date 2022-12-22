@@ -5,7 +5,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.api.condomanager.condomanager.autenticacao.AutenticacaoService;
 import br.com.api.condomanager.condomanager.model.PetEntity;
 import br.com.api.condomanager.condomanager.model.UserEntity;
 import br.com.api.condomanager.condomanager.repository.PetRepository;
@@ -18,17 +17,12 @@ import br.com.api.condomanager.condomanager.sistema.exceptions.CondomanagerExcep
 public class PetService {
 	
 	@Autowired
-	AutenticacaoService autenticationService;
-	
-	@Autowired
 	PetRepository petRepository;
 	
 	@Autowired
 	UsuarioRepository usuarioRepository;
 	
-	public PetResponseDTO salvarPet(PetRequestDTO request, String auth) {
-		
-		this.autenticationService.validaUserToken(auth);
+	public PetResponseDTO salvarPet(PetRequestDTO request) {
 		
 		if(request != null) {
 			

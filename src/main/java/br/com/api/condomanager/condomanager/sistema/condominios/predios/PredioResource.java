@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,14 +23,13 @@ public class PredioResource {
 	PredioService predioservice;
 	
 	@PostMapping("/predio/cadastrar")
-	public ResponseEntity<PredioResponseDTO> cadastrarPredio(@Valid @RequestBody PredioRequestDTO request, 
-			@RequestHeader String authorization) {
-		return ResponseEntity.ok(predioservice.cadastrarPredio(request, authorization));
+	public ResponseEntity<PredioResponseDTO> cadastrarPredio(@Valid @RequestBody PredioRequestDTO request) {
+		return ResponseEntity.ok(predioservice.cadastrarPredio(request));
 	}
 	
 	@GetMapping(value = "/predios")
-	public List<PredioResponseDTO> getPredios(@RequestHeader String authorization) {
-		return this.predioservice.getPredios(authorization);
+	public List<PredioResponseDTO> getPredios() {
+		return this.predioservice.getPredios();
 	}
 	
 }

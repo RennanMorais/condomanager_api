@@ -5,9 +5,12 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
+import javax.security.sasl.AuthenticationException;
+
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -19,7 +22,6 @@ import br.com.api.condomanager.condomanager.sistema.cadastro.ExceptionResponse;
 import br.com.api.condomanager.condomanager.sistema.exceptions.InvalidLoginException;
 import br.com.api.condomanager.condomanager.util.ErrorDto;
 import br.com.api.condomanager.condomanager.util.ErrorDto.CodeErrorDto;
-import io.jsonwebtoken.SignatureException;
 
 @ControllerAdvice
 public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
@@ -30,15 +32,21 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
 		return new ResponseEntity<>(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
+	@ExceptionHandler({ AuthenticationException.class })
+    public ResponseEntity<CodeErrorDto> handleAuthenticationException(Exception ex) {
+		CodeErrorDto erro = new CodeErrorDto(HttpStatus.UNAUTHORIZED.toString(), "Token Inválido ou expirado.");
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(erro);
+    }
+	
+	@ExceptionHandler({ InsufficientAuthenticationException.class })
+    public ResponseEntity<CodeErrorDto> handleAuthenticationException(InsufficientAuthenticationException ex) {
+		CodeErrorDto erro = new CodeErrorDto(String.valueOf(HttpStatus.UNAUTHORIZED.value()), "Token Inválido ou expirado.");
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(erro);
+    }
+	
 	@ExceptionHandler(InvalidLoginException.class)
 	public ResponseEntity<Object> handleInvalidLoginException(InvalidLoginException e) {
 		ExceptionResponse exceptionResponse = new ExceptionResponse(String.valueOf(HttpStatus.UNAUTHORIZED.value()), e.getMessage());
-		return new ResponseEntity<>(exceptionResponse, HttpStatus.UNAUTHORIZED);
-	}
-	
-	@ExceptionHandler(SignatureException.class)
-	public ResponseEntity<Object> handleInvalidTokenException(SignatureException e) {
-		ExceptionResponse exceptionResponse = new ExceptionResponse(String.valueOf(HttpStatus.UNAUTHORIZED.value()), "Token Inválido ou expirado");
 		return new ResponseEntity<>(exceptionResponse, HttpStatus.UNAUTHORIZED);
 	}
 	

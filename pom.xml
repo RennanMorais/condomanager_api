@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>br.com.api.condomanager</groupId>
 	<artifactId>condomanager</artifactId>
-	<version>0.1.0-SNAPSHOT</version>
+	<version>0.1.4-SNAPSHOT</version>
 	<name>condomanager</name>
 	<description>API CondoManager</description>
 	<properties>
@@ -44,11 +44,6 @@
 			<groupId>org.springframework.session</groupId>
 			<artifactId>spring-session-core</artifactId>
 		</dependency>
-		
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -73,6 +68,11 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 	    
 	    <dependency>

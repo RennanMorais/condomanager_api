@@ -7,7 +7,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.api.condomanager.condomanager.autenticacao.AutenticacaoService;
 import br.com.api.condomanager.condomanager.model.AreaComumEntity;
 import br.com.api.condomanager.condomanager.model.CondominioEntity;
 import br.com.api.condomanager.condomanager.repository.AreaComumRepository;
@@ -20,18 +19,13 @@ import br.com.api.condomanager.condomanager.sistema.exceptions.CondomanagerExcep
 public class AreaComumService {
 	
 	@Autowired
-	AutenticacaoService autenticationService;
-	
-	@Autowired
 	AreaComumRepository areaComumRepository;
 	
 	@Autowired
 	CondominioRepository condominioRepository;
 	
-	public AreaComumResponseDTO cadastrarAreaComum(AreaComumRequestDTO request, String auth) {
-		
-		this.autenticationService.validaUserToken(auth);
-		
+	public AreaComumResponseDTO cadastrarAreaComum(AreaComumRequestDTO request) {
+
 		if(request != null) {
 			
 			AreaComumEntity area = new AreaComumEntity();
@@ -59,9 +53,7 @@ public class AreaComumService {
 		throw new CondomanagerException("Não foi possivel salvar a área comum, verifique os dados e tente novamente.");
 	}
 	
-	public List<AreaComumResponseDTO> getAreaComum(String authorization) {
-		
-		this.autenticationService.validaUserToken(authorization);
+	public List<AreaComumResponseDTO> getAreaComum() {
 		
 		List<AreaComumEntity> listAreaComum = new ArrayList<>();
 		listAreaComum = areaComumRepository.findAll();

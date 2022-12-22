@@ -8,8 +8,10 @@ import br.com.api.condomanager.condomanager.model.UserEntity;
 @Repository
 public interface UsuarioRepository extends JpaRepository<UserEntity, Long> {
 
+	boolean existsByEmail(String email);
+
 	UserEntity findByEmail(String email);
-	UserEntity findByCpf(String cpf);
-	UserEntity findByToken(String token);
 	
+	UserEntity findByCpf(String cpf);
+
 }

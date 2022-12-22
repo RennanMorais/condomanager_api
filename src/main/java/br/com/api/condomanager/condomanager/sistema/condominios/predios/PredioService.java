@@ -7,7 +7,6 @@ import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.api.condomanager.condomanager.autenticacao.AutenticacaoService;
 import br.com.api.condomanager.condomanager.model.CondominioEntity;
 import br.com.api.condomanager.condomanager.model.PredioEntity;
 import br.com.api.condomanager.condomanager.repository.CondominioRepository;
@@ -20,17 +19,12 @@ import br.com.api.condomanager.condomanager.sistema.exceptions.CondomanagerExcep
 public class PredioService {
 	
 	@Autowired
-	AutenticacaoService autenticationService;
-	
-	@Autowired
 	PredioRepository predioRepository;
 	
 	@Autowired
 	CondominioRepository condominioRepository;
 
-	public PredioResponseDTO cadastrarPredio(PredioRequestDTO request, String authorization) {
-		
-		this.autenticationService.validaUserToken(authorization);
+	public PredioResponseDTO cadastrarPredio(PredioRequestDTO request) {
 		
 		if(request != null) {
 			
@@ -64,9 +58,7 @@ public class PredioService {
 		throw new CondomanagerException("Não foi possivel salvar o prédio, verifique os dados e tente novamente.");
 	}
 	
-	public List<PredioResponseDTO> getPredios(String authorization) {
-			
-		this.autenticationService.validaUserToken(authorization);
+	public List<PredioResponseDTO> getPredios() {
 		
 		List<PredioEntity> listPredios = new ArrayList<>();
 		listPredios = predioRepository.findAll();
