@@ -1,5 +1,7 @@
 package br.com.api.condomanager.condomanager.autenticacao.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -10,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
 
 import lombok.RequiredArgsConstructor;
 
@@ -20,6 +23,10 @@ import lombok.RequiredArgsConstructor;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
   private final JwtTokenProvider jwtTokenProvider;
+  
+  @Autowired
+  @Qualifier("delegatedAuthenticationEntryPoint")
+  AuthenticationEntryPoint authEntryPoint;
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
@@ -36,15 +43,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers("/condomanager/sistema/cadastro").permitAll()
         // Disallow everything else..
         .anyRequest().authenticated();
-
-    // If a user try to access a resource without having enough permissions
-    http.exceptionHandling().accessDeniedPage("/login");
-
+    
+    http.exceptionHandling().authenticationEntryPoint(authEntryPoint);
+    
     // Apply JWT
     http.apply(new JwtTokenFilterConfigurer(jwtTokenProvider));
-
-    // Optional, if you want to test the API from a browser
-    // http.httpBasic();
+    
   }
 
   @Bean

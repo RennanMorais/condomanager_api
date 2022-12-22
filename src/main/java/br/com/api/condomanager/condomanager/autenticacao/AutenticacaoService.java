@@ -1,6 +1,5 @@
 package br.com.api.condomanager.condomanager.autenticacao;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
@@ -10,7 +9,7 @@ import br.com.api.condomanager.condomanager.autenticacao.dto.LoginRequestDto;
 import br.com.api.condomanager.condomanager.autenticacao.dto.LoginResponseDto;
 import br.com.api.condomanager.condomanager.autenticacao.security.JwtTokenProvider;
 import br.com.api.condomanager.condomanager.repository.UsuarioRepository;
-import br.com.api.condomanager.condomanager.sistema.exceptions.CustomException;
+import br.com.api.condomanager.condomanager.sistema.exceptions.InvalidTokenException;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -30,7 +29,7 @@ public class AutenticacaoService {
 			
 			return response;
 		} catch (AuthenticationException e) {
-			throw new CustomException("Invalid username/password supplied", HttpStatus.UNPROCESSABLE_ENTITY);
+			throw new InvalidTokenException("Invalid username/password supplied");
 		}
 	}
 }
