@@ -9,6 +9,8 @@ import br.com.api.condomanager.condomanager.model.UserEntity;
 public interface UsuarioRepository extends JpaRepository<UserEntity, Long> {
 
 	boolean existsByEmail(String email);
+	
+	boolean existsByCpf(String cpf);
 
 	UserEntity findByEmail(String email);
 	
