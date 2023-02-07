@@ -30,6 +30,7 @@ public class UserRequestDto {
 	private String password;
 	
 	@CPF(message = "{cpf.valid}")
+	@NotBlank(message = "{campo.nulo.vazio}")
 	private String cpf;
 	
 	@NotBlank(message = "{campo.nulo.vazio}")
