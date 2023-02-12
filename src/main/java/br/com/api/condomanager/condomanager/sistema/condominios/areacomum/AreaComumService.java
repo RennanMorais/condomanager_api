@@ -11,8 +11,8 @@ import br.com.api.condomanager.condomanager.model.AreaComumEntity;
 import br.com.api.condomanager.condomanager.model.CondominioEntity;
 import br.com.api.condomanager.condomanager.repository.AreaComumRepository;
 import br.com.api.condomanager.condomanager.repository.CondominioRepository;
-import br.com.api.condomanager.condomanager.sistema.condominios.dto.request.AreaComumRequestDTO;
-import br.com.api.condomanager.condomanager.sistema.condominios.dto.response.AreaComumResponseDTO;
+import br.com.api.condomanager.condomanager.sistema.condominios.areacomum.dto.AreaComumRequestDTO;
+import br.com.api.condomanager.condomanager.sistema.condominios.areacomum.dto.AreaComumResponseDTO;
 import br.com.api.condomanager.condomanager.sistema.exceptions.CondomanagerException;
 
 @Service

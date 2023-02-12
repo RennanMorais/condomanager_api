@@ -1,11 +1,11 @@
-package br.com.api.condomanager.condomanager.sistema.condominios.dto.response;
+package br.com.api.condomanager.condomanager.sistema.condominios.veiculos.dto;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class MoradorResponseDTO {
+public class VeiculoResponseDTO {
 
 	private String codigo;
 	private String mensagem;

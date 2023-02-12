@@ -20,8 +20,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import br.com.api.condomanager.condomanager.sistema.condominios.dto.request.PredioRequestDTO;
-import br.com.api.condomanager.condomanager.sistema.condominios.dto.response.PredioResponseDTO;
+import br.com.api.condomanager.condomanager.sistema.condominios.predios.dto.PredioRequestDTO;
+import br.com.api.condomanager.condomanager.sistema.condominios.predios.dto.PredioResponseDTO;
 
 class PredioResourceTest {
 

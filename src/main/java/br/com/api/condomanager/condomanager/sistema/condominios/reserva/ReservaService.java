@@ -19,10 +19,10 @@ import br.com.api.condomanager.condomanager.repository.AreaComumRepository;
 import br.com.api.condomanager.condomanager.repository.CondominioRepository;
 import br.com.api.condomanager.condomanager.repository.ReservaRepository;
 import br.com.api.condomanager.condomanager.repository.UsuarioRepository;
-import br.com.api.condomanager.condomanager.sistema.condominios.dto.request.AprovarReservaResponseDTO;
-import br.com.api.condomanager.condomanager.sistema.condominios.dto.request.ReservaRequestDTO;
-import br.com.api.condomanager.condomanager.sistema.condominios.dto.response.ReservaResponseDTO;
-import br.com.api.condomanager.condomanager.sistema.condominios.dto.response.ReservasDadosResponseDTO;
+import br.com.api.condomanager.condomanager.sistema.condominios.reserva.dto.AprovarReservaResponseDTO;
+import br.com.api.condomanager.condomanager.sistema.condominios.reserva.dto.ReservaRequestDTO;
+import br.com.api.condomanager.condomanager.sistema.condominios.reserva.dto.ReservaResponseDTO;
+import br.com.api.condomanager.condomanager.sistema.condominios.reserva.dto.ReservasDadosResponseDTO;
 import br.com.api.condomanager.condomanager.sistema.exceptions.CondomanagerException;
 
 @Service
