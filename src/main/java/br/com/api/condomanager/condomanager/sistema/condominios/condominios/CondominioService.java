@@ -1,4 +1,4 @@
-package br.com.api.condomanager.condomanager.sistema.condominios;
+package br.com.api.condomanager.condomanager.sistema.condominios.condominios;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 
 import br.com.api.condomanager.condomanager.model.CondominioEntity;
 import br.com.api.condomanager.condomanager.repository.CondominioRepository;
-import br.com.api.condomanager.condomanager.sistema.condominios.dto.CondominioResponse;
-import br.com.api.condomanager.condomanager.sistema.condominios.dto.request.CondominiosRequestDTO;
-import br.com.api.condomanager.condomanager.sistema.condominios.dto.response.CondominiosResponseDTO;
+import br.com.api.condomanager.condomanager.sistema.condominios.condominios.dto.CondominioResponse;
+import br.com.api.condomanager.condomanager.sistema.condominios.condominios.dto.CondominiosRequestDTO;
+import br.com.api.condomanager.condomanager.sistema.condominios.condominios.dto.CondominiosResponseDTO;
 import br.com.api.condomanager.condomanager.sistema.exceptions.CondomanagerException;
 import br.com.api.condomanager.condomanager.util.Endereco;
 

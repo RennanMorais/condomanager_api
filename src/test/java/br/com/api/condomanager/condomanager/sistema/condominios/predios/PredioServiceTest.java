@@ -13,8 +13,8 @@ import br.com.api.condomanager.condomanager.model.CondominioEntity;
 import br.com.api.condomanager.condomanager.model.PredioEntity;
 import br.com.api.condomanager.condomanager.repository.CondominioRepository;
 import br.com.api.condomanager.condomanager.repository.PredioRepository;
-import br.com.api.condomanager.condomanager.sistema.condominios.dto.request.PredioRequestDTO;
-import br.com.api.condomanager.condomanager.sistema.condominios.dto.response.PredioResponseDTO;
+import br.com.api.condomanager.condomanager.sistema.condominios.predios.dto.PredioRequestDTO;
+import br.com.api.condomanager.condomanager.sistema.condominios.predios.dto.PredioResponseDTO;
 
 class PredioServiceTest {
 	PredioRequestDTO request;

@@ -10,8 +10,9 @@ import org.mockito.MockitoAnnotations;
 
 import br.com.api.condomanager.condomanager.model.CondominioEntity;
 import br.com.api.condomanager.condomanager.repository.CondominioRepository;
-import br.com.api.condomanager.condomanager.sistema.condominios.dto.request.CondominiosRequestDTO;
-import br.com.api.condomanager.condomanager.sistema.condominios.dto.response.CondominiosResponseDTO;
+import br.com.api.condomanager.condomanager.sistema.condominios.condominios.CondominioService;
+import br.com.api.condomanager.condomanager.sistema.condominios.condominios.dto.CondominiosRequestDTO;
+import br.com.api.condomanager.condomanager.sistema.condominios.condominios.dto.CondominiosResponseDTO;
 import br.com.api.condomanager.condomanager.util.Endereco;
 
 class CondominioServiceTest {

@@ -20,8 +20,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import br.com.api.condomanager.condomanager.sistema.condominios.dto.request.AreaComumRequestDTO;
-import br.com.api.condomanager.condomanager.sistema.condominios.dto.response.AreaComumResponseDTO;
+import br.com.api.condomanager.condomanager.sistema.condominios.areacomum.dto.AreaComumRequestDTO;
+import br.com.api.condomanager.condomanager.sistema.condominios.areacomum.dto.AreaComumResponseDTO;
 
 class AreaComumResourceTest {
 	AreaComumRequestDTO request;

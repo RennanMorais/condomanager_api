@@ -1,4 +1,4 @@
-package br.com.api.condomanager.condomanager.sistema.condominios.dto.request;
+package br.com.api.condomanager.condomanager.sistema.condominios.condominios.dto;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;

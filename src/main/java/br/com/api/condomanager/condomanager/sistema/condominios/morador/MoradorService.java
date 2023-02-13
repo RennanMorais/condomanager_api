@@ -3,6 +3,7 @@ package br.com.api.condomanager.condomanager.sistema.condominios.morador;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import br.com.api.condomanager.condomanager.enums.AcessoEnum;
@@ -12,8 +13,8 @@ import br.com.api.condomanager.condomanager.model.UserEntity;
 import br.com.api.condomanager.condomanager.repository.CondominioRepository;
 import br.com.api.condomanager.condomanager.repository.PredioRepository;
 import br.com.api.condomanager.condomanager.repository.UsuarioRepository;
-import br.com.api.condomanager.condomanager.sistema.condominios.dto.request.MoradorRequestDTO;
-import br.com.api.condomanager.condomanager.sistema.condominios.dto.response.MoradorResponseDTO;
+import br.com.api.condomanager.condomanager.sistema.condominios.morador.dto.MoradorRequestDTO;
+import br.com.api.condomanager.condomanager.sistema.condominios.morador.dto.MoradorResponseDTO;
 import br.com.api.condomanager.condomanager.sistema.exceptions.CondomanagerException;
 import br.com.api.condomanager.condomanager.sistema.exceptions.DadosPessoaisException;
 
@@ -28,12 +29,15 @@ public class MoradorService {
 	
 	@Autowired
 	PredioRepository predioRepository;
+	
+	@Autowired
+	PasswordEncoder encoder;
 
 	public MoradorResponseDTO cadastrarMorador(MoradorRequestDTO moradorRequest) {
 		
 		if(!usuarioRepository.existsByCpf(moradorRequest.getCpf().trim())) {
 			UserEntity usuario = new UserEntity();
-			usuario.setNomeAccess(moradorRequest.getName());
+			usuario.setName(moradorRequest.getName());
 			usuario.setCpf(moradorRequest.getCpf());
 			usuario.setRg(moradorRequest.getRg());
 			usuario.setEmail(moradorRequest.getEmail());
@@ -49,6 +53,7 @@ public class MoradorService {
 			usuario.setCondominio(condominioRepository.findById(moradorRequest.getIdCondominio()).get().getNome());
 			usuario.setPredio(predioRepository.findById(moradorRequest.getIdPredio()).get().getNome());
 			usuario.setApto(moradorRequest.getApto());
+			usuario.setPassword(this.encoder.encode(moradorRequest.getCpf()));
 			
 			usuarioRepository.save(usuario);
 		} else {
@@ -67,11 +72,11 @@ public class MoradorService {
 		Optional<CondominioEntity> condominio = condominioRepository.findById(moradorRequest.getIdCondominio());
 		Optional<PredioEntity> predio = predioRepository.findById(moradorRequest.getIdPredio());
 		
-		if(condominio.get() == null) {
+		if(condominio.isEmpty()) {
 			throw new CondomanagerException("Condomínio inválido ou não encontrado.");
 		}
 		
-		if(predio.get() == null) {
+		if(predio.isEmpty()) {
 			throw new CondomanagerException("Prédio inválido ou não encontrado.");
 		}
 		

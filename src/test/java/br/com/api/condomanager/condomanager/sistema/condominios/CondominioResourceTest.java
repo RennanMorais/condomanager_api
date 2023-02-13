@@ -20,9 +20,11 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import br.com.api.condomanager.condomanager.sistema.condominios.dto.CondominioResponse;
-import br.com.api.condomanager.condomanager.sistema.condominios.dto.request.CondominiosRequestDTO;
-import br.com.api.condomanager.condomanager.sistema.condominios.dto.response.CondominiosResponseDTO;
+import br.com.api.condomanager.condomanager.sistema.condominios.condominios.CondominioResource;
+import br.com.api.condomanager.condomanager.sistema.condominios.condominios.CondominioService;
+import br.com.api.condomanager.condomanager.sistema.condominios.condominios.dto.CondominioResponse;
+import br.com.api.condomanager.condomanager.sistema.condominios.condominios.dto.CondominiosRequestDTO;
+import br.com.api.condomanager.condomanager.sistema.condominios.condominios.dto.CondominiosResponseDTO;
 import br.com.api.condomanager.condomanager.util.Endereco;
 
 class CondominioResourceTest {

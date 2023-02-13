@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.api.condomanager.condomanager.sistema.condominios.dto.request.AreaComumRequestDTO;
-import br.com.api.condomanager.condomanager.sistema.condominios.dto.response.AreaComumResponseDTO;
+import br.com.api.condomanager.condomanager.sistema.condominios.areacomum.dto.AreaComumRequestDTO;
+import br.com.api.condomanager.condomanager.sistema.condominios.areacomum.dto.AreaComumResponseDTO;
 
 @RestController
 @RequestMapping("/condomanager/sistema")
