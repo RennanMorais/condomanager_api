@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.api.condomanager.condomanager.sistema.condominios.predios.dto.PredioRequestDTO;
-import br.com.api.condomanager.condomanager.sistema.condominios.predios.dto.PredioResponseDTO;
+import br.com.api.condomanager.condomanager.sistema.condominios.dto.PredioRequestDTO;
+import br.com.api.condomanager.condomanager.sistema.condominios.dto.PredioResponseDTO;
 
 @RequestMapping("/condomanager/sistema")
 @RestController

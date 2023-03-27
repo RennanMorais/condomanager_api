@@ -1,4 +1,4 @@
-package br.com.api.condomanager.condomanager.sistema.condominios.veiculos.dto;
+package br.com.api.condomanager.condomanager.sistema.condominios.dto;
 
 import java.math.BigInteger;
 

@@ -13,8 +13,8 @@ import br.com.api.condomanager.condomanager.model.UserEntity;
 import br.com.api.condomanager.condomanager.repository.CondominioRepository;
 import br.com.api.condomanager.condomanager.repository.PredioRepository;
 import br.com.api.condomanager.condomanager.repository.UsuarioRepository;
-import br.com.api.condomanager.condomanager.sistema.condominios.morador.dto.MoradorRequestDTO;
-import br.com.api.condomanager.condomanager.sistema.condominios.morador.dto.MoradorResponseDTO;
+import br.com.api.condomanager.condomanager.sistema.condominios.dto.MoradorRequestDTO;
+import br.com.api.condomanager.condomanager.sistema.condominios.dto.MoradorResponseDTO;
 import br.com.api.condomanager.condomanager.sistema.exceptions.CondomanagerException;
 import br.com.api.condomanager.condomanager.sistema.exceptions.DadosPessoaisException;
 
@@ -72,11 +72,11 @@ public class MoradorService {
 		Optional<CondominioEntity> condominio = condominioRepository.findById(moradorRequest.getIdCondominio());
 		Optional<PredioEntity> predio = predioRepository.findById(moradorRequest.getIdPredio());
 		
-		if(condominio.isEmpty()) {
+		if(condominio.isPresent()) {
 			throw new CondomanagerException("Condomínio inválido ou não encontrado.");
 		}
 		
-		if(predio.isEmpty()) {
+		if(predio.isPresent()) {
 			throw new CondomanagerException("Prédio inválido ou não encontrado.");
 		}
 		

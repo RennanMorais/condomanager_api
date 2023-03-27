@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 
 import br.com.api.condomanager.condomanager.model.VeiculoEntity;
 import br.com.api.condomanager.condomanager.repository.VeiculoRepository;
-import br.com.api.condomanager.condomanager.sistema.condominios.veiculos.dto.VeiculoRequestDTO;
-import br.com.api.condomanager.condomanager.sistema.condominios.veiculos.dto.VeiculoResponseDTO;
+import br.com.api.condomanager.condomanager.sistema.condominios.dto.VeiculoRequestDTO;
+import br.com.api.condomanager.condomanager.sistema.condominios.dto.VeiculoResponseDTO;
 import br.com.api.condomanager.condomanager.sistema.exceptions.CondomanagerException;
 
 @Service

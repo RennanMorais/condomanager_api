@@ -1,4 +1,4 @@
-package br.com.api.condomanager.condomanager.sistema.condominios.pets.dto;
+package br.com.api.condomanager.condomanager.sistema.condominios.dto;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
