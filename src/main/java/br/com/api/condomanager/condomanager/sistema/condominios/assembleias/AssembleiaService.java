@@ -1,8 +1,9 @@
 package br.com.api.condomanager.condomanager.sistema.condominios.assembleias;
 
+import org.springframework.stereotype.Service;
+
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.AssembleiaRequestDTO;
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.AssembleiaResponseDTO;
-import org.springframework.stereotype.Service;
 
 @Service
 public class AssembleiaService {

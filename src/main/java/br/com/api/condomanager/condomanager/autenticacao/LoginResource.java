@@ -1,5 +1,6 @@
 package br.com.api.condomanager.condomanager.autenticacao;
 
+import javax.security.auth.login.LoginException;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ public class LoginResource {
 	AutenticacaoService authService;
 	
 	@PostMapping(value = "/login", produces = "application/json")
-	public ResponseEntity<LoginResponseDto> autenticar(@RequestBody @Valid LoginRequestDto loginDto) {
+	public ResponseEntity<LoginResponseDto> autenticar(@RequestBody @Valid LoginRequestDto loginDto) throws LoginException {
 		return ResponseEntity.ok(authService.autenticar(loginDto));
 	}
 }

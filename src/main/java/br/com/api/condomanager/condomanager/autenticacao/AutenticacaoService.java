@@ -1,5 +1,7 @@
 package br.com.api.condomanager.condomanager.autenticacao;
 
+import javax.security.auth.login.LoginException;
+
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
@@ -9,7 +11,6 @@ import br.com.api.condomanager.condomanager.autenticacao.dto.LoginRequestDto;
 import br.com.api.condomanager.condomanager.autenticacao.dto.LoginResponseDto;
 import br.com.api.condomanager.condomanager.autenticacao.security.JwtTokenProvider;
 import br.com.api.condomanager.condomanager.repository.UsuarioRepository;
-import br.com.api.condomanager.condomanager.sistema.exceptions.InvalidTokenException;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -20,7 +21,7 @@ public class AutenticacaoService {
 	private final JwtTokenProvider jwtTokenProvider;
 	private final AuthenticationManager authenticationManager;
 
-	public LoginResponseDto autenticar(LoginRequestDto loginDto) {
+	public LoginResponseDto autenticar(LoginRequestDto loginDto) throws LoginException {
 		try {
 			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword()));
 			
@@ -29,7 +30,7 @@ public class AutenticacaoService {
 			
 			return response;
 		} catch (AuthenticationException e) {
-			throw new InvalidTokenException("Invalid username/password supplied");
+			throw new LoginException("Usuário e/ou senha incorretos, tente novamente!");
 		}
 	}
 }

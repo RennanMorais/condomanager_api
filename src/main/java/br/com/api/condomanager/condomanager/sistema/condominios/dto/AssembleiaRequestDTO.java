@@ -1,11 +1,11 @@
 package br.com.api.condomanager.condomanager.sistema.condominios.dto;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 import br.com.api.condomanager.condomanager.util.DateFormat;
 import lombok.Getter;
 import lombok.Setter;
-
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
