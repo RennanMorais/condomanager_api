@@ -1,8 +1,6 @@
 package br.com.api.condomanager.condomanager.sistema.condominios.reserva;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -24,6 +22,7 @@ import br.com.api.condomanager.condomanager.sistema.condominios.dto.ReservaReque
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.ReservaResponseDTO;
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.ReservasDadosResponseDTO;
 import br.com.api.condomanager.condomanager.sistema.exceptions.CondomanagerException;
+import br.com.api.condomanager.condomanager.util.DateUtil;
 
 @Service
 public class ReservaService {
@@ -65,7 +64,7 @@ public class ReservaService {
 			reserva.setArea(nomeAreaComum);
 			reserva.setEvento(request.getEvento());
 			
-			Date dataFormatada = toDate(request.getData());
+			Date dataFormatada = DateUtil.toDate(request.getData());
 			this.reservaDataCheck(request.getIdCondominio(), request.getIdArea(), dataFormatada);
 			
 			reserva.setData(dataFormatada);
@@ -101,7 +100,7 @@ public class ReservaService {
 				response.setMorador(r.getMorador());
 				response.setArea(r.getArea());
 				response.setEvento(r.getEvento());
-				response.setData(dateToString(r.getData()));
+				response.setData(DateUtil.dateToString(r.getData()));
 				response.setStatus(r.getStatus());
 				listaResponse.add(response);
 			}
@@ -153,32 +152,6 @@ public class ReservaService {
 		}
 		
 		throw new CondomanagerException("Falha ao consultar nome da área comum.");
-	}
-	
-	private Date toDate(String data) {
-		Calendar c = null;
-		
-		if(data != null) {
-			int dia = Integer.valueOf(data.substring(0, 2));
-			int mes = Integer.valueOf(data.substring(3, 5));
-			int ano = Integer.valueOf(data.substring(6, 10));
-			c = Calendar.getInstance();
-			c.set(Calendar.DAY_OF_MONTH, dia);
-			c.set(Calendar.MONTH, mes - 1);
-			c.set(Calendar.YEAR, ano);
-		}
-		
-		return c.getTime();
-	}
-	
-	private String dateToString(Date data) {
-		String dataFormatada = "";
-		
-		if(data != null) {
-			SimpleDateFormat simpleDate = new SimpleDateFormat("dd/MM/yyyy");
-			dataFormatada = simpleDate.format(data);;
-		}
-		return dataFormatada;
 	}
 	
 	public AprovarReservaResponseDTO aprovarReserva(Long id) {

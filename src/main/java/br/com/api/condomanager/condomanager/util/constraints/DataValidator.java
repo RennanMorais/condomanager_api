@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-import br.com.api.condomanager.condomanager.util.DateFormat;
+import br.com.api.condomanager.condomanager.util.validators.DateFormat;
 
 public class DataValidator implements ConstraintValidator<DateFormat, String>{
 
