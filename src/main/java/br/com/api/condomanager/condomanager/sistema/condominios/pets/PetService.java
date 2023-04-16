@@ -9,8 +9,8 @@ import br.com.api.condomanager.condomanager.model.PetEntity;
 import br.com.api.condomanager.condomanager.model.UserEntity;
 import br.com.api.condomanager.condomanager.repository.PetRepository;
 import br.com.api.condomanager.condomanager.repository.UsuarioRepository;
-import br.com.api.condomanager.condomanager.sistema.condominios.pets.dto.PetRequestDTO;
-import br.com.api.condomanager.condomanager.sistema.condominios.pets.dto.PetResponseDTO;
+import br.com.api.condomanager.condomanager.sistema.condominios.dto.PetRequestDTO;
+import br.com.api.condomanager.condomanager.sistema.condominios.dto.PetResponseDTO;
 import br.com.api.condomanager.condomanager.sistema.exceptions.CondomanagerException;
 
 @Service

@@ -34,6 +34,8 @@ public class CondominioService {
 				cond.setNumero(request.getEndereco().getNumero());
 				cond.setBairro(request.getEndereco().getBairro());
 				cond.setComplemento(request.getEndereco().getComplemento());
+				cond.setCidade(request.getEndereco().getCidade());
+				cond.setEstado(request.getEndereco().getEstado());
 				
 				condominioRepository.save(cond);
 				
@@ -50,9 +52,8 @@ public class CondominioService {
 	}
 	
 	public List<CondominioResponse> buscarCondominios() {
-		
-		List<CondominioEntity> listCondominios = new ArrayList<>();
-		listCondominios = condominioRepository.findAll();
+
+		List<CondominioEntity> listCondominios = condominioRepository.findAll();
 		
 		if(!listCondominios.isEmpty()) {
 			List<CondominioResponse> response = new ArrayList<>();
@@ -68,6 +69,8 @@ public class CondominioService {
 				endereco.setBairro(condominio.getBairro());
 				endereco.setNumero(condominio.getNumero());
 				endereco.setComplemento(condominio.getComplemento());
+				endereco.setCidade(condominio.getCidade());
+				endereco.setEstado(condominio.getEstado());
 				
 				cond.setEndereco(endereco);
 				

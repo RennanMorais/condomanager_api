@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
+import javax.security.auth.login.LoginException;
 import javax.security.sasl.AuthenticationException;
 
 import org.springframework.http.HttpHeaders;
@@ -14,7 +15,6 @@ import org.springframework.security.authentication.InsufficientAuthenticationExc
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
@@ -24,33 +24,39 @@ import br.com.api.condomanager.condomanager.util.ErrorDto;
 import br.com.api.condomanager.condomanager.util.ErrorDto.CodeErrorDto;
 
 @ControllerAdvice
-public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
+public class ExceptionHandler extends ResponseEntityExceptionHandler {
 
-	@ExceptionHandler(Exception.class)
+	@org.springframework.web.bind.annotation.ExceptionHandler(Exception.class)
 	public ResponseEntity<Object> anyExceptions(Exception e) {
 		ExceptionResponse exceptionResponse = new ExceptionResponse(String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()), e.getMessage());
 		return new ResponseEntity<>(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
+
+	@org.springframework.web.bind.annotation.ExceptionHandler(LoginException.class)
+	public ResponseEntity<Object> handleNoSuchException(LoginException e) {
+		ExceptionResponse exceptionResponse = new ExceptionResponse(String.valueOf(HttpStatus.BAD_REQUEST.value()), e.getMessage());
+		return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
+	}
 	
-	@ExceptionHandler({ AuthenticationException.class })
+	@org.springframework.web.bind.annotation.ExceptionHandler({ AuthenticationException.class })
     public ResponseEntity<CodeErrorDto> handleAuthenticationException(Exception ex) {
 		CodeErrorDto erro = new CodeErrorDto(HttpStatus.UNAUTHORIZED.toString(), "Token Inválido ou expirado.");
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(erro);
     }
 	
-	@ExceptionHandler({ InsufficientAuthenticationException.class })
+	@org.springframework.web.bind.annotation.ExceptionHandler({ InsufficientAuthenticationException.class })
     public ResponseEntity<CodeErrorDto> handleAuthenticationException(InsufficientAuthenticationException ex) {
 		CodeErrorDto erro = new CodeErrorDto(String.valueOf(HttpStatus.UNAUTHORIZED.value()), "Token Inválido ou expirado.");
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(erro);
     }
 	
-	@ExceptionHandler(InvalidLoginException.class)
+	@org.springframework.web.bind.annotation.ExceptionHandler(InvalidLoginException.class)
 	public ResponseEntity<Object> handleInvalidLoginException(InvalidLoginException e) {
 		ExceptionResponse exceptionResponse = new ExceptionResponse(String.valueOf(HttpStatus.UNAUTHORIZED.value()), e.getMessage());
 		return new ResponseEntity<>(exceptionResponse, HttpStatus.UNAUTHORIZED);
 	}
 	
-	@ExceptionHandler(NoSuchElementException.class)
+	@org.springframework.web.bind.annotation.ExceptionHandler(NoSuchElementException.class)
 	public ResponseEntity<Object> handleNoSuchException(NoSuchElementException e) {
 		ExceptionResponse exceptionResponse = new ExceptionResponse(String.valueOf(HttpStatus.BAD_REQUEST.value()), e.getMessage());
 		return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);

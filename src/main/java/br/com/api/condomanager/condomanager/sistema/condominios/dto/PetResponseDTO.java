@@ -1,4 +1,4 @@
-package br.com.api.condomanager.condomanager.sistema.condominios.pets.dto;
+package br.com.api.condomanager.condomanager.sistema.condominios.dto;
 
 import lombok.Getter;
 import lombok.Setter;

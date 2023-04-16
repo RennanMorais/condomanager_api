@@ -1,4 +1,4 @@
-package br.com.api.condomanager.condomanager.sistema.condominios.predios.dto;
+package br.com.api.condomanager.condomanager.sistema.condominios.dto;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -8,10 +8,10 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class PredioRequestDTO {
-	
+public class AreaComumRequestDTO {
+
 	@NotBlank(message = "{campo.nulo.vazio}")
-	private String nome;
+	private String area;
 	
 	@NotNull(message = "{campo.nulo.vazio}")
 	private Long idCondominio;
