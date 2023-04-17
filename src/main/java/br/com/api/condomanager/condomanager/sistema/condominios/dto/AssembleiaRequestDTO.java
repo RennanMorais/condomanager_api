@@ -22,5 +22,8 @@ public class AssembleiaRequestDTO {
 
     @NotBlank(message = "{campo.nulo.vazio}")
     private Long idCondominio;
+    
+    @NotBlank(message = "{campo.nulo.vazio}")
+    private Long idArea;
 
 }

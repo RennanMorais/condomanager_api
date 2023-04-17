@@ -11,7 +11,7 @@ import br.com.api.condomanager.condomanager.repository.PetRepository;
 import br.com.api.condomanager.condomanager.repository.UsuarioRepository;
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.PetRequestDTO;
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.PetResponseDTO;
-import br.com.api.condomanager.condomanager.sistema.exceptions.CondomanagerException;
+import br.com.api.condomanager.condomanager.sistema.exceptions.ErroFluxoException;
 
 @Service
 public class PetService {
@@ -28,7 +28,7 @@ public class PetService {
 			
 			Optional<UserEntity> user = usuarioRepository.findById(request.getIdMorador());
 			if(user == null) {
-				throw new CondomanagerException("Morador não encontrado.");
+				throw new ErroFluxoException("Morador não encontrado.");
 			}
 			
 			PetEntity pet = new PetEntity();
@@ -42,7 +42,7 @@ public class PetService {
 			try {
 				petRepository.save(pet);
 			} catch(Exception e) {
-				throw new CondomanagerException("Erro interno: " + e.getMessage());
+				throw new ErroFluxoException("Erro interno: " + e.getMessage());
 			}
 		}
 		

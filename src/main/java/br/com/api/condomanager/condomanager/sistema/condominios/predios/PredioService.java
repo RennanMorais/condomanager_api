@@ -13,7 +13,7 @@ import br.com.api.condomanager.condomanager.repository.CondominioRepository;
 import br.com.api.condomanager.condomanager.repository.PredioRepository;
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.PredioRequestDTO;
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.PredioResponseDTO;
-import br.com.api.condomanager.condomanager.sistema.exceptions.CondomanagerException;
+import br.com.api.condomanager.condomanager.sistema.exceptions.ErroFluxoException;
 
 @Service
 public class PredioService {
@@ -36,14 +36,14 @@ public class PredioService {
 			try {
 				condominio = this.condominioRepository.findById(request.getIdCondominio()).get();
 			} catch(NoSuchElementException e) {
-				throw new CondomanagerException("Condomínio invalido.");
+				throw new ErroFluxoException("Condomínio invalido.");
 			}
 			
 			if(condominio != null) {
 				predio.setCondominio(condominio.getNome());
 				predio.setIdCondominio(condominio.getId());
 			} else {
-				throw new CondomanagerException("Condomínio inexistente");
+				throw new ErroFluxoException("Condomínio inexistente");
 			}
 			
 			predioRepository.save(predio);
@@ -55,7 +55,7 @@ public class PredioService {
 			return response;
 		}
 		
-		throw new CondomanagerException("Não foi possivel salvar o prédio, verifique os dados e tente novamente.");
+		throw new ErroFluxoException("Não foi possivel salvar o prédio, verifique os dados e tente novamente.");
 	}
 	
 	public List<PredioResponseDTO> getPredios() {
@@ -76,7 +76,7 @@ public class PredioService {
 			return response;
 		}
 		
-		throw new CondomanagerException("Nenhum prédio cadastrado!");
+		throw new ErroFluxoException("Nenhum prédio cadastrado!");
 		
 	}
 	
