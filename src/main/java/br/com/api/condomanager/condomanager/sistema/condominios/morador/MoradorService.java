@@ -15,8 +15,8 @@ import br.com.api.condomanager.condomanager.repository.PredioRepository;
 import br.com.api.condomanager.condomanager.repository.UsuarioRepository;
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.MoradorRequestDTO;
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.MoradorResponseDTO;
-import br.com.api.condomanager.condomanager.sistema.exceptions.CondomanagerException;
 import br.com.api.condomanager.condomanager.sistema.exceptions.DadosPessoaisException;
+import br.com.api.condomanager.condomanager.sistema.exceptions.ErroFluxoException;
 
 @Service
 public class MoradorService {
@@ -73,15 +73,15 @@ public class MoradorService {
 		Optional<PredioEntity> predio = predioRepository.findById(moradorRequest.getIdPredio());
 		
 		if(condominio.isPresent()) {
-			throw new CondomanagerException("Condomínio inválido ou não encontrado.");
+			throw new ErroFluxoException("Condomínio inválido ou não encontrado.");
 		}
 		
 		if(predio.isPresent()) {
-			throw new CondomanagerException("Prédio inválido ou não encontrado.");
+			throw new ErroFluxoException("Prédio inválido ou não encontrado.");
 		}
 		
 		if(predio.get().getIdCondominio().equals(moradorRequest.getIdCondominio())) {
-			throw new CondomanagerException("O prédio não faz parte do condomínio. Verifique e tente novamente!");
+			throw new ErroFluxoException("O prédio não faz parte do condomínio. Verifique e tente novamente!");
 		}
 		
 		return true;

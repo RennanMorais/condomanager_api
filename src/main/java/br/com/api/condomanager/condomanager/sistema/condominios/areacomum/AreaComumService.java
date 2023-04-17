@@ -14,6 +14,7 @@ import br.com.api.condomanager.condomanager.repository.CondominioRepository;
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.AreaComumRequestDTO;
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.AreaComumResponseDTO;
 import br.com.api.condomanager.condomanager.sistema.exceptions.CondomanagerException;
+import br.com.api.condomanager.condomanager.sistema.exceptions.ErroFluxoException;
 
 @Service
 public class AreaComumService {
@@ -50,7 +51,7 @@ public class AreaComumService {
 			
 		}
 		
-		throw new CondomanagerException("Não foi possivel salvar a área comum, verifique os dados e tente novamente.");
+		throw new ErroFluxoException("Não foi possivel salvar a área comum, verifique os dados e tente novamente.");
 	}
 	
 	public List<AreaComumResponseDTO> getAreaComum() {
@@ -72,7 +73,7 @@ public class AreaComumService {
 			return response;
 		}
 		
-		throw new CondomanagerException("Nenhuma área comum cadastrada!");
+		throw new ErroFluxoException("Nenhuma área comum cadastrada!");
 		
 	}
 	

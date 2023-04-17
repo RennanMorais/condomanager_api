@@ -19,6 +19,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import br.com.api.condomanager.condomanager.sistema.cadastro.ExceptionResponse;
+import br.com.api.condomanager.condomanager.sistema.exceptions.ErroFluxoException;
 import br.com.api.condomanager.condomanager.sistema.exceptions.InvalidLoginException;
 import br.com.api.condomanager.condomanager.util.ErrorDto;
 import br.com.api.condomanager.condomanager.util.ErrorDto.CodeErrorDto;
@@ -33,7 +34,7 @@ public class ExceptionHandler extends ResponseEntityExceptionHandler {
 	}
 
 	@org.springframework.web.bind.annotation.ExceptionHandler(LoginException.class)
-	public ResponseEntity<Object> handleNoSuchException(LoginException e) {
+	public ResponseEntity<Object> handleLoginException(LoginException e) {
 		ExceptionResponse exceptionResponse = new ExceptionResponse(String.valueOf(HttpStatus.BAD_REQUEST.value()), e.getMessage());
 		return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
 	}
@@ -57,7 +58,7 @@ public class ExceptionHandler extends ResponseEntityExceptionHandler {
 	}
 	
 	@org.springframework.web.bind.annotation.ExceptionHandler(NoSuchElementException.class)
-	public ResponseEntity<Object> handleNoSuchException(NoSuchElementException e) {
+	public ResponseEntity<Object> handleNoSuchElementException(NoSuchElementException e) {
 		ExceptionResponse exceptionResponse = new ExceptionResponse(String.valueOf(HttpStatus.BAD_REQUEST.value()), e.getMessage());
 		return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
 	}
@@ -82,4 +83,12 @@ public class ExceptionHandler extends ResponseEntityExceptionHandler {
 
 		return ResponseEntity.badRequest().body(new ErrorDto(HttpStatus.BAD_REQUEST, erros));
 	}
+	
+	@org.springframework.web.bind.annotation.ExceptionHandler(ErroFluxoException.class)
+	public ResponseEntity<Object> handleErroFluxoException(ErroFluxoException e) {
+		ExceptionResponse exceptionResponse = new ExceptionResponse(String.valueOf(HttpStatus.BAD_REQUEST.value()), e.getMessage());
+		return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
+	}
+	
+	
 }

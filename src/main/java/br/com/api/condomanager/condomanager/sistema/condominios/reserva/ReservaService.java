@@ -21,7 +21,7 @@ import br.com.api.condomanager.condomanager.sistema.condominios.dto.AprovarReser
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.ReservaRequestDTO;
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.ReservaResponseDTO;
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.ReservasDadosResponseDTO;
-import br.com.api.condomanager.condomanager.sistema.exceptions.CondomanagerException;
+import br.com.api.condomanager.condomanager.sistema.exceptions.ErroFluxoException;
 import br.com.api.condomanager.condomanager.util.DateUtil;
 
 @Service
@@ -52,7 +52,7 @@ public class ReservaService {
 				nomeUsuario = this.buscarNomeUsuario(request.getIdMorador());
 				nomeAreaComum = this.buscarNomeAreaComum(request.getIdArea());
 			} catch (Exception e) {
-				throw new CondomanagerException("Falha ao consultar dados.");
+				throw new ErroFluxoException("Falha ao consultar dados.");
 			}
 			
 			ReservaEntity reserva = new ReservaEntity();
@@ -80,7 +80,7 @@ public class ReservaService {
 			
 		}
 		
-		throw new CondomanagerException("Não foi possivel finalizar a reserva, verifique os dados e tente novamente.");
+		throw new ErroFluxoException("Não foi possivel finalizar a reserva, verifique os dados e tente novamente.");
 	}
 	
 	public List<ReservasDadosResponseDTO> listarReservas() {
@@ -90,7 +90,7 @@ public class ReservaService {
 		try {
 			reservas = this.reservaRepository.findAll();
 		} catch(Exception e) {
-			throw new CondomanagerException("Nennuma reserva registrada.");
+			throw new ErroFluxoException("Nennuma reserva registrada.");
 		}
 		
 		if(reservas != null) {
@@ -113,12 +113,10 @@ public class ReservaService {
 		
 		ReservaEntity reserva = this.reservaRepository.findByDate(idCondominio, idArea, data);
 		
-		if(reserva == null) {
-			return true;
+		if(reserva != null) {
+			throw new ErroFluxoException("Já existe uma reserva nesta data!");
 		}
-		
-		throw new CondomanagerException("Já existe uma reserva nesta data!");
-		
+		return true;
 	}
 	
 	private CondominioEntity buscarDadosCondominio(Long idCondominio) {
@@ -129,7 +127,7 @@ public class ReservaService {
 			return condominio.get();
 		}
 		
-		throw new CondomanagerException("Falha ao consultar condomínio.");
+		throw new ErroFluxoException("Falha ao consultar condomínio.");
 	}
 	
 	private String buscarNomeUsuario(Long idUsuario) {
@@ -140,7 +138,7 @@ public class ReservaService {
 			return usuario.get().getName();
 		}
 		
-		throw new CondomanagerException("Falha ao consultar nome do usuario.");
+		throw new ErroFluxoException("Falha ao consultar nome do usuario.");
 	}
 	
 	private String buscarNomeAreaComum(Long idArea) {
@@ -151,7 +149,7 @@ public class ReservaService {
 			return area.get().getArea();
 		}
 		
-		throw new CondomanagerException("Falha ao consultar nome da área comum.");
+		throw new ErroFluxoException("Falha ao consultar nome da área comum.");
 	}
 	
 	public AprovarReservaResponseDTO aprovarReserva(Long id) {
@@ -179,10 +177,10 @@ public class ReservaService {
 				return response;
 			}
 			
-			throw new CondomanagerException("Falha ao aprovar reserva. Reserva não encontrada.");
+			throw new ErroFluxoException("Falha ao aprovar reserva. Reserva não encontrada.");
 		}
 		
-		throw new CondomanagerException("Falha ao aprovar reserva. Tente novamente.");
+		throw new ErroFluxoException("Falha ao aprovar reserva. Tente novamente.");
 	}
 	
 	public AprovarReservaResponseDTO cancelarReserva(Long id) {
@@ -210,9 +208,9 @@ public class ReservaService {
 				return response;
 			}
 			
-			throw new CondomanagerException("Falha ao cancelar reserva. Reserva não encontrada.");
+			throw new ErroFluxoException("Falha ao cancelar reserva. Reserva não encontrada.");
 		}
 		
-		throw new CondomanagerException("Falha ao cancelar reserva. Tente novamente.");
+		throw new ErroFluxoException("Falha ao cancelar reserva. Tente novamente.");
 	}
 }

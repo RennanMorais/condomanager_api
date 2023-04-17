@@ -12,7 +12,7 @@ import br.com.api.condomanager.condomanager.repository.CondominioRepository;
 import br.com.api.condomanager.condomanager.sistema.condominios.condominios.dto.CondominioResponse;
 import br.com.api.condomanager.condomanager.sistema.condominios.condominios.dto.CondominiosRequestDTO;
 import br.com.api.condomanager.condomanager.sistema.condominios.condominios.dto.CondominiosResponseDTO;
-import br.com.api.condomanager.condomanager.sistema.exceptions.CondomanagerException;
+import br.com.api.condomanager.condomanager.sistema.exceptions.ErroFluxoException;
 import br.com.api.condomanager.condomanager.util.Endereco;
 
 @Service
@@ -47,7 +47,7 @@ public class CondominioService {
 			}
 		}
 		
-		throw new CondomanagerException("Não foi possivel salvar o condomínio, verifique os dados e tente novamente.");
+		throw new ErroFluxoException("Não foi possivel salvar o condomínio, verifique os dados e tente novamente.");
 		
 	}
 	
@@ -80,7 +80,7 @@ public class CondominioService {
 			return response;
 		}
 		
-		throw new CondomanagerException("Nenhum condomínio cadastrado!");
+		throw new ErroFluxoException("Nenhum condomínio cadastrado!");
 	}
 	
 	private boolean checkCondominio(String cnpj) {
@@ -90,7 +90,7 @@ public class CondominioService {
 			return true;
 		}
 		
-		throw new CondomanagerException("Condomínio já cadastrado!");
+		throw new ErroFluxoException("Condomínio já cadastrado!");
 		
 	}
 	
