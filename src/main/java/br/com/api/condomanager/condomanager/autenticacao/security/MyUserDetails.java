@@ -1,5 +1,6 @@
 package br.com.api.condomanager.condomanager.autenticacao.security;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -32,6 +33,19 @@ public class MyUserDetails implements UserDetailsService {
         .credentialsExpired(false)//
         .disabled(false)//
         .build();
+  }
+  
+  public String getLoginUser() {
+	  Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	  String username;    
+
+	  if (principal instanceof UserDetails) {
+		  username = ((UserDetails) principal).getUsername();
+	  } else {
+		  username = principal.toString();
+	  }
+	  
+	  return username;
   }
 
 }
