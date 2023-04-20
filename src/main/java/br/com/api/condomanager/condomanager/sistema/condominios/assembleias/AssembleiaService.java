@@ -1,6 +1,8 @@
 package br.com.api.condomanager.condomanager.sistema.condominios.assembleias;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +44,6 @@ public class AssembleiaService {
     	Optional<CondominioEntity> cond = condominioRepository.findById(dto.getIdCondominio());
     	Optional<AreaComumEntity> area = areaComumRepository.findById(dto.getIdArea());
     	
-    	
     	if(cond.isPresent() & area.isPresent()) {
     		if(cond.get().getId().equals(area.get().getIdCondominio())) {
     			assembleia.setIdCondominio(cond.get().getId());
@@ -74,5 +75,26 @@ public class AssembleiaService {
 		}
 		return true;
 	}
+    
+    public List<AssembleiaResponseDTO> buscarAssembleias() {
+    	
+    	List<AssembleiaEntity> assembleias = assembleiaRepository.findAll();
+    	List<AssembleiaResponseDTO> response = new ArrayList<>();
+    	
+    	if(assembleias != null) {
+    		for(AssembleiaEntity a : assembleias) {
+        		AssembleiaResponseDTO assResponse = new AssembleiaResponseDTO();
+        		assResponse.setCondominio(a.getCondominio());
+        		assResponse.setTitulo(a.getTitulo());
+        		assResponse.setData(DateUtil.dateToString(a.getData()));
+        		response.add(assResponse);
+        	}
+    	} else {
+    		throw new ErroFluxoException("Nenhuma assembléia encontrada");
+    	}
+    	
+    	return response;
+    	
+    }
 
 }
