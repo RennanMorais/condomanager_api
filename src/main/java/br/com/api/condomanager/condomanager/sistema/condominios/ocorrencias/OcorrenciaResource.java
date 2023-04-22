@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.api.condomanager.condomanager.sistema.condominios.dto.FinalizarOcorrenciaRequestDTO;
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.OcorrenciaRequestDTO;
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.OcorrenciaResponseDTO;
 
@@ -25,6 +26,11 @@ public class OcorrenciaResource {
 	@PostMapping("/ocorrencia/atender/{id}")
 	public OcorrenciaResponseDTO registrarOcorrencia(@PathVariable Long id) {
 		return this.service.atenderOcorrencia(id);
+	}
+	
+	@PostMapping("/ocorrencia/atender/{id}")
+	public OcorrenciaResponseDTO finalizarOcorrencia(@PathVariable Long id, @RequestBody FinalizarOcorrenciaRequestDTO request) {
+		return this.service.finalizarOcorrencia(id, request);
 	}
 	
 }

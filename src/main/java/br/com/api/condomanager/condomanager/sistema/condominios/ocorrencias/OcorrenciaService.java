@@ -15,6 +15,7 @@ import br.com.api.condomanager.condomanager.model.UserEntity;
 import br.com.api.condomanager.condomanager.repository.CondominioRepository;
 import br.com.api.condomanager.condomanager.repository.OcorrenciaRepository;
 import br.com.api.condomanager.condomanager.repository.UsuarioRepository;
+import br.com.api.condomanager.condomanager.sistema.condominios.dto.FinalizarOcorrenciaRequestDTO;
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.OcorrenciaRequestDTO;
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.OcorrenciaResponseDTO;
 import br.com.api.condomanager.condomanager.sistema.exceptions.ErroFluxoException;
@@ -71,6 +72,34 @@ public class OcorrenciaService {
 	
 	public OcorrenciaResponseDTO atenderOcorrencia(Long idOcorrencia) {
 		
+		OcorrenciaEntity ocorrencia = this.validarOcorrencia(idOcorrencia);
+		
+		ocorrencia.setStatus(OcorrenciaStatusEnum.EM_ANDAMENTO.getDescricaoStatus());
+		ocorrenciaRepository.save(ocorrencia);
+		
+		OcorrenciaResponseDTO response = new OcorrenciaResponseDTO(
+				String.valueOf(HttpStatus.OK.value()), 
+				"Ocorrência agora está em andamento");
+		
+		return response;
+	}
+	
+	public OcorrenciaResponseDTO finalizarOcorrencia(Long idOcorrencia, FinalizarOcorrenciaRequestDTO request) {
+		
+		OcorrenciaEntity ocorrencia = this.validarOcorrencia(idOcorrencia);
+		
+		ocorrencia.setStatus(OcorrenciaStatusEnum.FINALIZADO.getDescricaoStatus());
+		ocorrencia.setFeedback(request.getFeedback());
+		ocorrenciaRepository.save(ocorrencia);
+		
+		OcorrenciaResponseDTO response = new OcorrenciaResponseDTO(
+				String.valueOf(HttpStatus.OK.value()), 
+				"Ocorrência finalizada, verifique a mensagem de feedback.");
+		
+		return response;
+	}
+
+	private OcorrenciaEntity validarOcorrencia(Long idOcorrencia) {
 		Optional<OcorrenciaEntity> ocorrencia = ocorrenciaRepository.findById(idOcorrencia);
 		
 		if(!ocorrencia.isPresent()) {
@@ -91,14 +120,7 @@ public class OcorrenciaService {
 			}
 		}
 		
-		ocorrencia.get().setStatus(OcorrenciaStatusEnum.EM_ANDAMENTO.getDescricaoStatus());
-		ocorrenciaRepository.save(ocorrencia.get());
-		
-		OcorrenciaResponseDTO response = new OcorrenciaResponseDTO(
-				String.valueOf(HttpStatus.OK.value()), 
-				"Ocorrência agora está em andamento");
-		
-		return response;
+		return ocorrencia.get();
 	}
 	
 }
