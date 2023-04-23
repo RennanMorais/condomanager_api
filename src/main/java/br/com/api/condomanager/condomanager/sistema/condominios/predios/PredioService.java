@@ -14,6 +14,7 @@ import br.com.api.condomanager.condomanager.repository.PredioRepository;
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.PredioRequestDTO;
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.PredioResponseDTO;
 import br.com.api.condomanager.condomanager.sistema.exceptions.ErroFluxoException;
+import br.com.api.condomanager.condomanager.util.Util;
 
 @Service
 public class PredioService {
@@ -23,12 +24,16 @@ public class PredioService {
 	
 	@Autowired
 	CondominioRepository condominioRepository;
+	
+	@Autowired
+	Util utils;
 
 	public PredioResponseDTO cadastrarPredio(PredioRequestDTO request) {
 		
 		if(request != null) {
 			
 			PredioEntity predio = new PredioEntity();
+			predio.setCodigo(utils.gerarCodigo("pred"));
 			predio.setNome(request.getNome());
 			
 			CondominioEntity condominio;
@@ -49,6 +54,7 @@ public class PredioService {
 			predioRepository.save(predio);
 			
 			PredioResponseDTO response = new PredioResponseDTO();
+			response.setCodigo(predio.getCodigo());
 			response.setNome(predio.getNome());
 			response.setCondominio(predio.getCondominio());
 			
@@ -68,6 +74,7 @@ public class PredioService {
 			
 			for(PredioEntity predioItem : listPredios) {
 				PredioResponseDTO predio = new PredioResponseDTO();
+				predio.setCodigo(predioItem.getCodigo());
 				predio.setNome(predioItem.getNome());
 				predio.setCondominio(predioItem.getCondominio());
 				response.add(predio);

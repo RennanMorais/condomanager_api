@@ -8,4 +8,6 @@ import br.com.api.condomanager.condomanager.model.PredioEntity;
 @Repository
 public interface PredioRepository extends JpaRepository<PredioEntity, Long> {
 
+	boolean existsByCodigo(String codigo);
+	
 }

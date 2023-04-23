@@ -73,7 +73,7 @@ class AreaComumResourceTest {
 	@Test
 	void getAreaComumTest() throws JsonProcessingException, Exception {
 		
-		when(this.areaComumService.getAreaComum()).thenReturn(listResponse);
+		when(this.areaComumService.listarAreaComum()).thenReturn(listResponse);
 		
 		mockMvc.perform(MockMvcRequestBuilders
 				.get("/condomanager/sistema/areacomum", "")

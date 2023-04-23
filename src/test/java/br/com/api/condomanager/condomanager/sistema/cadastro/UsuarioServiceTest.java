@@ -9,8 +9,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import br.com.api.condomanager.condomanager.repository.UsuarioRepository;
-import br.com.api.condomanager.condomanager.sistema.cadastro.dto.request.UserRequestDto;
-import br.com.api.condomanager.condomanager.sistema.cadastro.dto.response.UserResponseDto;
+import br.com.api.condomanager.condomanager.sistema.cadastro.dto.UserRequestDto;
+import br.com.api.condomanager.condomanager.sistema.cadastro.dto.UserResponseDto;
 import br.com.api.condomanager.condomanager.util.Util;
 
 @SpringBootTest

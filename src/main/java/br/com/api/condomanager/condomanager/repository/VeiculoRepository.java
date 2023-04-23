@@ -10,4 +10,6 @@ public interface VeiculoRepository extends JpaRepository<VeiculoEntity, Long> {
 	@Query("SELECT v FROM VeiculoEntity v WHERE v.idCondominio = :idCondominio")
 	boolean checkVeiculoCadastrado(Long idCondominio);
 	
+	boolean existsByCodigo(String codigo);
+	
 }

@@ -28,7 +28,7 @@ public class OcorrenciaResource {
 		return this.service.atenderOcorrencia(id);
 	}
 	
-	@PostMapping("/ocorrencia/atender/{id}")
+	@PostMapping("/ocorrencia/finalizar/{id}")
 	public OcorrenciaResponseDTO finalizarOcorrencia(@PathVariable Long id, @RequestBody FinalizarOcorrenciaRequestDTO request) {
 		return this.service.finalizarOcorrencia(id, request);
 	}

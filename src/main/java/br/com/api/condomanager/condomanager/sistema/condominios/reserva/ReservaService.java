@@ -23,6 +23,7 @@ import br.com.api.condomanager.condomanager.sistema.condominios.dto.ReservaRespo
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.ReservasDadosResponseDTO;
 import br.com.api.condomanager.condomanager.sistema.exceptions.ErroFluxoException;
 import br.com.api.condomanager.condomanager.util.DateUtil;
+import br.com.api.condomanager.condomanager.util.Util;
 
 @Service
 public class ReservaService {
@@ -39,48 +40,48 @@ public class ReservaService {
 	@Autowired
 	AreaComumRepository areaComumRepository;
 	
+	@Autowired
+	Util utils;
+	
 	public ReservaResponseDTO reservar(ReservaRequestDTO request) {
 		
-		if(request != null) {
 			
-			CondominioEntity condominio;
-			String nomeUsuario;
-			String nomeAreaComum;
-			
-			try {
-				condominio = this.buscarDadosCondominio(request.getIdCondominio());
-				nomeUsuario = this.buscarNomeUsuario(request.getIdMorador());
-				nomeAreaComum = this.buscarNomeAreaComum(request.getIdArea());
-			} catch (Exception e) {
-				throw new ErroFluxoException("Falha ao consultar dados.");
-			}
-			
-			ReservaEntity reserva = new ReservaEntity();
-			reserva.setIdCondominio(request.getIdCondominio());
-			reserva.setCondominio(condominio.getNome());
-			reserva.setIdMorador(request.getIdMorador());
-			reserva.setMorador(nomeUsuario);
-			reserva.setIdArea(request.getIdArea());
-			reserva.setArea(nomeAreaComum);
-			reserva.setEvento(request.getEvento());
-			
-			Date dataFormatada = DateUtil.toDate(request.getData());
-			this.reservaDataCheck(request.getIdCondominio(), request.getIdArea(), dataFormatada);
-			
-			reserva.setData(dataFormatada);
-			reserva.setStatus(ReservaStatusEnum.PENDENTE.getDescricao());
-			
-			reservaRepository.save(reserva);
-			
-			ReservaResponseDTO response = new ReservaResponseDTO();
-			response.setEvento(request.getEvento());
-			response.setData(request.getData());
-			
-			return response;
-			
+		CondominioEntity condominio;
+		String nomeUsuario;
+		String nomeAreaComum;
+		
+		try {
+			condominio = this.buscarDadosCondominio(request.getIdCondominio());
+			nomeUsuario = this.buscarNomeUsuario(request.getIdMorador());
+			nomeAreaComum = this.buscarNomeAreaComum(request.getIdArea());
+		} catch (Exception e) {
+			throw new ErroFluxoException("Falha ao consultar dados.");
 		}
 		
-		throw new ErroFluxoException("Não foi possivel finalizar a reserva, verifique os dados e tente novamente.");
+		ReservaEntity reserva = new ReservaEntity();
+		reserva.setCodigo(utils.gerarCodigo("reserv"));
+		reserva.setIdCondominio(request.getIdCondominio());
+		reserva.setCondominio(condominio.getNome());
+		reserva.setIdMorador(request.getIdMorador());
+		reserva.setMorador(nomeUsuario);
+		reserva.setIdArea(request.getIdArea());
+		reserva.setArea(nomeAreaComum);
+		reserva.setEvento(request.getEvento());
+		
+		Date dataFormatada = DateUtil.toDate(request.getData());
+		this.reservaDataCheck(request.getIdCondominio(), request.getIdArea(), dataFormatada);
+		
+		reserva.setData(dataFormatada);
+		reserva.setStatus(ReservaStatusEnum.PENDENTE.getDescricao());
+		
+		reservaRepository.save(reserva);
+		
+		ReservaResponseDTO response = new ReservaResponseDTO();
+		response.setCodigo(reserva.getCodigo());
+		response.setEvento(reserva.getEvento());
+		response.setData(DateUtil.dateToString(reserva.getData()));
+		
+		return response;
 	}
 	
 	public List<ReservasDadosResponseDTO> listarReservas() {
@@ -96,6 +97,7 @@ public class ReservaService {
 		if(reservas != null) {
 			for(ReservaEntity r : reservas) {
 				ReservasDadosResponseDTO response = new ReservasDadosResponseDTO();
+				response.setCodigo(r.getCodigo());
 				response.setCondominio(r.getCondominio());
 				response.setMorador(r.getMorador());
 				response.setArea(r.getArea());

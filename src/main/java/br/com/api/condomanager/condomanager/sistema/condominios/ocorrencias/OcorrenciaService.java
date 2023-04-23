@@ -20,6 +20,7 @@ import br.com.api.condomanager.condomanager.sistema.condominios.dto.OcorrenciaRe
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.OcorrenciaResponseDTO;
 import br.com.api.condomanager.condomanager.sistema.exceptions.ErroFluxoException;
 import br.com.api.condomanager.condomanager.util.DateUtil;
+import br.com.api.condomanager.condomanager.util.Util;
 
 @Service
 public class OcorrenciaService {
@@ -34,11 +35,15 @@ public class OcorrenciaService {
 	UsuarioRepository userRepository;
 	
 	@Autowired
+	Util utils;
+	
+	@Autowired
 	MyUserDetails userDetails;
 	
 	public OcorrenciaResponseDTO registrarOcorrencia(OcorrenciaRequestDTO request) {
 		
 		OcorrenciaEntity ocorrencia = new OcorrenciaEntity();
+		ocorrencia.setCodigo(utils.gerarCodigo("ocorr"));
 		ocorrencia.setData(DateUtil.toDate(request.getData()));
 		ocorrencia.setDescricao(request.getDescricao());
 		
@@ -72,7 +77,7 @@ public class OcorrenciaService {
 	
 	public OcorrenciaResponseDTO atenderOcorrencia(Long idOcorrencia) {
 		
-		OcorrenciaEntity ocorrencia = this.validarOcorrencia(idOcorrencia);
+		OcorrenciaEntity ocorrencia = this.validarOcorrencia(idOcorrencia, "atender");
 		
 		ocorrencia.setStatus(OcorrenciaStatusEnum.EM_ANDAMENTO.getDescricaoStatus());
 		ocorrenciaRepository.save(ocorrencia);
@@ -86,7 +91,7 @@ public class OcorrenciaService {
 	
 	public OcorrenciaResponseDTO finalizarOcorrencia(Long idOcorrencia, FinalizarOcorrenciaRequestDTO request) {
 		
-		OcorrenciaEntity ocorrencia = this.validarOcorrencia(idOcorrencia);
+		OcorrenciaEntity ocorrencia = this.validarOcorrencia(idOcorrencia, "finalizar");
 		
 		ocorrencia.setStatus(OcorrenciaStatusEnum.FINALIZADO.getDescricaoStatus());
 		ocorrencia.setFeedback(request.getFeedback());
@@ -99,16 +104,23 @@ public class OcorrenciaService {
 		return response;
 	}
 
-	private OcorrenciaEntity validarOcorrencia(Long idOcorrencia) {
+	private OcorrenciaEntity validarOcorrencia(Long idOcorrencia, String chamada) {
 		Optional<OcorrenciaEntity> ocorrencia = ocorrenciaRepository.findById(idOcorrencia);
 		
 		if(!ocorrencia.isPresent()) {
 			throw new ErroFluxoException("Código da ocorrência invalido ou não encontrado!");
 		}
 		
-		if(ocorrencia.get().getStatus().equalsIgnoreCase(OcorrenciaStatusEnum.EM_ANDAMENTO.getDescricaoStatus())
-				|| ocorrencia.get().getStatus().equalsIgnoreCase(OcorrenciaStatusEnum.FINALIZADO.getDescricaoStatus())) {
-			throw new ErroFluxoException("Ocorrencia já está em atendimento ou foi finalizada");
+		if(chamada.equalsIgnoreCase("atender")) {
+			if(ocorrencia.get().getStatus().equalsIgnoreCase(OcorrenciaStatusEnum.EM_ANDAMENTO.getDescricaoStatus())
+					|| ocorrencia.get().getStatus().equalsIgnoreCase(OcorrenciaStatusEnum.FINALIZADO.getDescricaoStatus())) {
+				throw new ErroFluxoException("Ocorrencia já está em atendimento ou foi finalizada");
+			}
+		} else if(chamada.equalsIgnoreCase("finalizar")) {
+			if(ocorrencia.get().getStatus().equalsIgnoreCase(OcorrenciaStatusEnum.PENDENTE.getDescricaoStatus())
+					|| ocorrencia.get().getStatus().equalsIgnoreCase(OcorrenciaStatusEnum.FINALIZADO.getDescricaoStatus())) {
+				throw new ErroFluxoException("Ocorrencia ainda está pendente ou já foi finalizada");
+			}
 		}
 		
 		String loginUser = userDetails.getLoginUser();

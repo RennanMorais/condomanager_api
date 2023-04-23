@@ -18,6 +18,7 @@ import br.com.api.condomanager.condomanager.sistema.condominios.dto.AssembleiaRe
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.AssembleiaResponseDTO;
 import br.com.api.condomanager.condomanager.sistema.exceptions.ErroFluxoException;
 import br.com.api.condomanager.condomanager.util.DateUtil;
+import br.com.api.condomanager.condomanager.util.Util;
 
 @Service
 public class AssembleiaService {
@@ -30,6 +31,9 @@ public class AssembleiaService {
 	
 	@Autowired
 	AreaComumRepository areaComumRepository;
+	
+	@Autowired
+	Util utils;
 
     public AssembleiaResponseDTO agendarAssembleia(AssembleiaRequestDTO dto) {
     	
@@ -37,6 +41,7 @@ public class AssembleiaService {
     	this.assembleiaDataCheck(dataFormatada);
     	
     	AssembleiaEntity assembleia = new AssembleiaEntity();
+    	assembleia.setCodigo(utils.gerarCodigo("assembl"));
     	assembleia.setTitulo(dto.getTitulo());
     	assembleia.setDescricao(dto.getDescricao() == null ? "":dto.getDescricao());
     	assembleia.setData(DateUtil.toDate(dto.getData()));
@@ -59,9 +64,10 @@ public class AssembleiaService {
     	}
     	
     	AssembleiaResponseDTO response = new AssembleiaResponseDTO();
+    	response.setCodigo(assembleia.getCodigo());
     	response.setCondominio(cond.get().getNome());
-    	response.setTitulo(dto.getTitulo());
-    	response.setData(dto.getData());
+    	response.setTitulo(assembleia.getTitulo());
+    	response.setData(DateUtil.dateToString(assembleia.getData()));
     	
         return response;
     }
@@ -84,6 +90,7 @@ public class AssembleiaService {
     	if(assembleias != null) {
     		for(AssembleiaEntity a : assembleias) {
         		AssembleiaResponseDTO assResponse = new AssembleiaResponseDTO();
+        		assResponse.setCodigo(a.getCodigo());
         		assResponse.setCondominio(a.getCondominio());
         		assResponse.setTitulo(a.getTitulo());
         		assResponse.setData(DateUtil.dateToString(a.getData()));

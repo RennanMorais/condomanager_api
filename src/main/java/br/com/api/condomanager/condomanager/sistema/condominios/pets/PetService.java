@@ -12,6 +12,7 @@ import br.com.api.condomanager.condomanager.repository.UsuarioRepository;
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.PetRequestDTO;
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.PetResponseDTO;
 import br.com.api.condomanager.condomanager.sistema.exceptions.ErroFluxoException;
+import br.com.api.condomanager.condomanager.util.Util;
 
 @Service
 public class PetService {
@@ -22,31 +23,33 @@ public class PetService {
 	@Autowired
 	UsuarioRepository usuarioRepository;
 	
+	@Autowired
+	Util utils;
+	
 	public PetResponseDTO salvarPet(PetRequestDTO request) {
 		
-		if(request != null) {
-			
-			Optional<UserEntity> user = usuarioRepository.findById(request.getIdMorador());
-			if(user == null) {
-				throw new ErroFluxoException("Morador não encontrado.");
-			}
-			
-			PetEntity pet = new PetEntity();
-			pet.setIdMorador(request.getIdMorador());
-			pet.setMorador(user.get().getName());
-			pet.setNome(request.getNome());
-			pet.setSexo(request.getSexo());
-			pet.setTelefone(user.get().getPhone());
-			pet.setTipo(request.getTipo());
-			
-			try {
-				petRepository.save(pet);
-			} catch(Exception e) {
-				throw new ErroFluxoException("Erro interno: " + e.getMessage());
-			}
+		Optional<UserEntity> user = usuarioRepository.findById(request.getIdMorador());
+		if(user == null) {
+			throw new ErroFluxoException("Morador não encontrado.");
+		}
+		
+		PetEntity pet = new PetEntity();
+		pet.setCodigo(utils.gerarCodigo("pet"));
+		pet.setIdMorador(request.getIdMorador());
+		pet.setMorador(user.get().getName());
+		pet.setNome(request.getNome());
+		pet.setSexo(request.getSexo());
+		pet.setTelefone(user.get().getPhone());
+		pet.setTipo(request.getTipo());
+		
+		try {
+			petRepository.save(pet);
+		} catch(Exception e) {
+			throw new ErroFluxoException("Erro interno: " + e.getMessage());
 		}
 		
 		PetResponseDTO response = new PetResponseDTO();
+		response.setCodigo(pet.getCodigo());
 		response.setNome(request.getNome());
 		response.setSexo(request.getSexo());
 		response.setTipo(request.getTipo());

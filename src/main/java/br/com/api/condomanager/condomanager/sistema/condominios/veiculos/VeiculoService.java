@@ -10,12 +10,16 @@ import br.com.api.condomanager.condomanager.repository.VeiculoRepository;
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.VeiculoRequestDTO;
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.VeiculoResponseDTO;
 import br.com.api.condomanager.condomanager.sistema.exceptions.ErroFluxoException;
+import br.com.api.condomanager.condomanager.util.Util;
 
 @Service
 public class VeiculoService {
 
 	@Autowired
 	VeiculoRepository veiculoRepository;
+	
+	@Autowired
+	Util utils;
 	
 	public VeiculoResponseDTO cadastrar(VeiculoRequestDTO request) {
 		

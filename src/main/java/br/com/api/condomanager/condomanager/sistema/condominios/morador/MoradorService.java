@@ -17,6 +17,7 @@ import br.com.api.condomanager.condomanager.sistema.condominios.dto.MoradorReque
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.MoradorResponseDTO;
 import br.com.api.condomanager.condomanager.sistema.exceptions.DadosPessoaisException;
 import br.com.api.condomanager.condomanager.sistema.exceptions.ErroFluxoException;
+import br.com.api.condomanager.condomanager.util.Util;
 
 @Service
 public class MoradorService {
@@ -31,12 +32,16 @@ public class MoradorService {
 	PredioRepository predioRepository;
 	
 	@Autowired
+	Util utils;
+	
+	@Autowired
 	PasswordEncoder encoder;
 
 	public MoradorResponseDTO cadastrarMorador(MoradorRequestDTO moradorRequest) {
 		
 		if(!usuarioRepository.existsByCpf(moradorRequest.getCpf().trim())) {
 			UserEntity usuario = new UserEntity();
+			usuario.setCodigo(utils.gerarCodigo("user"));
 			usuario.setName(moradorRequest.getName());
 			usuario.setCpf(moradorRequest.getCpf());
 			usuario.setRg(moradorRequest.getRg());

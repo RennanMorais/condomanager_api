@@ -12,4 +12,6 @@ public interface AssembleiaRepository extends JpaRepository<AssembleiaEntity, Lo
 	@Query("SELECT a FROM AssembleiaEntity a WHERE a.data = :data")
 	AssembleiaEntity findByDate(Date data);
 	
+	boolean existsByCodigo(String codigo);
+	
 }

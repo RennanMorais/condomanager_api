@@ -9,11 +9,12 @@ import org.springframework.stereotype.Service;
 
 import br.com.api.condomanager.condomanager.model.CondominioEntity;
 import br.com.api.condomanager.condomanager.repository.CondominioRepository;
-import br.com.api.condomanager.condomanager.sistema.condominios.condominios.dto.CondominioResponse;
-import br.com.api.condomanager.condomanager.sistema.condominios.condominios.dto.CondominiosRequestDTO;
-import br.com.api.condomanager.condomanager.sistema.condominios.condominios.dto.CondominiosResponseDTO;
+import br.com.api.condomanager.condomanager.sistema.condominios.dto.CondominioResponse;
+import br.com.api.condomanager.condomanager.sistema.condominios.dto.CondominiosRequestDTO;
+import br.com.api.condomanager.condomanager.sistema.condominios.dto.CondominiosResponseDTO;
 import br.com.api.condomanager.condomanager.sistema.exceptions.ErroFluxoException;
 import br.com.api.condomanager.condomanager.util.Endereco;
+import br.com.api.condomanager.condomanager.util.Util;
 
 @Service
 public class CondominioService {
@@ -21,33 +22,32 @@ public class CondominioService {
 	@Autowired
 	CondominioRepository condominioRepository;
 	
+	@Autowired
+	Util utils;
+	
 	public CondominiosResponseDTO cadastrarCondominio(CondominiosRequestDTO request) {
-		
-		if(request != null) {
 			
-			if(this.checkCondominio(request.getCnpj())) {
-				CondominioEntity cond = new CondominioEntity();
-				cond.setNome(request.getNome());
-				cond.setCnpj(request.getCnpj());
-				cond.setEmail(request.getEmail());
-				cond.setEndereco(request.getEndereco().getEndereco());
-				cond.setNumero(request.getEndereco().getNumero());
-				cond.setBairro(request.getEndereco().getBairro());
-				cond.setComplemento(request.getEndereco().getComplemento());
-				cond.setCidade(request.getEndereco().getCidade());
-				cond.setEstado(request.getEndereco().getEstado());
-				
-				condominioRepository.save(cond);
-				
-				CondominiosResponseDTO response = new CondominiosResponseDTO();
-				response.setCodigo(HttpStatus.OK.value());
-				response.setMensagem("O condominio '"+ request.getNome() +"' foi salvo com sucesso!");
-				
-				return response;
-			}
-		}
+		this.checkCondominio(request.getCnpj());
 		
-		throw new ErroFluxoException("Não foi possivel salvar o condomínio, verifique os dados e tente novamente.");
+		CondominioEntity cond = new CondominioEntity();
+		cond.setCodigo(utils.gerarCodigo("cond"));
+		cond.setNome(request.getNome());
+		cond.setCnpj(request.getCnpj());
+		cond.setEmail(request.getEmail());
+		cond.setEndereco(request.getEndereco().getEndereco());
+		cond.setNumero(request.getEndereco().getNumero());
+		cond.setBairro(request.getEndereco().getBairro());
+		cond.setComplemento(request.getEndereco().getComplemento());
+		cond.setCidade(request.getEndereco().getCidade());
+		cond.setEstado(request.getEndereco().getEstado());
+		
+		condominioRepository.save(cond);
+		
+		CondominiosResponseDTO response = new CondominiosResponseDTO();
+		response.setCodigo(HttpStatus.OK.value());
+		response.setMensagem("O condominio '"+ request.getNome() +"' foi salvo com sucesso!");
+		
+		return response;
 		
 	}
 	
@@ -60,6 +60,7 @@ public class CondominioService {
 			
 			for(CondominioEntity condominio : listCondominios) { 
 				CondominioResponse cond = new CondominioResponse();
+				cond.setCodigo(condominio.getCodigo());
 				cond.setNome(condominio.getNome());
 				cond.setCnpj(condominio.getCnpj());
 				cond.setEmail(condominio.getEmail());
