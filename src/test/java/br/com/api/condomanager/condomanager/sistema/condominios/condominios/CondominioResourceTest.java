@@ -1,19 +1,25 @@
-package br.com.api.condomanager.condomanager.sistema.condominios;
+package br.com.api.condomanager.condomanager.sistema.condominios.condominios;
+
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import br.com.api.condomanager.condomanager.sistema.condominios.condominios.CondominioResource;
-import br.com.api.condomanager.condomanager.sistema.condominios.condominios.CondominioService;
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.CondominioResponse;
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.CondominiosRequestDTO;
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.CondominiosResponseDTO;
@@ -60,35 +66,34 @@ class CondominioResourceTest {
 		listResponse.add(responseGet);
 	}
 	
-//	@Test
-//	void cadastrarCondominioTest() throws JsonProcessingException, Exception  {
-//		
-//		when(this.condominioService.cadastrarCondominio(Mockito.<CondominiosRequestDTO>any(), 
-//				Mockito.<String>any())).thenReturn(response);
-//		
-//		mockMvc.perform(MockMvcRequestBuilders
-//				.post("/condomanager/sistema/condominio/cadastrar")
-//				.content(mapper.writeValueAsString(request))
-//				.header("authorization", "")
-//				.contentType(MediaType.APPLICATION_JSON)
-//				.accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
-//			.andExpect(MockMvcResultMatchers.status().is(200))
-//			.andExpect(MockMvcResultMatchers.jsonPath("$.codigo").value(response.getCodigo()))
-//			.andExpect(MockMvcResultMatchers.jsonPath("$.mensagem").value(response.getMensagem()));
-//	}
-//	
-//	@Test
-//	void getCondominiosTest() throws JsonProcessingException, Exception {
-//		
-//		when(this.condominioService.buscarCondominios(Mockito.<String>any())).thenReturn(listResponse);
-//		
-//		mockMvc.perform(MockMvcRequestBuilders
-//				.get("/condomanager/sistema/condominio")
-//				.header("authorization", "")
-//				.contentType(MediaType.APPLICATION_JSON)
-//				.accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
-//			.andExpect(MockMvcResultMatchers.status().is(200));
-//		
-//	}
+	@Test
+	void cadastrarCondominioTest() throws JsonProcessingException, Exception  {
+		
+		when(this.condominioService.cadastrarCondominio(Mockito.<CondominiosRequestDTO>any())).thenReturn(response);
+		
+		mockMvc.perform(MockMvcRequestBuilders
+				.post("/condomanager/sistema/condominio/cadastrar")
+				.content(mapper.writeValueAsString(request))
+				.header("authorization", "")
+				.contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
+			.andExpect(MockMvcResultMatchers.status().is(200))
+			.andExpect(MockMvcResultMatchers.jsonPath("$.codigo").value(response.getCodigo()))
+			.andExpect(MockMvcResultMatchers.jsonPath("$.mensagem").value(response.getMensagem()));
+	}
+	
+	@Test
+	void getCondominiosTest() throws JsonProcessingException, Exception {
+		
+		when(this.condominioService.buscarCondominios()).thenReturn(listResponse);
+		
+		mockMvc.perform(MockMvcRequestBuilders
+				.get("/condomanager/sistema/condominio")
+				.header("authorization", "")
+				.contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
+			.andExpect(MockMvcResultMatchers.status().is(200));
+		
+	}
 	
 }
