@@ -1,5 +1,8 @@
 package br.com.api.condomanager.condomanager.sistema.condominios.veiculos;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -14,6 +17,7 @@ import br.com.api.condomanager.condomanager.repository.UsuarioRepository;
 import br.com.api.condomanager.condomanager.repository.VeiculoRepository;
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.VeiculoRequestDTO;
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.VeiculoResponseDTO;
+import br.com.api.condomanager.condomanager.sistema.condominios.dto.VieculosResponseDTO;
 import br.com.api.condomanager.condomanager.sistema.exceptions.ErroFluxoException;
 import br.com.api.condomanager.condomanager.util.Util;
 
@@ -73,6 +77,27 @@ public class VeiculoService {
 		VeiculoResponseDTO response = new VeiculoResponseDTO();
 		response.setCodigo(String.valueOf(HttpStatus.OK.value()));
 		response.setMensagem("Veículo "+ veiculo.getModelo() +" cadastrado com sucesso!");
+		
+		return response;
+	}
+	
+	public List<VieculosResponseDTO> listarVeiculos() {
+		List<VieculosResponseDTO> response = new ArrayList<>();
+		List<VeiculoEntity> veiculos = veiculoRepository.findAll();
+		
+		if(veiculos == null || veiculos.isEmpty()) {
+			throw new ErroFluxoException("Nenhum veículo cadastrado!");
+		}
+		
+		for(VeiculoEntity v : veiculos) {
+			VieculosResponseDTO veiculoItem = new VieculosResponseDTO();
+			veiculoItem.setCodigo(v.getCodigo());
+			veiculoItem.setMarca(v.getMarca());
+			veiculoItem.setModelo(v.getModelo());
+			veiculoItem.setPlaca(v.getPlaca());
+			veiculoItem.setTipoVeiculo(v.getTipo());
+			response.add(veiculoItem);
+		}
 		
 		return response;
 	}
