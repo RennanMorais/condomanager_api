@@ -7,9 +7,11 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Service;
 
+import br.com.api.condomanager.condomanager.autenticacao.dto.AcessoDTO;
 import br.com.api.condomanager.condomanager.autenticacao.dto.LoginRequestDto;
 import br.com.api.condomanager.condomanager.autenticacao.dto.LoginResponseDto;
 import br.com.api.condomanager.condomanager.autenticacao.security.JwtTokenProvider;
+import br.com.api.condomanager.condomanager.model.UserEntity;
 import br.com.api.condomanager.condomanager.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -25,8 +27,13 @@ public class AutenticacaoService {
 		try {
 			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword()));
 			
+			UserEntity user = userRepository.findByEmail(loginDto.getEmail());
+			
 			LoginResponseDto response = new LoginResponseDto();
-			response.setToken(jwtTokenProvider.gerarToken(loginDto.getEmail(), userRepository.findByEmail(loginDto.getEmail()).getNomeAccess()));
+			AcessoDTO acesso = new AcessoDTO();
+			acesso.setNivel(user.getNomeAccess());
+			acesso.setAccessToken(jwtTokenProvider.gerarToken(loginDto.getEmail(), user.getName(), user.getNomeAccess()));
+			response.setAcesso(acesso);
 			
 			return response;
 		} catch (AuthenticationException e) {

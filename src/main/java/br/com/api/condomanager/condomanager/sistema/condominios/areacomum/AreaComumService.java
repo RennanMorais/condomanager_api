@@ -2,7 +2,6 @@ package br.com.api.condomanager.condomanager.sistema.condominios.areacomum;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +14,7 @@ import br.com.api.condomanager.condomanager.sistema.condominios.dto.AreaComumReq
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.AreaComumResponseDTO;
 import br.com.api.condomanager.condomanager.sistema.exceptions.CondomanagerException;
 import br.com.api.condomanager.condomanager.sistema.exceptions.ErroFluxoException;
+import br.com.api.condomanager.condomanager.util.Util;
 
 @Service
 public class AreaComumService {
@@ -25,36 +25,36 @@ public class AreaComumService {
 	@Autowired
 	CondominioRepository condominioRepository;
 	
+	@Autowired
+	Util utils;
+	
 	public AreaComumResponseDTO cadastrarAreaComum(AreaComumRequestDTO request) {
 
-		if(request != null) {
-			
-			AreaComumEntity area = new AreaComumEntity();
-			area.setArea(request.getArea());
-			
-			Optional<CondominioEntity> condominio = this.condominioRepository.findById(request.getIdCondominio());
-			
-			if(condominio != null) {
-				area.setCondominio(condominio.get().getNome());
-				area.setIdCondominio(condominio.get().getId());
-			} else {
-				throw new CondomanagerException("Condomínio inexistente");
-			}
-			
-			areaComumRepository.save(area);
-			
-			AreaComumResponseDTO response = new AreaComumResponseDTO();
-			response.setArea(area.getArea());
-			response.setCondominio(area.getCondominio());
-			
-			return response;
-			
+		AreaComumEntity area = new AreaComumEntity();
+		area.setCodigo(utils.gerarCodigo("area"));
+		area.setArea(request.getArea());
+		
+		CondominioEntity condominio = this.condominioRepository.findByCodigo(String.valueOf(request.getCodigoCondominio()));
+		
+		if(condominio != null) {
+			area.setCondominio(condominio.getNome());
+			area.setIdCondominio(condominio.getId());
+		} else {
+			throw new CondomanagerException("Condomínio inexistente");
 		}
 		
-		throw new ErroFluxoException("Não foi possivel salvar a área comum, verifique os dados e tente novamente.");
+		areaComumRepository.save(area);
+		
+		AreaComumResponseDTO response = new AreaComumResponseDTO();
+		response.setCodigo(area.getCodigo());
+		response.setArea(area.getArea());
+		response.setCondominio(area.getCondominio());
+		
+		return response;
+
 	}
 	
-	public List<AreaComumResponseDTO> getAreaComum() {
+	public List<AreaComumResponseDTO> listarAreaComum() {
 		
 		List<AreaComumEntity> listAreaComum = new ArrayList<>();
 		listAreaComum = areaComumRepository.findAll();
@@ -64,6 +64,7 @@ public class AreaComumService {
 			
 			for(AreaComumEntity areaItem : listAreaComum) { 
 				AreaComumResponseDTO area = new AreaComumResponseDTO();
+				area.setCodigo(areaItem.getCodigo());
 				area.setArea(areaItem.getArea());
 				area.setCondominio(areaItem.getCondominio());
 				

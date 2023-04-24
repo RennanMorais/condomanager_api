@@ -1,7 +1,5 @@
 package br.com.api.condomanager.condomanager.sistema.cadastro;
 
-import java.math.BigInteger;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -9,9 +7,10 @@ import org.springframework.stereotype.Service;
 import br.com.api.condomanager.condomanager.enums.AcessoEnum;
 import br.com.api.condomanager.condomanager.model.UserEntity;
 import br.com.api.condomanager.condomanager.repository.UsuarioRepository;
-import br.com.api.condomanager.condomanager.sistema.cadastro.dto.request.UserRequestDto;
-import br.com.api.condomanager.condomanager.sistema.cadastro.dto.response.UserResponseDto;
+import br.com.api.condomanager.condomanager.sistema.cadastro.dto.UserRequestDto;
+import br.com.api.condomanager.condomanager.sistema.cadastro.dto.UserResponseDto;
 import br.com.api.condomanager.condomanager.sistema.exceptions.DadosPessoaisException;
+import br.com.api.condomanager.condomanager.util.Util;
 
 @Service
 public class UsuarioService {
@@ -20,10 +19,14 @@ public class UsuarioService {
 	UsuarioRepository usuarioRepository;
 	
 	@Autowired
+	Util utils;
+	
+	@Autowired
 	PasswordEncoder encoder;
 	
 	public UserResponseDto cadastrar(UserRequestDto request) throws DadosPessoaisException {
 		UserEntity user = new UserEntity();
+		user.setCodigo(utils.gerarCodigo("user"));
 		user.setName(request.getName());
 		
 		if(validarEmailExistente(request.getEmail())) {
@@ -41,7 +44,13 @@ public class UsuarioService {
 		
 		usuarioRepository.save(user);
 		
-		return new UserResponseDto(request.getName(), request.getEmail(), BigInteger.valueOf(1));
+		UserResponseDto response = new UserResponseDto();
+		response.setCodigo(null);
+		response.setNome(user.getName());
+		response.setEmail(user.getEmail());
+		response.setNivelAcesso(user.getIdAccess());
+		
+		return response;
 	}
 	
 	public boolean validarEmailExistente(String email) {

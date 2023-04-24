@@ -6,4 +6,6 @@ import br.com.api.condomanager.condomanager.model.PetEntity;
 
 public interface PetRepository extends JpaRepository<PetEntity, Long> {
 
+	boolean existsByCodigo(String codigo);
+	
 }

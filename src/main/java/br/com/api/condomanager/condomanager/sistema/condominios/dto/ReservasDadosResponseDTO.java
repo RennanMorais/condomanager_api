@@ -7,6 +7,7 @@ import lombok.Setter;
 @Setter
 public class ReservasDadosResponseDTO {
 
+	private String codigo;
 	private String condominio;
 	private String morador;
 	private String area;

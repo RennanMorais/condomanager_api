@@ -29,7 +29,7 @@ public class AreaComumResource {
 	
 	@GetMapping(value = "/areacomum")
 	public List<AreaComumResponseDTO> getAreaComum() {
-		return this.areaComumService.getAreaComum();
+		return this.areaComumService.listarAreaComum();
 	}
 	
 }

@@ -38,7 +38,7 @@ class PredioServiceTest {
 		
 		request = new PredioRequestDTO();
 		request.setNome("x");
-		request.setIdCondominio(1L);
+		request.setCodigoCondominio(1L);
 		
 		response = new PredioResponseDTO();
 		response.setNome("X");

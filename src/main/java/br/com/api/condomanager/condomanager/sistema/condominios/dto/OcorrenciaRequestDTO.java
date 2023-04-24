@@ -21,7 +21,7 @@ public class OcorrenciaRequestDTO {
 	private String descricao;
 	
 	@NotNull(message = "{campo.nulo.vazio}")
-    private Long idCondominio;
+    private Long codigoCondominio;
 	
 	@NotNull(message = "{campo.nulo.vazio}")
 	private String cpfMorador;

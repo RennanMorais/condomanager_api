@@ -1,4 +1,4 @@
-package br.com.api.condomanager.condomanager.sistema.condominios.condominios.dto;
+package br.com.api.condomanager.condomanager.sistema.condominios.dto;
 
 import br.com.api.condomanager.condomanager.util.Endereco;
 import lombok.Getter;
@@ -8,6 +8,7 @@ import lombok.Setter;
 @Setter
 public class CondominioResponse {
 	
+	private String codigo;
 	private String nome;
 	private String cnpj;
 	private String email;

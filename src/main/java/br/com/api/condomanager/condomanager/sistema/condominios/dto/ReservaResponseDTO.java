@@ -7,6 +7,7 @@ import lombok.Setter;
 @Setter
 public class ReservaResponseDTO {
 
+	private String codigo;
 	private String evento;
 	private String data;
 	

@@ -1,7 +1,5 @@
 package br.com.api.condomanager.condomanager.sistema.condominios.morador;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -17,6 +15,7 @@ import br.com.api.condomanager.condomanager.sistema.condominios.dto.MoradorReque
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.MoradorResponseDTO;
 import br.com.api.condomanager.condomanager.sistema.exceptions.DadosPessoaisException;
 import br.com.api.condomanager.condomanager.sistema.exceptions.ErroFluxoException;
+import br.com.api.condomanager.condomanager.util.Util;
 
 @Service
 public class MoradorService {
@@ -31,12 +30,16 @@ public class MoradorService {
 	PredioRepository predioRepository;
 	
 	@Autowired
+	Util utils;
+	
+	@Autowired
 	PasswordEncoder encoder;
 
 	public MoradorResponseDTO cadastrarMorador(MoradorRequestDTO moradorRequest) {
 		
 		if(!usuarioRepository.existsByCpf(moradorRequest.getCpf().trim())) {
 			UserEntity usuario = new UserEntity();
+			usuario.setCodigo(utils.gerarCodigo("user"));
 			usuario.setName(moradorRequest.getName());
 			usuario.setCpf(moradorRequest.getCpf());
 			usuario.setRg(moradorRequest.getRg());
@@ -45,13 +48,18 @@ public class MoradorService {
 			usuario.setIdAccess(AcessoEnum.MORADOR.getNivel());
 			usuario.setTipo(AcessoEnum.MORADOR.getDescricao());
 			
+			CondominioEntity condominio;
+			PredioEntity predio;
+			
 			if(validarCondominioPredio(moradorRequest)) {
-				usuario.setIdCondominio(moradorRequest.getIdCondominio());
-				usuario.setIdPredio(moradorRequest.getIdPredio());
+				condominio = condominioRepository.findByCodigo(String.valueOf(moradorRequest.getCodigoCondominio()));
+				predio = predioRepository.findByCodigo(String.valueOf(moradorRequest.getCodigoPredio()));
+				usuario.setIdCondominio(condominio.getId());
+				usuario.setIdPredio(predio.getId());
 			}
 			
-			usuario.setCondominio(condominioRepository.findById(moradorRequest.getIdCondominio()).get().getNome());
-			usuario.setPredio(predioRepository.findById(moradorRequest.getIdPredio()).get().getNome());
+			usuario.setCondominio(condominioRepository.findByCodigo(String.valueOf(moradorRequest.getCodigoCondominio())).getNome());
+			usuario.setPredio(predioRepository.findByCodigo(String.valueOf(moradorRequest.getCodigoPredio())).getNome());
 			usuario.setApto(moradorRequest.getApto());
 			usuario.setPassword(this.encoder.encode(moradorRequest.getCpf()));
 			
@@ -69,18 +77,14 @@ public class MoradorService {
 	
 	private boolean validarCondominioPredio(MoradorRequestDTO moradorRequest) {
 		
-		Optional<CondominioEntity> condominio = condominioRepository.findById(moradorRequest.getIdCondominio());
-		Optional<PredioEntity> predio = predioRepository.findById(moradorRequest.getIdPredio());
+		CondominioEntity condominio = condominioRepository.findByCodigo(String.valueOf(moradorRequest.getCodigoCondominio()));
+		PredioEntity predio = predioRepository.findByCodigo(String.valueOf(moradorRequest.getCodigoPredio()));
 		
-		if(condominio.isPresent()) {
+		if(condominio != null) {
 			throw new ErroFluxoException("Condomínio inválido ou não encontrado.");
-		}
-		
-		if(predio.isPresent()) {
+		} else if(predio != null) {
 			throw new ErroFluxoException("Prédio inválido ou não encontrado.");
-		}
-		
-		if(predio.get().getIdCondominio().equals(moradorRequest.getIdCondominio())) {
+		} else if(!condominio.getId().equals(predio.getIdCondominio())) {
 			throw new ErroFluxoException("O prédio não faz parte do condomínio. Verifique e tente novamente!");
 		}
 		

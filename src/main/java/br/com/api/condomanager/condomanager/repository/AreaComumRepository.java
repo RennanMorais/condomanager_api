@@ -7,5 +7,9 @@ import br.com.api.condomanager.condomanager.model.AreaComumEntity;
 
 @Repository
 public interface AreaComumRepository extends JpaRepository<AreaComumEntity, Long> {
-
+	
+	AreaComumEntity findByCodigo(String codigo);
+	
+	boolean existsByCodigo(String codigo);
+	
 }

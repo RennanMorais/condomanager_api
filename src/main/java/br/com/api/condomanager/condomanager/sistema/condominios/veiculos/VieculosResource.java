@@ -18,7 +18,7 @@ public class VieculosResource {
 	
 	@PostMapping("/veiculo/cadastrar")
 	public VeiculoResponseDTO cadastrarVeiculo(@RequestBody VeiculoRequestDTO request) {
-		return this.veiculoService.cadastrar(request);
+		return this.veiculoService.cadastrarVeiculo(request);
 	}
 	
 }

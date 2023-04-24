@@ -6,7 +6,10 @@ import lombok.Setter;
 @Getter
 @Setter
 public class AssembleiaResponseDTO {
+	
+	private String codigo;
     private String condominio;
     private String titulo;
     private String data;
+    
 }

@@ -11,9 +11,10 @@ import lombok.Setter;
 public class AreaComumRequestDTO {
 
 	@NotBlank(message = "{campo.nulo.vazio}")
+	@NotNull(message = "{campo.nulo.vazio}")
 	private String area;
 	
 	@NotNull(message = "{campo.nulo.vazio}")
-	private Long idCondominio;
+	private Long codigoCondominio;
 	
 }

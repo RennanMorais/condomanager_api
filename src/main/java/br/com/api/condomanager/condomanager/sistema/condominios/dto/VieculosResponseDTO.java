@@ -5,10 +5,12 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class AreaComumResponseDTO {
+public class VieculosResponseDTO {
 
 	private String codigo;
-	private String area;
-	private String condominio;
+	private String marca;
+	private String modelo;
+	private String placa;
+	private String tipoVeiculo;
 	
 }
