@@ -14,6 +14,6 @@ public class PredioRequestDTO {
 	private String nome;
 	
 	@NotNull(message = "{campo.nulo.vazio}")
-	private Long idCondominio;
+	private Long codigoCondominio;
 	
 }

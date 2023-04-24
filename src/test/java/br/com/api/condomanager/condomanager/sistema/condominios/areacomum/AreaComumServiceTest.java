@@ -38,7 +38,7 @@ class AreaComumServiceTest {
 		
 		request = new AreaComumRequestDTO();
 		request.setArea("x");
-		request.setIdCondominio(1L);
+		request.setCodigoCondominio(1L);
 		
 		response = new AreaComumResponseDTO();
 		response.setArea("X");

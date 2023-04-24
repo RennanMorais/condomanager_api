@@ -15,6 +15,6 @@ public class AreaComumRequestDTO {
 	private String area;
 	
 	@NotNull(message = "{campo.nulo.vazio}")
-	private Long idCondominio;
+	private Long codigoCondominio;
 	
 }

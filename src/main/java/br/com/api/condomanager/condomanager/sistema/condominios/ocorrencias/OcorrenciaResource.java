@@ -24,13 +24,13 @@ public class OcorrenciaResource {
 	}
 	
 	@PostMapping("/ocorrencia/atender/{id}")
-	public OcorrenciaResponseDTO registrarOcorrencia(@PathVariable Long id) {
-		return this.service.atenderOcorrencia(id);
+	public OcorrenciaResponseDTO registrarOcorrencia(@PathVariable Long codigo) {
+		return this.service.atenderOcorrencia(codigo);
 	}
 	
 	@PostMapping("/ocorrencia/finalizar/{id}")
-	public OcorrenciaResponseDTO finalizarOcorrencia(@PathVariable Long id, @RequestBody FinalizarOcorrenciaRequestDTO request) {
-		return this.service.finalizarOcorrencia(id, request);
+	public OcorrenciaResponseDTO finalizarOcorrencia(@PathVariable Long codigo, @RequestBody FinalizarOcorrenciaRequestDTO request) {
+		return this.service.finalizarOcorrencia(codigo, request);
 	}
 	
 }

@@ -21,9 +21,9 @@ public class AssembleiaRequestDTO {
     private String data;
 
     @NotNull(message = "{campo.nulo.vazio}")
-    private Long idCondominio;
+    private Long codigoCondominio;
     
     @NotNull(message = "{campo.nulo.vazio}")
-    private Long idArea;
+    private Long codigoArea;
 
 }

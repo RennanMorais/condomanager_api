@@ -3,7 +3,6 @@ package br.com.api.condomanager.condomanager.sistema.condominios.assembleias;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,15 +45,15 @@ public class AssembleiaService {
     	assembleia.setDescricao(dto.getDescricao() == null ? "":dto.getDescricao());
     	assembleia.setData(DateUtil.toDate(dto.getData()));
     	
-    	Optional<CondominioEntity> cond = condominioRepository.findById(dto.getIdCondominio());
-    	Optional<AreaComumEntity> area = areaComumRepository.findById(dto.getIdArea());
+    	CondominioEntity cond = condominioRepository.findByCodigo(String.valueOf(dto.getCodigoCondominio()));
+    	AreaComumEntity area = areaComumRepository.findByCodigo(String.valueOf(dto.getCodigoArea()));
     	
-    	if(cond.isPresent() & area.isPresent()) {
-    		if(cond.get().getId().equals(area.get().getIdCondominio())) {
-    			assembleia.setIdCondominio(cond.get().getId());
-            	assembleia.setCondominio(cond.get().getNome());
-            	assembleia.setIdArea(area.get().getId());
-            	assembleia.setLocalAreaComum(area.get().getArea());
+    	if(cond != null & area != null) {
+    		if(cond.getId().equals(area.getIdCondominio())) {
+    			assembleia.setIdCondominio(cond.getId());
+            	assembleia.setCondominio(cond.getNome());
+            	assembleia.setIdArea(area.getId());
+            	assembleia.setLocalAreaComum(area.getArea());
             	assembleiaRepository.save(assembleia);
         	} else {
         		throw new ErroFluxoException("A área comum não pertence a este condominio.");
@@ -65,7 +64,7 @@ public class AssembleiaService {
     	
     	AssembleiaResponseDTO response = new AssembleiaResponseDTO();
     	response.setCodigo(assembleia.getCodigo());
-    	response.setCondominio(cond.get().getNome());
+    	response.setCondominio(cond.getNome());
     	response.setTitulo(assembleia.getTitulo());
     	response.setData(DateUtil.dateToString(assembleia.getData()));
     	

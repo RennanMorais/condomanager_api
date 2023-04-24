@@ -1,7 +1,5 @@
 package br.com.api.condomanager.condomanager.sistema.condominios.dto;
 
-import java.math.BigInteger;
-
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -13,16 +11,16 @@ import lombok.Setter;
 public class VeiculoRequestDTO {
 
 	@NotNull(message = "{campo.nulo.vazio}")
-	private BigInteger idCondominio;
+	private Long codigoCondominio;
 	
 	@NotNull(message = "{campo.nulo.vazio}")
-	private BigInteger idPredio;
+	private Long codigoPredio;
 	
 	@NotNull(message = "{campo.nulo.vazio}")
-	private BigInteger morador;
+	private Long codigoMorador;
 	
 	@NotNull(message = "{campo.nulo.vazio}")
-	private BigInteger tipoVeiculo;
+	private Long tipoVeiculo;
 	
 	@NotBlank(message = "{campo.nulo.vazio}")
 	private String marca;

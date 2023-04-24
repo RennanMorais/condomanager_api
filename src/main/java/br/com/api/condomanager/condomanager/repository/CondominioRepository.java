@@ -10,6 +10,8 @@ public interface CondominioRepository extends JpaRepository<CondominioEntity, Lo
 	
 	CondominioEntity findByCnpj(String cnpj);
 	
+	CondominioEntity findByCodigo(String codigo);
+	
 	boolean existsByCodigo(String codigo);
 	
 }

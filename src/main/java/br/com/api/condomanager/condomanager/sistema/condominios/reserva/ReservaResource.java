@@ -36,12 +36,12 @@ public class ReservaResource {
 	}
 	
 	@PostMapping("/reservas/aprovar/{id}")
-	public ResponseEntity<AprovarReservaResponseDTO> aprovarReserva(@PathVariable Long id) {
-		return ResponseEntity.ok(this.reservaService.aprovarReserva(id)); 
+	public ResponseEntity<AprovarReservaResponseDTO> aprovarReserva(@PathVariable Long codigoReserva) {
+		return ResponseEntity.ok(this.reservaService.aprovarReserva(codigoReserva)); 
 	}
 	
 	@PostMapping("/reservas/cancelar/{id}")
-	public ResponseEntity<AprovarReservaResponseDTO> cancelarReserva(@PathVariable Long id) {
-		return ResponseEntity.ok(this.reservaService.cancelarReserva(id)); 
+	public ResponseEntity<AprovarReservaResponseDTO> cancelarReserva(@PathVariable Long codigoReserva) {
+		return ResponseEntity.ok(this.reservaService.cancelarReserva(codigoReserva)); 
 	}
 }

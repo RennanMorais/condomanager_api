@@ -30,38 +30,33 @@ public class PredioService {
 
 	public PredioResponseDTO cadastrarPredio(PredioRequestDTO request) {
 		
-		if(request != null) {
-			
-			PredioEntity predio = new PredioEntity();
-			predio.setCodigo(utils.gerarCodigo("pred"));
-			predio.setNome(request.getNome());
-			
-			CondominioEntity condominio;
-			
-			try {
-				condominio = this.condominioRepository.findById(request.getIdCondominio()).get();
-			} catch(NoSuchElementException e) {
-				throw new ErroFluxoException("Condomínio invalido.");
-			}
-			
-			if(condominio != null) {
-				predio.setCondominio(condominio.getNome());
-				predio.setIdCondominio(condominio.getId());
-			} else {
-				throw new ErroFluxoException("Condomínio inexistente");
-			}
-			
-			predioRepository.save(predio);
-			
-			PredioResponseDTO response = new PredioResponseDTO();
-			response.setCodigo(predio.getCodigo());
-			response.setNome(predio.getNome());
-			response.setCondominio(predio.getCondominio());
-			
-			return response;
+		PredioEntity predio = new PredioEntity();
+		predio.setCodigo(utils.gerarCodigo("pred"));
+		predio.setNome(request.getNome());
+		
+		CondominioEntity condominio;
+		
+		try {
+			condominio = this.condominioRepository.findByCodigo(String.valueOf(request.getCodigoCondominio()));
+		} catch(NoSuchElementException e) {
+			throw new ErroFluxoException("Condomínio invalido.");
 		}
 		
-		throw new ErroFluxoException("Não foi possivel salvar o prédio, verifique os dados e tente novamente.");
+		if(condominio != null) {
+			predio.setCondominio(condominio.getNome());
+			predio.setIdCondominio(condominio.getId());
+		} else {
+			throw new ErroFluxoException("Condomínio inexistente");
+		}
+		
+		predioRepository.save(predio);
+		
+		PredioResponseDTO response = new PredioResponseDTO();
+		response.setCodigo(predio.getCodigo());
+		response.setNome(predio.getNome());
+		response.setCondominio(predio.getCondominio());
+		
+		return response;
 	}
 	
 	public List<PredioResponseDTO> getPredios() {

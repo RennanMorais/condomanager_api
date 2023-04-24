@@ -21,7 +21,7 @@ public class PetRequestDTO {
 	private String sexo;
 	
 	@NotNull(message = "{campo.nulo.vazio}")
-	private Long idMorador;
+	private Long codigoMorador;
 	
 	@NotBlank(message = "{campo.nulo.vazio}")
 	private String morador;

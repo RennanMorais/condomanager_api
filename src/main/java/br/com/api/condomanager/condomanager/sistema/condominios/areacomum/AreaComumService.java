@@ -2,7 +2,6 @@ package br.com.api.condomanager.condomanager.sistema.condominios.areacomum;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,11 +34,11 @@ public class AreaComumService {
 		area.setCodigo(utils.gerarCodigo("area"));
 		area.setArea(request.getArea());
 		
-		Optional<CondominioEntity> condominio = this.condominioRepository.findById(request.getIdCondominio());
+		CondominioEntity condominio = this.condominioRepository.findByCodigo(String.valueOf(request.getCodigoCondominio()));
 		
 		if(condominio != null) {
-			area.setCondominio(condominio.get().getNome());
-			area.setIdCondominio(condominio.get().getId());
+			area.setCondominio(condominio.getNome());
+			area.setIdCondominio(condominio.getId());
 		} else {
 			throw new CondomanagerException("Condomínio inexistente");
 		}

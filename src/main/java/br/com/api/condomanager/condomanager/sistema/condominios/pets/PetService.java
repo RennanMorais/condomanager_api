@@ -1,7 +1,5 @@
 package br.com.api.condomanager.condomanager.sistema.condominios.pets;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,18 +26,19 @@ public class PetService {
 	
 	public PetResponseDTO salvarPet(PetRequestDTO request) {
 		
-		Optional<UserEntity> user = usuarioRepository.findById(request.getIdMorador());
+		UserEntity user = usuarioRepository.findByCodigo(String.valueOf(request.getCodigoMorador()));
+		
 		if(user == null) {
 			throw new ErroFluxoException("Morador não encontrado.");
 		}
 		
 		PetEntity pet = new PetEntity();
 		pet.setCodigo(utils.gerarCodigo("pet"));
-		pet.setIdMorador(request.getIdMorador());
-		pet.setMorador(user.get().getName());
+		pet.setIdMorador(user.getId());
+		pet.setMorador(user.getName());
 		pet.setNome(request.getNome());
 		pet.setSexo(request.getSexo());
-		pet.setTelefone(user.get().getPhone());
+		pet.setTelefone(user.getPhone());
 		pet.setTipo(request.getTipo());
 		
 		try {
