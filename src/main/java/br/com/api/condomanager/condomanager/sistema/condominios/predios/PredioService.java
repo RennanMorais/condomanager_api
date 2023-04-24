@@ -2,7 +2,6 @@ package br.com.api.condomanager.condomanager.sistema.condominios.predios;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,11 +35,7 @@ public class PredioService {
 		
 		CondominioEntity condominio;
 		
-		try {
-			condominio = this.condominioRepository.findByCodigo(String.valueOf(request.getCodigoCondominio()));
-		} catch(NoSuchElementException e) {
-			throw new ErroFluxoException("Condomínio invalido.");
-		}
+		condominio = this.condominioRepository.findByCodigo(String.valueOf(request.getCodigoCondominio()));
 		
 		if(condominio != null) {
 			predio.setCondominio(condominio.getNome());
