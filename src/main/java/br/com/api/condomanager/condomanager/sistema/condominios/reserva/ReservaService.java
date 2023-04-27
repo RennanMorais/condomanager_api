@@ -61,18 +61,15 @@ public class ReservaService {
 		ReservaEntity reserva = new ReservaEntity();
 		reserva.setCodigo(utils.gerarCodigo("reserv"));
 		reserva.setIdCondominio(condominio.getId());
-		reserva.setCondominio(condominio.getNome());
 		reserva.setIdMorador(usuario.getId());
-		reserva.setMorador(usuario.getName());
-		reserva.setIdArea(areaComum.getId());
-		reserva.setArea(areaComum.getArea());
+		reserva.setIdAreaComum(areaComum.getId());
 		reserva.setEvento(request.getEvento());
 		
 		Date dataFormatada = DateUtil.toDate(request.getData());
 		this.reservaDataCheck(condominio.getId(), areaComum.getId(), dataFormatada);
 		
 		reserva.setData(dataFormatada);
-		reserva.setStatus(ReservaStatusEnum.PENDENTE.getDescricao());
+		reserva.setIdStatus(ReservaStatusEnum.PENDENTE.getCodigo());
 		
 		reservaRepository.save(reserva);
 		
@@ -93,15 +90,13 @@ public class ReservaService {
 			throw new ErroFluxoException("Nennuma reserva registrada.");
 		}
 		
+		
+		//alterar for para projection e verificar novos campos do response dto
 		for(ReservaEntity r : reservas) {
 			ReservasDadosResponseDTO response = new ReservasDadosResponseDTO();
 			response.setCodigo(r.getCodigo());
-			response.setCondominio(r.getCondominio());
-			response.setMorador(r.getMorador());
-			response.setArea(r.getArea());
 			response.setEvento(r.getEvento());
 			response.setData(DateUtil.dateToString(r.getData()));
-			response.setStatus(r.getStatus());
 			listaResponse.add(response);
 		}
 		
@@ -157,8 +152,8 @@ public class ReservaService {
 			Optional<ReservaEntity> reserva = reservaRepository.findById(id);
 			if(reserva.get() != null) {
 				
-				if(ReservaStatusEnum.APROVADO.getDescricao().equals(reserva.get().getStatus())
-						|| ReservaStatusEnum.CANCELADO.getDescricao().equals(reserva.get().getStatus())) {
+				if(ReservaStatusEnum.APROVADO.getCodigo().equals(reserva.get().getIdStatus())
+						|| ReservaStatusEnum.CANCELADO.getCodigo().equals(reserva.get().getIdStatus())) {
 					AprovarReservaResponseDTO response = new AprovarReservaResponseDTO();
 					response.setCodigo("400");
 					response.setMensagem("Não é possivel aprovar uma reserva com status Aprovada ou Cancelada.");
@@ -166,12 +161,12 @@ public class ReservaService {
 					return response;
 				}
 				
-				reserva.get().setStatus(ReservaStatusEnum.APROVADO.getDescricao());
+				reserva.get().setIdStatus(ReservaStatusEnum.APROVADO.getCodigo());
 				reservaRepository.save(reserva.get());
 				
 				AprovarReservaResponseDTO response = new AprovarReservaResponseDTO();
 				response.setCodigo("200");
-				response.setMensagem("Reserva do "+ reserva.get().getArea() +" do evento "+ reserva.get().getEvento() + " foi aprovada com sucesso.");
+				response.setMensagem("Reserva do evento "+ reserva.get().getEvento() + " foi aprovada com sucesso.");
 				
 				return response;
 			}
@@ -188,8 +183,8 @@ public class ReservaService {
 			Optional<ReservaEntity> reserva = reservaRepository.findById(id);
 			if(reserva.get() != null) {
 				
-				if(ReservaStatusEnum.APROVADO.getDescricao().equals(reserva.get().getStatus())
-						|| ReservaStatusEnum.CANCELADO.getDescricao().equals(reserva.get().getStatus())) {
+				if(ReservaStatusEnum.APROVADO.getCodigo().equals(reserva.get().getIdStatus())
+						|| ReservaStatusEnum.CANCELADO.getCodigo().equals(reserva.get().getIdStatus())) {
 					AprovarReservaResponseDTO response = new AprovarReservaResponseDTO();
 					response.setCodigo("400");
 					response.setMensagem("Não é possivel aprovar uma reserva com status Aprovada ou Cancelada.");
@@ -197,12 +192,12 @@ public class ReservaService {
 					return response;
 				}
 				
-				reserva.get().setStatus(ReservaStatusEnum.CANCELADO.getDescricao());
+				reserva.get().setIdStatus(ReservaStatusEnum.CANCELADO.getCodigo());
 				reservaRepository.save(reserva.get());
 				
 				AprovarReservaResponseDTO response = new AprovarReservaResponseDTO();
 				response.setCodigo("200");
-				response.setMensagem("Reserva do "+ reserva.get().getArea() +" do evento "+ reserva.get().getEvento() + " foi cancelada com sucesso.");
+				response.setMensagem("Reserva do evento "+ reserva.get().getEvento() + " foi cancelada com sucesso.");
 				
 				return response;
 			}

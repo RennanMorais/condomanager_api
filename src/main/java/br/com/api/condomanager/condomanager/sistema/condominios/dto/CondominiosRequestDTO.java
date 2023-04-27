@@ -6,7 +6,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-import br.com.api.condomanager.condomanager.util.Endereco;
+import br.com.api.condomanager.condomanager.util.EnderecoDTO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -27,6 +27,6 @@ public class CondominiosRequestDTO{
 	private String email;
 	
 	@NotNull(message = "{campo.nulo.vazio}")
-	private Endereco endereco;
+	private EnderecoDTO endereco;
 	
 }

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.AreaComumRequestDTO;
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.AreaComumResponseDTO;
+import br.com.api.condomanager.condomanager.sistema.condominios.dto.projection.AreaComumProjection;
 
 @RestController
 @RequestMapping("/condomanager/sistema")
@@ -28,7 +29,7 @@ public class AreaComumResource {
 	}
 	
 	@GetMapping(value = "/areacomum")
-	public List<AreaComumResponseDTO> getAreaComum() {
+	public List<AreaComumProjection> getAreaComum() {
 		return this.areaComumService.listarAreaComum();
 	}
 	

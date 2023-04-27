@@ -44,10 +44,10 @@ public class CondominioEntity {
 	@Column(name="bairro")
 	private String bairro;
 	
-	@Column(name="estado")
-	private String estado;
+	@Column(name="id_estado")
+	private Long idEstado;
 	
-	@Column(name="cidade")
-	private String cidade;
+	@Column(name="id_cidade")
+	private Long idCidade;
 	
 }

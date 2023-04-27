@@ -33,12 +33,9 @@ public class PredioService {
 		predio.setCodigo(utils.gerarCodigo("pred"));
 		predio.setNome(request.getNome());
 		
-		CondominioEntity condominio;
-		
-		condominio = this.condominioRepository.findByCodigo(String.valueOf(request.getCodigoCondominio()));
+		CondominioEntity condominio = this.condominioRepository.findByCodigo(String.valueOf(request.getCodigoCondominio()));
 		
 		if(condominio != null) {
-			predio.setCondominio(condominio.getNome());
 			predio.setIdCondominio(condominio.getId());
 		} else {
 			throw new ErroFluxoException("Condomínio inexistente");
@@ -49,7 +46,8 @@ public class PredioService {
 		PredioResponseDTO response = new PredioResponseDTO();
 		response.setCodigo(predio.getCodigo());
 		response.setNome(predio.getNome());
-		response.setCondominio(predio.getCondominio());
+		response.setCondominio(condominio.getNome());
+		response.setCodigoCondominio(condominio.getCodigo());
 		
 		return response;
 	}
@@ -66,7 +64,10 @@ public class PredioService {
 				PredioResponseDTO predio = new PredioResponseDTO();
 				predio.setCodigo(predioItem.getCodigo());
 				predio.setNome(predioItem.getNome());
-				predio.setCondominio(predioItem.getCondominio());
+				
+				//TODO valterar response para o projection e validar codigo do condominio
+				predio.setCondominio(null);
+				
 				response.add(predio);
 			}
 			

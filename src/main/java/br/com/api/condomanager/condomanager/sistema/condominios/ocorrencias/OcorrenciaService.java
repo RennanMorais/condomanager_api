@@ -52,7 +52,6 @@ public class OcorrenciaService {
 		}
 		
 		ocorrencia.setIdCondominio(cond.getId());
-		ocorrencia.setCondominio(cond.getNome());
 		
 		UserEntity user = userRepository.findByCpf(request.getCpfMorador());
 		
@@ -61,15 +60,14 @@ public class OcorrenciaService {
 		}
 		
 		ocorrencia.setIdMorador(user.getId());
-		ocorrencia.setMorador(user.getName());
-		ocorrencia.setContato(user.getPhone());
-		ocorrencia.setStatus(OcorrenciaStatusEnum.PENDENTE.getDescricaoStatus());
+		ocorrencia.setIdStatus(OcorrenciaStatusEnum.PENDENTE.getIdStatus());
 		
 		ocorrenciaRepository.save(ocorrencia);
 		
 		OcorrenciaResponseDTO response = new OcorrenciaResponseDTO(
 				String.valueOf(HttpStatus.ACCEPTED.value()), 
 				"Ocorrência registrada com sucesso, aguarde o atendimento.");
+		
 		return response;
 	}
 	
@@ -77,7 +75,7 @@ public class OcorrenciaService {
 		
 		OcorrenciaEntity ocorrencia = this.validarOcorrencia(codigoOcorrencia, "atender");
 		
-		ocorrencia.setStatus(OcorrenciaStatusEnum.EM_ANDAMENTO.getDescricaoStatus());
+		ocorrencia.setIdStatus(OcorrenciaStatusEnum.EM_ANDAMENTO.getIdStatus());
 		ocorrenciaRepository.save(ocorrencia);
 		
 		OcorrenciaResponseDTO response = new OcorrenciaResponseDTO(
@@ -91,8 +89,8 @@ public class OcorrenciaService {
 		
 		OcorrenciaEntity ocorrencia = this.validarOcorrencia(codigoOcorrencia, "finalizar");
 		
-		ocorrencia.setStatus(OcorrenciaStatusEnum.FINALIZADO.getDescricaoStatus());
-		ocorrencia.setFeedback(request.getFeedback());
+		ocorrencia.setIdStatus(OcorrenciaStatusEnum.FINALIZADO.getIdStatus());
+		ocorrencia.setResposta(request.getResposta());
 		ocorrenciaRepository.save(ocorrencia);
 		
 		OcorrenciaResponseDTO response = new OcorrenciaResponseDTO(
@@ -110,13 +108,13 @@ public class OcorrenciaService {
 		}
 		
 		if(chamada.equalsIgnoreCase("atender")) {
-			if(ocorrencia.getStatus().equalsIgnoreCase(OcorrenciaStatusEnum.EM_ANDAMENTO.getDescricaoStatus())
-					|| ocorrencia.getStatus().equalsIgnoreCase(OcorrenciaStatusEnum.FINALIZADO.getDescricaoStatus())) {
+			if(ocorrencia.getIdStatus().equals(OcorrenciaStatusEnum.EM_ANDAMENTO.getIdStatus())
+					|| ocorrencia.getIdStatus().equals(OcorrenciaStatusEnum.FINALIZADO.getIdStatus())) {
 				throw new ErroFluxoException("Ocorrencia já está em atendimento ou foi finalizada");
 			}
 		} else if(chamada.equalsIgnoreCase("finalizar")) {
-			if(ocorrencia.getStatus().equalsIgnoreCase(OcorrenciaStatusEnum.PENDENTE.getDescricaoStatus())
-					|| ocorrencia.getStatus().equalsIgnoreCase(OcorrenciaStatusEnum.FINALIZADO.getDescricaoStatus())) {
+			if(ocorrencia.getIdStatus().equals(OcorrenciaStatusEnum.PENDENTE.getIdStatus())
+					|| ocorrencia.getIdStatus().equals(OcorrenciaStatusEnum.FINALIZADO.getIdStatus())) {
 				throw new ErroFluxoException("Ocorrencia ainda está pendente ou já foi finalizada");
 			}
 		}
@@ -125,7 +123,7 @@ public class OcorrenciaService {
 		UserEntity user = userRepository.findByEmail(loginUser.trim());
 		
 		if(user != null) {
-			if(!user.getIdAccess().equals(AcessoEnum.ADMINISTRADOR.getNivel())) {
+			if(!user.getIdNivelAcesso().equals(AcessoEnum.ADMINISTRADOR.getNivel())) {
 				throw new ErroFluxoException("Você não tem permissão para realizar atender ocorrências");
 			}
 		}

@@ -25,6 +25,6 @@ public class MoradorRequestDTO extends UserRequestDto {
 	
 	@NotBlank(message = "{campo.nulo.vazio}")
 	@NotNull(message = "{campo.nulo.vazio}")
-	private String apto;
+	private Long idApto;
 	
 }

@@ -10,6 +10,6 @@ import lombok.Setter;
 public class FinalizarOcorrenciaRequestDTO {
 
 	@NotNull(message = "{campo.nulo.vazio}")
-	private String feedback;
+	private String resposta;
 	
 }

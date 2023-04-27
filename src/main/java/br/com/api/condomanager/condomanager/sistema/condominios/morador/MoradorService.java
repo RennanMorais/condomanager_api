@@ -40,28 +40,34 @@ public class MoradorService {
 		if(!usuarioRepository.existsByCpf(moradorRequest.getCpf().trim())) {
 			UserEntity usuario = new UserEntity();
 			usuario.setCodigo(utils.gerarCodigo("user"));
-			usuario.setName(moradorRequest.getName());
+			usuario.setNome(moradorRequest.getNome());
 			usuario.setCpf(moradorRequest.getCpf());
 			usuario.setRg(moradorRequest.getRg());
 			usuario.setEmail(moradorRequest.getEmail());
-			usuario.setPhone(moradorRequest.getPhone());
-			usuario.setIdAccess(AcessoEnum.MORADOR.getNivel());
-			usuario.setTipo(AcessoEnum.MORADOR.getDescricao());
+			usuario.setTelefone(moradorRequest.getTelefone());
+			usuario.setDdd(moradorRequest.getDdd());
+			usuario.setIdNivelAcesso(AcessoEnum.MORADOR.getNivel());
 			
-			CondominioEntity condominio;
-			PredioEntity predio;
+			CondominioEntity condominio = condominioRepository.findByCodigo(String.valueOf(moradorRequest.getCodigoCondominio()));
+			PredioEntity predio = predioRepository.findByCodigo(String.valueOf(moradorRequest.getCodigoPredio()));
+			
+			if(condominio == null || predio == null) {
+				throw new ErroFluxoException("Falha ao consultar dados do condomínio!");
+			}
 			
 			if(validarCondominioPredio(moradorRequest)) {
-				condominio = condominioRepository.findByCodigo(String.valueOf(moradorRequest.getCodigoCondominio()));
-				predio = predioRepository.findByCodigo(String.valueOf(moradorRequest.getCodigoPredio()));
 				usuario.setIdCondominio(condominio.getId());
 				usuario.setIdPredio(predio.getId());
 			}
 			
-			usuario.setCondominio(condominioRepository.findByCodigo(String.valueOf(moradorRequest.getCodigoCondominio())).getNome());
-			usuario.setPredio(predioRepository.findByCodigo(String.valueOf(moradorRequest.getCodigoPredio())).getNome());
-			usuario.setApto(moradorRequest.getApto());
-			usuario.setPassword(this.encoder.encode(moradorRequest.getCpf()));
+			usuario.setIdCondominio(condominio.getId());
+			usuario.setIdPredio(predio.getId());
+			
+			//TO DO
+			//criar tabela de apartamentos vinculada aos predios
+			usuario.setIdApto(null);
+			
+			usuario.setSenha(this.encoder.encode(moradorRequest.getCpf()));
 			
 			usuarioRepository.save(usuario);
 		} else {

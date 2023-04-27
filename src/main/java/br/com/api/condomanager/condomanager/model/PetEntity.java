@@ -29,16 +29,7 @@ public class PetEntity {
 	@Column(name = "tipo")
 	private String tipo;
 	
-	@Column(name = "sexo")
-	private String sexo;
-	
 	@Column(name = "id_morador")
 	private Long idMorador;
-	
-	@Column(name = "morador")
-	private String morador;
-	
-	@Column(name = "phone")
-	private String telefone;
 	
 }

@@ -24,12 +24,9 @@ public class AreaComumEntity {
 	private String codigo;
 	
 	@Column(name = "nome")
-	private String area;
+	private String nome;
 	
 	@Column(name = "id_condominio")
 	private Long idCondominio;
-	
-	@Column(name = "condominio")
-	private String condominio;
 	
 }

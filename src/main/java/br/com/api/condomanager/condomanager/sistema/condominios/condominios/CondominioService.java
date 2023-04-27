@@ -1,6 +1,5 @@
 package br.com.api.condomanager.condomanager.sistema.condominios.condominios;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,11 +8,10 @@ import org.springframework.stereotype.Service;
 
 import br.com.api.condomanager.condomanager.model.CondominioEntity;
 import br.com.api.condomanager.condomanager.repository.CondominioRepository;
-import br.com.api.condomanager.condomanager.sistema.condominios.dto.CondominioResponse;
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.CondominiosRequestDTO;
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.CondominiosResponseDTO;
+import br.com.api.condomanager.condomanager.sistema.condominios.dto.projection.CondominioProjection;
 import br.com.api.condomanager.condomanager.sistema.exceptions.ErroFluxoException;
-import br.com.api.condomanager.condomanager.util.Endereco;
 import br.com.api.condomanager.condomanager.util.Util;
 
 @Service
@@ -38,8 +36,8 @@ public class CondominioService {
 		cond.setNumero(request.getEndereco().getNumero());
 		cond.setBairro(request.getEndereco().getBairro());
 		cond.setComplemento(request.getEndereco().getComplemento());
-		cond.setCidade(request.getEndereco().getCidade());
-		cond.setEstado(request.getEndereco().getEstado());
+		cond.setIdCidade(request.getEndereco().getIdCidade());
+		cond.setIdEstado(request.getEndereco().getIdEstado());
 		
 		condominioRepository.save(cond);
 		
@@ -51,34 +49,12 @@ public class CondominioService {
 		
 	}
 	
-	public List<CondominioResponse> buscarCondominios() {
+	public List<CondominioProjection> buscarCondominios() {
 
-		List<CondominioEntity> listCondominios = condominioRepository.findAll();
+		List<CondominioProjection> listCondominios = condominioRepository.findAllProjectedBy();
 		
 		if(!listCondominios.isEmpty()) {
-			List<CondominioResponse> response = new ArrayList<>();
-			
-			for(CondominioEntity condominio : listCondominios) { 
-				CondominioResponse cond = new CondominioResponse();
-				cond.setCodigo(condominio.getCodigo());
-				cond.setNome(condominio.getNome());
-				cond.setCnpj(condominio.getCnpj());
-				cond.setEmail(condominio.getEmail());
-				
-				Endereco endereco = new Endereco();
-				endereco.setEndereco(condominio.getEndereco());
-				endereco.setBairro(condominio.getBairro());
-				endereco.setNumero(condominio.getNumero());
-				endereco.setComplemento(condominio.getComplemento());
-				endereco.setCidade(condominio.getCidade());
-				endereco.setEstado(condominio.getEstado());
-				
-				cond.setEndereco(endereco);
-				
-				response.add(cond);
-			}
-			
-			return response;
+			return listCondominios;
 		}
 		
 		throw new ErroFluxoException("Nenhum condomínio cadastrado!");

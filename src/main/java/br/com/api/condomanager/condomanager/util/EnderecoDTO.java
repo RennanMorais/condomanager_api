@@ -5,13 +5,13 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class Endereco {
+public class EnderecoDTO {
 
-	private String estado;
-	private String cidade;
 	private String endereco;
 	private String numero;
 	private String complemento;
 	private String bairro;
+	private Long idEstado;
+	private Long idCidade;
 	
 }

@@ -18,7 +18,7 @@ import br.com.api.condomanager.condomanager.autenticacao.dto.LoginResponseDto;
 public class LoginResource {
 
 	@Autowired
-	AutenticacaoService authService;
+	private AutenticacaoService authService;
 	
 	@PostMapping(value = "/login", produces = "application/json")
 	public ResponseEntity<LoginResponseDto> autenticar(@RequestBody @Valid LoginRequestDto loginDto) throws LoginException {

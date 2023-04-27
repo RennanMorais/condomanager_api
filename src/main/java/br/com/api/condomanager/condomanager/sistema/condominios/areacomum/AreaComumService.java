@@ -12,6 +12,7 @@ import br.com.api.condomanager.condomanager.repository.AreaComumRepository;
 import br.com.api.condomanager.condomanager.repository.CondominioRepository;
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.AreaComumRequestDTO;
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.AreaComumResponseDTO;
+import br.com.api.condomanager.condomanager.sistema.condominios.dto.projection.AreaComumProjection;
 import br.com.api.condomanager.condomanager.sistema.exceptions.CondomanagerException;
 import br.com.api.condomanager.condomanager.sistema.exceptions.ErroFluxoException;
 import br.com.api.condomanager.condomanager.util.Util;
@@ -32,12 +33,11 @@ public class AreaComumService {
 
 		AreaComumEntity area = new AreaComumEntity();
 		area.setCodigo(utils.gerarCodigo("area"));
-		area.setArea(request.getArea());
+		area.setNome(request.getArea());
 		
 		CondominioEntity condominio = this.condominioRepository.findByCodigo(String.valueOf(request.getCodigoCondominio()));
 		
 		if(condominio != null) {
-			area.setCondominio(condominio.getNome());
 			area.setIdCondominio(condominio.getId());
 		} else {
 			throw new CondomanagerException("Condomínio inexistente");
@@ -47,31 +47,21 @@ public class AreaComumService {
 		
 		AreaComumResponseDTO response = new AreaComumResponseDTO();
 		response.setCodigo(area.getCodigo());
-		response.setArea(area.getArea());
-		response.setCondominio(area.getCondominio());
+		response.setArea(area.getNome());
+		response.setCondominio(condominio.getNome());
+		response.setCodigoCondominio(condominio.getCodigo());
 		
 		return response;
 
 	}
 	
-	public List<AreaComumResponseDTO> listarAreaComum() {
+	public List<AreaComumProjection> listarAreaComum() {
 		
-		List<AreaComumEntity> listAreaComum = new ArrayList<>();
-		listAreaComum = areaComumRepository.findAll();
+		List<AreaComumProjection> listaAreas = new ArrayList<>();
+		listaAreas = areaComumRepository.findAllProjectedBy();
 		
-		if(!listAreaComum.isEmpty()) {
-			List<AreaComumResponseDTO> response = new ArrayList<>();
-			
-			for(AreaComumEntity areaItem : listAreaComum) { 
-				AreaComumResponseDTO area = new AreaComumResponseDTO();
-				area.setCodigo(areaItem.getCodigo());
-				area.setArea(areaItem.getArea());
-				area.setCondominio(areaItem.getCondominio());
-				
-				response.add(area);
-			}
-			
-			return response;
+		if(!listaAreas.isEmpty()) {
+			return listaAreas;
 		}
 		
 		throw new ErroFluxoException("Nenhuma área comum cadastrada!");

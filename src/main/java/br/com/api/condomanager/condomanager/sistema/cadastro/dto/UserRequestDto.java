@@ -19,7 +19,7 @@ import lombok.Setter;
 public class UserRequestDto {
 	
 	@NotBlank(message = "{campo.nulo.vazio}")
-	private String name;
+	private String nome;
 	
 	@NotBlank(message = "{campo.nulo.vazio}")
 	@Email(message = "{email.valid}")
@@ -27,7 +27,7 @@ public class UserRequestDto {
 	
 	@NotBlank(message = "{campo.nulo.vazio}")
 	@Size(min = 6, message = "{senha.min.carac}")
-	private String password;
+	private String senha;
 	
 	@CPF(message = "{cpf.valid}")
 	@NotBlank(message = "{campo.nulo.vazio}")
@@ -35,5 +35,9 @@ public class UserRequestDto {
 	
 	@NotBlank(message = "{campo.nulo.vazio}")
 	@Pattern(regexp = "[0-9]+" , message = "{telefone.valid}")
-	private String phone;
+	private String telefone;
+	
+	@NotBlank(message = "{campo.nulo.vazio}")
+	@Pattern(regexp = "[0-9]+" , message = "{telefone.valid}")
+	private String ddd;
 }

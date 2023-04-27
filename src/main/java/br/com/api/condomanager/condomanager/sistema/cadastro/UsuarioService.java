@@ -27,7 +27,7 @@ public class UsuarioService {
 	public UserResponseDto cadastrar(UserRequestDto request) throws DadosPessoaisException {
 		UserEntity user = new UserEntity();
 		user.setCodigo(utils.gerarCodigo("user"));
-		user.setName(request.getName());
+		user.setNome(request.getNome());
 		
 		if(validarEmailExistente(request.getEmail())) {
 			user.setEmail(request.getEmail());
@@ -37,18 +37,18 @@ public class UsuarioService {
 			user.setCpf(request.getCpf());
 		}
 		
-		user.setPassword(this.encoder.encode(request.getPassword()));
-		user.setPhone(request.getPhone());
-		user.setIdAccess(AcessoEnum.ADMINISTRADOR.getNivel());
-		user.setNomeAccess(AcessoEnum.ADMINISTRADOR.getDescricao());
+		user.setSenha(this.encoder.encode(request.getSenha()));
+		user.setTelefone(request.getTelefone());
+		user.setDdd(request.getDdd());
+		user.setIdNivelAcesso(AcessoEnum.ADMINISTRADOR.getNivel());
 		
 		usuarioRepository.save(user);
 		
 		UserResponseDto response = new UserResponseDto();
-		response.setCodigo(null);
-		response.setNome(user.getName());
+		response.setCodigo(user.getCodigo());
+		response.setNome(user.getNome());
 		response.setEmail(user.getEmail());
-		response.setNivelAcesso(user.getIdAccess());
+		response.setNivelAcesso(user.getIdNivelAcesso());
 		
 		return response;
 	}

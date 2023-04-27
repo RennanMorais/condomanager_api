@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.api.condomanager.condomanager.sistema.condominios.dto.CondominioResponse;
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.CondominiosRequestDTO;
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.CondominiosResponseDTO;
+import br.com.api.condomanager.condomanager.sistema.condominios.dto.projection.CondominioProjection;
 
 @RequestMapping("/condomanager/sistema")
 @RestController
@@ -29,7 +29,7 @@ public class CondominioResource {
 	}
 	
 	@GetMapping(value = "/condominio")
-	public List<CondominioResponse> getXCondominios() {
+	public List<CondominioProjection> getXCondominios() {
 		return this.condominioService.buscarCondominios();
 	}
 	

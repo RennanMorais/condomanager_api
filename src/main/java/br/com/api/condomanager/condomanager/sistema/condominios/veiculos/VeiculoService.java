@@ -55,23 +55,20 @@ public class VeiculoService {
 		VeiculoEntity veiculo = new VeiculoEntity();
 		veiculo.setCodigo(utils.gerarCodigo("veic"));
 		veiculo.setIdCondominio(condominio.getId());
-		veiculo.setCondominio(condominio.getNome());
 		veiculo.setIdMorador(usuario.getId());
-		veiculo.setMorador(usuario.getName());
 		veiculo.setIdPredio(usuario.getIdPredio());
-		veiculo.setPredio(usuario.getPredio());
 		veiculo.setMarca(request.getMarca());
 		veiculo.setModelo(request.getModelo());
 		veiculo.setPlaca(request.getPlaca());
 		
 		if(request.getTipoVeiculo().equals(TipoVeiculoEnum.CARRO.getTipo())) {
-			veiculo.setTipo(TipoVeiculoEnum.CARRO.getDescricao());
+			veiculo.setIdTipo(TipoVeiculoEnum.CARRO.getTipo());
 		} else if(request.getTipoVeiculo().equals(TipoVeiculoEnum.MOTO.getTipo())) {
-			veiculo.setTipo(TipoVeiculoEnum.MOTO.getDescricao());
+			veiculo.setIdTipo(TipoVeiculoEnum.MOTO.getTipo());
 		} else if(request.getTipoVeiculo().equals(TipoVeiculoEnum.VAN.getTipo())) {
-			veiculo.setTipo(TipoVeiculoEnum.VAN.getDescricao());
+			veiculo.setIdTipo(TipoVeiculoEnum.VAN.getTipo());
 		} else {
-			veiculo.setTipo(TipoVeiculoEnum.OUTROS.getDescricao());
+			veiculo.setIdTipo(TipoVeiculoEnum.OUTROS.getTipo());
 		}
 		
 		VeiculoResponseDTO response = new VeiculoResponseDTO();
@@ -95,7 +92,7 @@ public class VeiculoService {
 			veiculoItem.setMarca(v.getMarca());
 			veiculoItem.setModelo(v.getModelo());
 			veiculoItem.setPlaca(v.getPlaca());
-			veiculoItem.setTipoVeiculo(v.getTipo());
+			veiculoItem.setTipoVeiculo(v.getIdTipo());
 			response.add(veiculoItem);
 		}
 		

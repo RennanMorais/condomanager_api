@@ -23,14 +23,14 @@ public class UserEntity {
 	@Column(name = "codigo")
 	private String codigo;
 	
-	@Column(name = "name")
-	private String name;
+	@Column(name = "nome")
+	private String nome;
 	
 	@Column(name = "email")
 	private String email;
 	
-	@Column(name = "password")
-	private String password;
+	@Column(name = "senha")
+	private String senha;
 	
 	@Column(name = "rg")
 	private String rg;
@@ -38,36 +38,24 @@ public class UserEntity {
 	@Column(name = "cpf")
 	private String cpf;
 	
-	@Column(name = "phone")
-	private String phone;
+	@Column(name = "telefone")
+	private String telefone;
 	
-	@Column(name = "tipo")
-	private String tipo;
+	@Column(name = "ddd")
+	private String ddd;
 	
 	@Column(name = "idCondominio")
 	private Long idCondominio;
 	
-	@Column(name = "condominio")
-	private String condominio;
-	
 	@Column(name = "id_predio")
 	private Long idPredio;
 	
-	@Column(name = "predio")
-	private String predio;
+	@Column(name = "id_apto")
+	private String idApto;
 	
-	@Column(name = "apto")
-	private String apto;
+	@Column(name = "id_nivel_acesso")
+	private Long idNivelAcesso;
 	
-	@Column(name = "id_access")
-	private Long idAccess;
-	
-	@Column(name = "nome_access")
-	private String nomeAccess;
-	
-	@Column(name = "token")
-	private String token;
-	
-	@Column(name = "avatar")
-	private String avatar;
+	@Column(name = "id_avatar")
+	private String idAvatar;
 }

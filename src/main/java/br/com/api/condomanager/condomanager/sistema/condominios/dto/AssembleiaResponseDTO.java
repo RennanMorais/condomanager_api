@@ -9,6 +9,7 @@ public class AssembleiaResponseDTO {
 	
 	private String codigo;
     private String condominio;
+    private String codigoCondominio;
     private String titulo;
     private String data;
     

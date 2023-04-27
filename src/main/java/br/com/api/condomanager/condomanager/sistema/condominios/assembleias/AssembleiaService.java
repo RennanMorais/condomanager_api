@@ -1,5 +1,6 @@
 package br.com.api.condomanager.condomanager.sistema.condominios.assembleias;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -44,6 +45,7 @@ public class AssembleiaService {
     	assembleia.setTitulo(dto.getTitulo());
     	assembleia.setDescricao(dto.getDescricao() == null ? "":dto.getDescricao());
     	assembleia.setData(DateUtil.toDate(dto.getData()));
+    	assembleia.setHora(LocalDateTime.now());
     	
     	CondominioEntity cond = condominioRepository.findByCodigo(String.valueOf(dto.getCodigoCondominio()));
     	AreaComumEntity area = areaComumRepository.findByCodigo(String.valueOf(dto.getCodigoArea()));
@@ -51,9 +53,7 @@ public class AssembleiaService {
     	if(cond != null & area != null) {
     		if(cond.getId().equals(area.getIdCondominio())) {
     			assembleia.setIdCondominio(cond.getId());
-            	assembleia.setCondominio(cond.getNome());
-            	assembleia.setIdArea(area.getId());
-            	assembleia.setLocalAreaComum(area.getArea());
+            	assembleia.setIdAreaComum(area.getId());
             	assembleiaRepository.save(assembleia);
         	} else {
         		throw new ErroFluxoException("A área comum não pertence a este condominio.");
@@ -88,9 +88,11 @@ public class AssembleiaService {
     	
     	if(assembleias != null) {
     		for(AssembleiaEntity a : assembleias) {
+    			CondominioEntity cond = condominioRepository.findById(a.getIdCondominio()).get();
         		AssembleiaResponseDTO assResponse = new AssembleiaResponseDTO();
         		assResponse.setCodigo(a.getCodigo());
-        		assResponse.setCondominio(a.getCondominio());
+        		assResponse.setCondominio(cond.getNome());
+        		assResponse.setCodigoCondominio(cond.getCodigo());
         		assResponse.setTitulo(a.getTitulo());
         		assResponse.setData(DateUtil.dateToString(a.getData()));
         		response.add(assResponse);

@@ -35,10 +35,7 @@ public class PetService {
 		PetEntity pet = new PetEntity();
 		pet.setCodigo(utils.gerarCodigo("pet"));
 		pet.setIdMorador(user.getId());
-		pet.setMorador(user.getName());
 		pet.setNome(request.getNome());
-		pet.setSexo(request.getSexo());
-		pet.setTelefone(user.getPhone());
 		pet.setTipo(request.getTipo());
 		
 		try {

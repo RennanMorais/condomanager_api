@@ -10,5 +10,6 @@ public class AreaComumResponseDTO {
 	private String codigo;
 	private String area;
 	private String condominio;
+	private String codigoCondominio;
 	
 }
