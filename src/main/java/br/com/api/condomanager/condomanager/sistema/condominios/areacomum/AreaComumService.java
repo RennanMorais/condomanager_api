@@ -15,7 +15,6 @@ import br.com.api.condomanager.condomanager.sistema.condominios.dto.AreaComumRes
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.projection.AreaComumProjection;
 import br.com.api.condomanager.condomanager.sistema.exceptions.CondomanagerException;
 import br.com.api.condomanager.condomanager.sistema.exceptions.ErroFluxoException;
-import br.com.api.condomanager.condomanager.util.Util;
 
 @Service
 public class AreaComumService {
@@ -26,16 +25,12 @@ public class AreaComumService {
 	@Autowired
 	CondominioRepository condominioRepository;
 	
-	@Autowired
-	Util utils;
-	
 	public AreaComumResponseDTO cadastrarAreaComum(AreaComumRequestDTO request) {
 
 		AreaComumEntity area = new AreaComumEntity();
-		area.setCodigo(utils.gerarCodigo("area"));
 		area.setNome(request.getArea());
 		
-		CondominioEntity condominio = this.condominioRepository.findByCodigo(String.valueOf(request.getCodigoCondominio()));
+		CondominioEntity condominio = this.condominioRepository.findById(request.getIdCondominio()).get();
 		
 		if(condominio != null) {
 			area.setIdCondominio(condominio.getId());
@@ -46,10 +41,9 @@ public class AreaComumService {
 		areaComumRepository.save(area);
 		
 		AreaComumResponseDTO response = new AreaComumResponseDTO();
-		response.setCodigo(area.getCodigo());
 		response.setArea(area.getNome());
 		response.setCondominio(condominio.getNome());
-		response.setCodigoCondominio(condominio.getCodigo());
+		response.setIdCondominio(condominio.getId());
 		
 		return response;
 

@@ -15,7 +15,6 @@ import br.com.api.condomanager.condomanager.repository.ReservaRepository;
 import br.com.api.condomanager.condomanager.repository.UsuarioRepository;
 import br.com.api.condomanager.condomanager.repository.VeiculoRepository;
 import br.com.api.condomanager.condomanager.sistema.exceptions.DadosPessoaisException;
-import br.com.api.condomanager.condomanager.sistema.exceptions.ErroFluxoException;
 
 @Service
 public class Util {
@@ -93,7 +92,7 @@ public class Util {
 		
 	}
 	
-	public String gerarCodigo(String tipo) {
+	public String gerarCodigo() {
 		
 		SecureRandom sr = new SecureRandom();
 		
@@ -107,79 +106,7 @@ public class Util {
 		
 		String codigo = pt1.concat(pt2).concat(pt3);
 		
-		if(!this.validarCodigo(codigo, tipo)) {
-			throw new ErroFluxoException("Erro no serviço de gerar código, verifique as informações e tente novamente.");
-		}
-		
 		return codigo;
-	}
-	
-	private boolean validarCodigo(String codigo, String tipo) {
-		
-		if("user".equals(tipo)) {
-			while(usuarioRepository.existsByCodigo(codigo)) {
-				this.gerarCodigo(tipo);
-			}
-			return true;
-		}
-		
-		if("area".equals(tipo)) {
-			while(areaComumRepository.existsByCodigo(codigo)) {
-				this.gerarCodigo(tipo);
-			}
-			return true;
-		}
-		
-		if("assembl".equals(tipo)) {
-			while(assembleiaRepository.existsByCodigo(codigo)) {
-				this.gerarCodigo(tipo);
-			}
-			return true;
-		}
-		
-		if("cond".equals(tipo)) {
-			while(condominioRepository.existsByCodigo(codigo)) {
-				this.gerarCodigo(tipo);
-			}
-			return true;
-		}
-		
-		if("ocorr".equals(tipo)) {
-			while(ocorrenciaRepository.existsByCodigo(codigo)) {
-				this.gerarCodigo(tipo);
-			}
-			return true;
-		}
-		
-		if("pet".equals(tipo)) {
-			while(petRepository.existsByCodigo(codigo)) {
-				this.gerarCodigo(tipo);
-			}
-			return true;
-		}
-		
-		if("pred".equals(tipo)) {
-			while(predioRepository.existsByCodigo(codigo)) {
-				this.gerarCodigo(tipo);
-			}
-			return true;
-		}
-		
-		if("reserv".equals(tipo)) {
-			while(reservaRepository.existsByCodigo(codigo)) {
-				this.gerarCodigo(tipo);
-			}
-			return true;
-		}
-		
-		if("veic".equals(tipo)) {
-			while(veiculoRepository.existsByCodigo(codigo)) {
-				this.gerarCodigo(tipo);
-			}
-			return true;
-		}
-		
-		return false;
 	}
 	
 }

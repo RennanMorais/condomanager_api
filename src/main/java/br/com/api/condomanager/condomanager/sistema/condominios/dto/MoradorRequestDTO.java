@@ -17,11 +17,11 @@ public class MoradorRequestDTO extends UserRequestDto {
 	
 	@NotBlank(message = "{campo.nulo.vazio}")
 	@NotNull(message = "{campo.nulo.vazio}")
-	private Long codigoCondominio;
+	private Long idCondominio;
 	
 	@NotBlank(message = "{campo.nulo.vazio}")
 	@NotNull(message = "{campo.nulo.vazio}")
-	private Long codigoPredio;
+	private Long idPredio;
 	
 	@NotBlank(message = "{campo.nulo.vazio}")
 	@NotNull(message = "{campo.nulo.vazio}")

@@ -10,6 +10,6 @@ public class PredioResponseDTO {
 	private String codigo;
 	private String nome;
 	private String condominio;
-	private String codigoCondominio;
+	private Long idCondominio;
 	
 }

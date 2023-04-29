@@ -2,6 +2,7 @@ package br.com.api.condomanager.condomanager.sistema.condominios.predios;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,13 +31,12 @@ public class PredioService {
 	public PredioResponseDTO cadastrarPredio(PredioRequestDTO request) {
 		
 		PredioEntity predio = new PredioEntity();
-		predio.setCodigo(utils.gerarCodigo("pred"));
 		predio.setNome(request.getNome());
 		
-		CondominioEntity condominio = this.condominioRepository.findByCodigo(String.valueOf(request.getCodigoCondominio()));
+		Optional<CondominioEntity> condominio = this.condominioRepository.findById(request.getIdCondominio());
 		
-		if(condominio != null) {
-			predio.setIdCondominio(condominio.getId());
+		if(condominio.isPresent()) {
+			predio.setIdCondominio(condominio.get().getId());
 		} else {
 			throw new ErroFluxoException("Condomínio inexistente");
 		}
@@ -44,10 +44,9 @@ public class PredioService {
 		predioRepository.save(predio);
 		
 		PredioResponseDTO response = new PredioResponseDTO();
-		response.setCodigo(predio.getCodigo());
 		response.setNome(predio.getNome());
-		response.setCondominio(condominio.getNome());
-		response.setCodigoCondominio(condominio.getCodigo());
+		response.setCondominio(condominio.get().getNome());
+		response.setIdCondominio(condominio.get().getId());
 		
 		return response;
 	}
@@ -62,7 +61,6 @@ public class PredioService {
 			
 			for(PredioEntity predioItem : listPredios) {
 				PredioResponseDTO predio = new PredioResponseDTO();
-				predio.setCodigo(predioItem.getCodigo());
 				predio.setNome(predioItem.getNome());
 				
 				//TODO valterar response para o projection e validar codigo do condominio

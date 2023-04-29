@@ -12,13 +12,7 @@ import lombok.Setter;
 public class ReservaRequestDTO {
 	
 	@NotNull(message = "{campo.nulo.vazio}")
-	private Long codigoCondominio;
-	
-	@NotNull(message = "{campo.nulo.vazio}")
-	private Long codigoMorador;
-	
-	@NotNull(message = "{campo.nulo.vazio}")
-	private Long codigoArea;
+	private Long idAreaComum;
 	
 	@NotBlank(message = "{campo.nulo.vazio}")
 	private String evento;
@@ -26,5 +20,11 @@ public class ReservaRequestDTO {
 	@DateFormat
 	@NotNull(message = "{campo.nulo.vazio}")
 	private String data;
+	
+	@NotNull(message = "{campo.nulo.vazio}")
+	private Long idCondominio;
+	
+	@NotNull(message = "{campo.nulo.vazio}")
+	private Long idMorador;
 	
 }

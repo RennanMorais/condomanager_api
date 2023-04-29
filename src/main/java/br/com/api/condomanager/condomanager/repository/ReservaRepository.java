@@ -14,6 +14,4 @@ public interface ReservaRepository extends JpaRepository<ReservaEntity, Long> {
 	@Query("SELECT r FROM ReservaEntity r WHERE r.idCondominio = :idCondominio AND r.idAreaComum = :idArea AND r.data = :data")
 	ReservaEntity findByDate(Long idCondominio, Long idArea, Date data);
 	
-	boolean existsByCodigo(String codigo);
-	
 }

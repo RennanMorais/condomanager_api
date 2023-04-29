@@ -28,7 +28,6 @@ public class CondominioService {
 		this.checkCondominio(request.getCnpj());
 		
 		CondominioEntity cond = new CondominioEntity();
-		cond.setCodigo(utils.gerarCodigo("cond"));
 		cond.setNome(request.getNome());
 		cond.setCnpj(request.getCnpj());
 		cond.setEmail(request.getEmail());

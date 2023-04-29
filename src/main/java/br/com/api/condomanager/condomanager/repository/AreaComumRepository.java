@@ -11,8 +11,6 @@ import br.com.api.condomanager.condomanager.sistema.condominios.dto.projection.A
 @Repository
 public interface AreaComumRepository extends JpaRepository<AreaComumEntity, Long> {
 	
-	AreaComumEntity findByCodigo(String codigo);
-	
 	List<AreaComumProjection> findAllProjectedBy();
 	
 	boolean existsByCodigo(String codigo);

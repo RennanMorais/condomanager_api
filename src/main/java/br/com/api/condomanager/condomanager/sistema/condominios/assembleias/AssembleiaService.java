@@ -1,9 +1,9 @@
 package br.com.api.condomanager.condomanager.sistema.condominios.assembleias;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,9 +16,9 @@ import br.com.api.condomanager.condomanager.repository.AssembleiaRepository;
 import br.com.api.condomanager.condomanager.repository.CondominioRepository;
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.AssembleiaRequestDTO;
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.AssembleiaResponseDTO;
+import br.com.api.condomanager.condomanager.sistema.condominios.dto.projection.AssembleiaProjection;
 import br.com.api.condomanager.condomanager.sistema.exceptions.ErroFluxoException;
 import br.com.api.condomanager.condomanager.util.DateUtil;
-import br.com.api.condomanager.condomanager.util.Util;
 
 @Service
 public class AssembleiaService {
@@ -31,9 +31,6 @@ public class AssembleiaService {
 	
 	@Autowired
 	AreaComumRepository areaComumRepository;
-	
-	@Autowired
-	Util utils;
 
     public AssembleiaResponseDTO agendarAssembleia(AssembleiaRequestDTO dto) {
     	
@@ -41,19 +38,18 @@ public class AssembleiaService {
     	this.assembleiaDataCheck(dataFormatada);
     	
     	AssembleiaEntity assembleia = new AssembleiaEntity();
-    	assembleia.setCodigo(utils.gerarCodigo("assembl"));
     	assembleia.setTitulo(dto.getTitulo());
     	assembleia.setDescricao(dto.getDescricao() == null ? "":dto.getDescricao());
     	assembleia.setData(DateUtil.toDate(dto.getData()));
     	assembleia.setHora(LocalDateTime.now());
     	
-    	CondominioEntity cond = condominioRepository.findByCodigo(String.valueOf(dto.getCodigoCondominio()));
-    	AreaComumEntity area = areaComumRepository.findByCodigo(String.valueOf(dto.getCodigoArea()));
+    	Optional<CondominioEntity> cond = condominioRepository.findById(dto.getIdCondominio());
+    	Optional<AreaComumEntity> area = areaComumRepository.findById(dto.getIdAreaComum());
     	
-    	if(cond != null & area != null) {
-    		if(cond.getId().equals(area.getIdCondominio())) {
-    			assembleia.setIdCondominio(cond.getId());
-            	assembleia.setIdAreaComum(area.getId());
+    	if(cond.isPresent() & area.isPresent()) {
+    		if(cond.get().getId().equals(area.get().getIdCondominio())) {
+    			assembleia.setIdCondominio(cond.get().getId());
+            	assembleia.setIdAreaComum(area.get().getId());
             	assembleiaRepository.save(assembleia);
         	} else {
         		throw new ErroFluxoException("A área comum não pertence a este condominio.");
@@ -63,8 +59,7 @@ public class AssembleiaService {
     	}
     	
     	AssembleiaResponseDTO response = new AssembleiaResponseDTO();
-    	response.setCodigo(assembleia.getCodigo());
-    	response.setCondominio(cond.getNome());
+    	response.setCondominio(cond.get().getNome());
     	response.setTitulo(assembleia.getTitulo());
     	response.setData(DateUtil.dateToString(assembleia.getData()));
     	
@@ -81,27 +76,15 @@ public class AssembleiaService {
 		return true;
 	}
     
-    public List<AssembleiaResponseDTO> buscarAssembleias() {
+    public List<AssembleiaProjection> buscarAssembleias() {
     	
-    	List<AssembleiaEntity> assembleias = assembleiaRepository.findAll();
-    	List<AssembleiaResponseDTO> response = new ArrayList<>();
+    	List<AssembleiaProjection> assembleias = assembleiaRepository.findAllProjectedBy();
     	
-    	if(assembleias != null) {
-    		for(AssembleiaEntity a : assembleias) {
-    			CondominioEntity cond = condominioRepository.findById(a.getIdCondominio()).get();
-        		AssembleiaResponseDTO assResponse = new AssembleiaResponseDTO();
-        		assResponse.setCodigo(a.getCodigo());
-        		assResponse.setCondominio(cond.getNome());
-        		assResponse.setCodigoCondominio(cond.getCodigo());
-        		assResponse.setTitulo(a.getTitulo());
-        		assResponse.setData(DateUtil.dateToString(a.getData()));
-        		response.add(assResponse);
-        	}
-    	} else {
+    	if(assembleias == null) {
     		throw new ErroFluxoException("Nenhuma assembléia encontrada");
     	}
     	
-    	return response;
+    	return assembleias;
     	
     }
 

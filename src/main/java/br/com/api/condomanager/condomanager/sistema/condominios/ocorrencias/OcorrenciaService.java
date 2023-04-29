@@ -1,5 +1,7 @@
 package br.com.api.condomanager.condomanager.sistema.condominios.ocorrencias;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -41,17 +43,16 @@ public class OcorrenciaService {
 	public OcorrenciaResponseDTO registrarOcorrencia(OcorrenciaRequestDTO request) {
 		
 		OcorrenciaEntity ocorrencia = new OcorrenciaEntity();
-		ocorrencia.setCodigo(utils.gerarCodigo("ocorr"));
 		ocorrencia.setData(DateUtil.toDate(request.getData()));
 		ocorrencia.setDescricao(request.getDescricao());
 		
-		CondominioEntity cond = condominioRepository.findByCodigo(String.valueOf(request.getCodigoCondominio()));
+		Optional<CondominioEntity> condominio = condominioRepository.findById(request.getIdCondominio());
 		
-		if(cond == null) {
+		if(!condominio.isPresent()) {
 			throw new ErroFluxoException("Código do condomínio invalido ou não encontrado!");
 		}
 		
-		ocorrencia.setIdCondominio(cond.getId());
+		ocorrencia.setIdCondominio(condominio.get().getId());
 		
 		UserEntity user = userRepository.findByCpf(request.getCpfMorador());
 		
@@ -71,9 +72,9 @@ public class OcorrenciaService {
 		return response;
 	}
 	
-	public OcorrenciaResponseDTO atenderOcorrencia(Long codigoOcorrencia) {
+	public OcorrenciaResponseDTO atenderOcorrencia(Long idOcorrencia) {
 		
-		OcorrenciaEntity ocorrencia = this.validarOcorrencia(codigoOcorrencia, "atender");
+		OcorrenciaEntity ocorrencia = this.validarOcorrencia(idOcorrencia, "atender");
 		
 		ocorrencia.setIdStatus(OcorrenciaStatusEnum.EM_ANDAMENTO.getIdStatus());
 		ocorrenciaRepository.save(ocorrencia);
@@ -100,21 +101,21 @@ public class OcorrenciaService {
 		return response;
 	}
 
-	private OcorrenciaEntity validarOcorrencia(Long codigoOcorrencia, String chamada) {
-		OcorrenciaEntity ocorrencia = ocorrenciaRepository.findByCodigo(String.valueOf(codigoOcorrencia));
+	private OcorrenciaEntity validarOcorrencia(Long idOcorrencia, String chamada) {
+		Optional<OcorrenciaEntity> ocorrencia = ocorrenciaRepository.findById(idOcorrencia);
 		
-		if(ocorrencia == null) {
+		if(!ocorrencia.isPresent()) {
 			throw new ErroFluxoException("Código da ocorrência invalido ou não encontrado!");
 		}
 		
 		if(chamada.equalsIgnoreCase("atender")) {
-			if(ocorrencia.getIdStatus().equals(OcorrenciaStatusEnum.EM_ANDAMENTO.getIdStatus())
-					|| ocorrencia.getIdStatus().equals(OcorrenciaStatusEnum.FINALIZADO.getIdStatus())) {
+			if(ocorrencia.get().getIdStatus().equals(OcorrenciaStatusEnum.EM_ANDAMENTO.getIdStatus())
+					|| ocorrencia.get().getIdStatus().equals(OcorrenciaStatusEnum.FINALIZADO.getIdStatus())) {
 				throw new ErroFluxoException("Ocorrencia já está em atendimento ou foi finalizada");
 			}
 		} else if(chamada.equalsIgnoreCase("finalizar")) {
-			if(ocorrencia.getIdStatus().equals(OcorrenciaStatusEnum.PENDENTE.getIdStatus())
-					|| ocorrencia.getIdStatus().equals(OcorrenciaStatusEnum.FINALIZADO.getIdStatus())) {
+			if(ocorrencia.get().getIdStatus().equals(OcorrenciaStatusEnum.PENDENTE.getIdStatus())
+					|| ocorrencia.get().getIdStatus().equals(OcorrenciaStatusEnum.FINALIZADO.getIdStatus())) {
 				throw new ErroFluxoException("Ocorrencia ainda está pendente ou já foi finalizada");
 			}
 		}
@@ -128,7 +129,7 @@ public class OcorrenciaService {
 			}
 		}
 		
-		return ocorrencia;
+		return ocorrencia.get();
 	}
 	
 }

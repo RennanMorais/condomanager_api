@@ -22,9 +22,6 @@ public class OcorrenciaEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name = "codigo")
-    private String codigo;
-	
 	@Column(name = "data")
     private Date data;
 	

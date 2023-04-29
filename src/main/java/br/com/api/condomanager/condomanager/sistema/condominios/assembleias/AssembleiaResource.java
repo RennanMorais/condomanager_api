@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.AssembleiaRequestDTO;
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.AssembleiaResponseDTO;
+import br.com.api.condomanager.condomanager.sistema.condominios.dto.projection.AssembleiaProjection;
 
 @RequestMapping("/condomanager/sistema")
 @RestController
@@ -26,7 +27,7 @@ public class AssembleiaResource {
     }
     
     @GetMapping("/assembleia/listar")
-    public ResponseEntity<List<AssembleiaResponseDTO>> buscarAssembleias() {
+    public ResponseEntity<List<AssembleiaProjection>> listarAssembleias() {
     	return ResponseEntity.ok(this.assembleiaService.buscarAssembleias());
     }
 

@@ -25,9 +25,6 @@ public class AssembleiaEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name = "codigo")
-    private String codigo;
-	
     @Column(name = "titulo")
     private String titulo;
     
