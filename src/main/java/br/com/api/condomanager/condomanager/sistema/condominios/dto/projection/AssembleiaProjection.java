@@ -14,6 +14,6 @@ public interface AssembleiaProjection {
     
     Long getIdCondominio();
     
-    Long getIddAreaComum();
+    Long getIdAreaComum();
 	
 }

@@ -13,6 +13,4 @@ public interface AreaComumRepository extends JpaRepository<AreaComumEntity, Long
 	
 	List<AreaComumProjection> findAllProjectedBy();
 	
-	boolean existsByCodigo(String codigo);
-	
 }
