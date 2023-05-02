@@ -59,9 +59,8 @@ public class AssembleiaService {
     	}
     	
     	AssembleiaResponseDTO response = new AssembleiaResponseDTO();
-    	response.setCondominio(cond.get().getNome());
-    	response.setTitulo(assembleia.getTitulo());
-    	response.setData(DateUtil.dateToString(assembleia.getData()));
+    	response.setCodigo("200");
+		response.setMensagem("Assembleia agendada com sucesso!");
     	
         return response;
     }
@@ -87,5 +86,22 @@ public class AssembleiaService {
     	return assembleias;
     	
     }
+
+	public AssembleiaResponseDTO deletarAssembleia(Long id) {
+
+		Optional<AssembleiaEntity> assembleia = assembleiaRepository.findById(id);
+
+		if(!assembleia.isPresent()) {
+			throw new ErroFluxoException("Agendamento não encontrado!");
+		}
+
+		assembleiaRepository.delete(assembleia.get());
+
+		AssembleiaResponseDTO response = new AssembleiaResponseDTO();
+		response.setCodigo("200");
+		response.setMensagem("Assembleia deletada com sucesso!");
+
+		return response;
+	}
 
 }

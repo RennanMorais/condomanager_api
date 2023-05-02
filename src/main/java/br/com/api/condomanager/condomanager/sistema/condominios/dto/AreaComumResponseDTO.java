@@ -8,8 +8,6 @@ import lombok.Setter;
 public class AreaComumResponseDTO {
 
 	private String codigo;
-	private String area;
-	private String condominio;
-	private Long idCondominio;
+	private String mensagem;
 	
 }

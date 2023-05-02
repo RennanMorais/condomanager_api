@@ -4,11 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.AssembleiaRequestDTO;
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.AssembleiaResponseDTO;
@@ -29,6 +25,11 @@ public class AssembleiaResource {
     @GetMapping("/assembleia/listar")
     public ResponseEntity<List<AssembleiaProjection>> listarAssembleias() {
     	return ResponseEntity.ok(this.assembleiaService.buscarAssembleias());
+    }
+
+    @DeleteMapping("/assembleia/deletar/{id}")
+    public ResponseEntity<AssembleiaResponseDTO> deletarAssembleia(@PathVariable Long id) {
+        return ResponseEntity.ok(this.assembleiaService.deletarAssembleia(id));
     }
 
 }

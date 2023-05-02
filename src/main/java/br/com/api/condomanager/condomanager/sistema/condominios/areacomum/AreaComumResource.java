@@ -6,11 +6,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.AreaComumRequestDTO;
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.AreaComumResponseDTO;
@@ -32,5 +28,9 @@ public class AreaComumResource {
 	public List<AreaComumProjection> getAreaComum() {
 		return this.areaComumService.listarAreaComum();
 	}
-	
+
+	@DeleteMapping(value = "/areacomum/deletar/{id}")
+	public ResponseEntity<AreaComumResponseDTO> deletarAreaComum(@PathVariable Long id) {
+		return ResponseEntity.ok(this.areaComumService.deletarAreaComum(id));
+	}
 }

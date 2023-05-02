@@ -2,6 +2,7 @@ package br.com.api.condomanager.condomanager.sistema.condominios.areacomum;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,9 +42,8 @@ public class AreaComumService {
 		areaComumRepository.save(area);
 		
 		AreaComumResponseDTO response = new AreaComumResponseDTO();
-		response.setArea(area.getNome());
-		response.setCondominio(condominio.getNome());
-		response.setIdCondominio(condominio.getId());
+		response.setCodigo("200");
+		response.setMensagem("Área comum cadastrada com sucesso!");
 		
 		return response;
 
@@ -60,6 +60,22 @@ public class AreaComumService {
 		
 		throw new ErroFluxoException("Nenhuma área comum cadastrada!");
 		
+	}
+
+	public AreaComumResponseDTO deletarAreaComum(Long id) {
+
+		Optional<AreaComumEntity> areaComum = areaComumRepository.findById(id);
+
+		if(!areaComum.isPresent()) {
+			throw new ErroFluxoException("Área comum não encontrada.");
+		}
+
+		areaComumRepository.delete(areaComum.get());
+
+		AreaComumResponseDTO response = new AreaComumResponseDTO();
+		response.setCodigo("200");
+		response.setMensagem("Área comum exclída com sucesso");
+		return response;
 	}
 	
 }

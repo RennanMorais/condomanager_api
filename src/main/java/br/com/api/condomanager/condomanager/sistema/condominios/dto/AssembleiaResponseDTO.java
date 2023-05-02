@@ -7,9 +7,7 @@ import lombok.Setter;
 @Setter
 public class AssembleiaResponseDTO {
 	
-	private String titulo;
-    private String data;
-    private String condominio;
-    private Long idCondominio;
+	private String codigo;
+    private String mensagem;
     
 }
