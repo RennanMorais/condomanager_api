@@ -71,6 +71,42 @@ public class CondominioService {
 		
 	}
 
+	public CondominioProjection getCondominio(Long id) {
+		CondominioProjection condominio = condominioRepository.findProjectedById(id);
+
+		if(condominio == null) {
+			throw new ErroFluxoException("Condomínio não encontrado!");
+		}
+
+		return condominio;
+	}
+
+	public CondominiosResponseDTO editarCondominio(Long id, CondominiosRequestDTO request) {
+		Optional<CondominioEntity> cond = condominioRepository.findById(id);
+
+		if(!cond.isPresent()) {
+			throw new ErroFluxoException("Condomínio não encontrado!");
+		}
+
+		cond.get().setNome(request.getNome());
+		cond.get().setCnpj(request.getCnpj());
+		cond.get().setEmail(request.getEmail());
+		cond.get().setEndereco(request.getEndereco().getEndereco());
+		cond.get().setNumero(request.getEndereco().getNumero());
+		cond.get().setBairro(request.getEndereco().getBairro());
+		cond.get().setComplemento(request.getEndereco().getComplemento());
+		cond.get().setIdCidade(request.getEndereco().getIdCidade());
+		cond.get().setIdEstado(request.getEndereco().getIdEstado());
+
+		condominioRepository.save(cond.get());
+
+		CondominiosResponseDTO response = new CondominiosResponseDTO();
+		response.setCodigo(HttpStatus.OK.value());
+		response.setMensagem("O condominio '"+ cond.get().getNome() +"' foi editado com sucesso!");
+
+		return response;
+	}
+
 	public CondominiosResponseDTO deletarCondominio(Long id) {
 
 		Optional<CondominioEntity> cond = condominioRepository.findById(id);

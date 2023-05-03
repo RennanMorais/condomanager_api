@@ -30,10 +30,7 @@ public class MoradorService {
 	
 	@Autowired
 	PredioRepository predioRepository;
-	
-	@Autowired
-	Util utils;
-	
+
 	@Autowired
 	PasswordEncoder encoder;
 

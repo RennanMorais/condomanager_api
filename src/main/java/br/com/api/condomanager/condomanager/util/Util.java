@@ -2,7 +2,12 @@ package br.com.api.condomanager.condomanager.util;
 
 import java.security.SecureRandom;
 
+import br.com.api.condomanager.condomanager.autenticacao.security.MyUserDetails;
+import br.com.api.condomanager.condomanager.enums.AcessoEnum;
+import br.com.api.condomanager.condomanager.model.UserEntity;
+import br.com.api.condomanager.condomanager.sistema.exceptions.ErroFluxoException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AuthorizationServiceException;
 import org.springframework.stereotype.Service;
 
 import br.com.api.condomanager.condomanager.repository.AreaComumRepository;
@@ -16,37 +21,30 @@ import br.com.api.condomanager.condomanager.repository.UsuarioRepository;
 import br.com.api.condomanager.condomanager.repository.VeiculoRepository;
 import br.com.api.condomanager.condomanager.sistema.exceptions.DadosPessoaisException;
 
+import javax.swing.text.html.parser.Entity;
+
 @Service
-public class Util {
-	
+public abstract class Util {
+
 	@Autowired
-	UsuarioRepository usuarioRepository;
-	
+	private static UsuarioRepository usuarioRepository;
+
 	@Autowired
-	AreaComumRepository areaComumRepository;
-	
-	@Autowired
-	AssembleiaRepository assembleiaRepository;
-	
-	@Autowired
-	CondominioRepository condominioRepository;
-	
-	@Autowired
-	OcorrenciaRepository ocorrenciaRepository;
-	
-	@Autowired
-	PetRepository petRepository;
-	
-	@Autowired
-	PredioRepository predioRepository;
-	
-	@Autowired
-	ReservaRepository reservaRepository;
-	
-	@Autowired
-	VeiculoRepository veiculoRepository;
-	
-	public boolean validarCpf(String cpf) {
+	private static MyUserDetails userDetails;
+
+	public static void validarAdmin(String emailoggedUser) {
+		UserEntity user = usuarioRepository.findByEmail(emailoggedUser);
+
+		if(user != null) {
+			if(!user.getIdNivelAcesso().equals(AcessoEnum.ADMINISTRADOR.getNivel())) {
+				throw new AuthorizationServiceException("Usuário não autorizado para utilizar esse serviço!");
+			}
+		} else {
+			throw new ErroFluxoException("Falha ao consultar dados do usuário.");
+		}
+	}
+
+	public static boolean validarCpf(String cpf) {
 		
 		int multiplicador1 = 10;
 		int multiplicador2 = 11;
@@ -92,7 +90,7 @@ public class Util {
 		
 	}
 	
-	public String gerarCodigo() {
+	public static String gerarCodigo() {
 		
 		SecureRandom sr = new SecureRandom();
 		
@@ -108,5 +106,7 @@ public class Util {
 		
 		return codigo;
 	}
+
+
 	
 }
