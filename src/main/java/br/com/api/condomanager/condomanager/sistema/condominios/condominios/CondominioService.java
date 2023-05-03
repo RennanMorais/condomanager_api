@@ -1,6 +1,7 @@
 package br.com.api.condomanager.condomanager.sistema.condominios.condominios;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -68,6 +69,23 @@ public class CondominioService {
 		
 		throw new ErroFluxoException("Condomínio já cadastrado!");
 		
+	}
+
+	public CondominiosResponseDTO deletarCondominio(Long id) {
+
+		Optional<CondominioEntity> cond = condominioRepository.findById(id);
+
+		if(!cond.isPresent()) {
+			throw new ErroFluxoException("Condomínio não encontrado!");
+		}
+
+		condominioRepository.delete(cond.get());
+
+		CondominiosResponseDTO response = new CondominiosResponseDTO();
+		response.setCodigo(HttpStatus.OK.value());
+		response.setMensagem("O condominio '"+ cond.get().getNome() +"' foi salvo com sucesso!");
+
+		return response;
 	}
 	
 }

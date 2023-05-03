@@ -5,6 +5,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import br.com.api.condomanager.condomanager.sistema.condominios.dto.AreaComumRequestDTO;
+import br.com.api.condomanager.condomanager.sistema.condominios.dto.AreaComumResponseDTO;
+import br.com.api.condomanager.condomanager.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -79,13 +82,46 @@ public class AssembleiaService {
     	
     	List<AssembleiaProjection> assembleias = assembleiaRepository.findAllProjectedBy();
     	
-    	if(assembleias == null) {
+    	if(assembleias == null || assembleias.isEmpty()) {
     		throw new ErroFluxoException("Nenhuma assembléia encontrada");
     	}
     	
     	return assembleias;
     	
     }
+
+	public AssembleiaProjection getAssembleia(Long id) {
+
+		AssembleiaProjection assembleia = assembleiaRepository.findProjectedById(id);
+
+		if(assembleia == null) {
+			throw new ErroFluxoException("Agendamento não encontrado!");
+		}
+
+		return assembleia;
+	}
+
+	public AssembleiaResponseDTO editarAssembleia(Long id, AssembleiaRequestDTO request) {
+
+		Optional<AssembleiaEntity> assembleia = assembleiaRepository.findById(id);
+
+		if(!assembleia.isPresent()) {
+			throw new ErroFluxoException("Área comum não encontrada.");
+		}
+
+		assembleia.get().setData(DateUtil.toDate(request.getData()));
+		assembleia.get().setDescricao(request.getDescricao());
+		assembleia.get().setTitulo(request.getTitulo());
+		assembleia.get().setIdAreaComum(request.getIdAreaComum());
+		assembleia.get().setIdCondominio(request.getIdCondominio());
+
+		assembleiaRepository.save(assembleia.get());
+
+		AssembleiaResponseDTO response = new AssembleiaResponseDTO();
+		response.setCodigo("200");
+		response.setMensagem("Assembléia editada com sucesso");
+		return response;
+	}
 
 	public AssembleiaResponseDTO deletarAssembleia(Long id) {
 

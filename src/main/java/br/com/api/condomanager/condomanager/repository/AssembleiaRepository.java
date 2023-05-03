@@ -15,5 +15,7 @@ public interface AssembleiaRepository extends JpaRepository<AssembleiaEntity, Lo
 	AssembleiaEntity findByDate(Date data);
 	
 	List<AssembleiaProjection> findAllProjectedBy();
+
+	AssembleiaProjection findProjectedById(Long id);
 	
 }

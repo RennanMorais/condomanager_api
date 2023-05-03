@@ -12,5 +12,7 @@ import br.com.api.condomanager.condomanager.sistema.condominios.dto.projection.A
 public interface AreaComumRepository extends JpaRepository<AreaComumEntity, Long> {
 	
 	List<AreaComumProjection> findAllProjectedBy();
+
+	AreaComumProjection findProjectedById(Long id);
 	
 }

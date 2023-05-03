@@ -29,6 +29,16 @@ public class AreaComumResource {
 		return this.areaComumService.listarAreaComum();
 	}
 
+	@GetMapping(value = "/areacomum/{id}")
+	public AreaComumProjection getAreaComum(@PathVariable Long id) {
+		return this.areaComumService.getAreaComum(id);
+	}
+
+	@PutMapping(value = "/areacomum/editar/{id}")
+	public ResponseEntity<AreaComumResponseDTO> editarAreaComum(@PathVariable Long id, @RequestBody AreaComumRequestDTO request) {
+		return ResponseEntity.ok(this.areaComumService.editarAreaComum(id, request));
+	}
+
 	@DeleteMapping(value = "/areacomum/deletar/{id}")
 	public ResponseEntity<AreaComumResponseDTO> deletarAreaComum(@PathVariable Long id) {
 		return ResponseEntity.ok(this.areaComumService.deletarAreaComum(id));

@@ -62,6 +62,37 @@ public class AreaComumService {
 		
 	}
 
+	public AreaComumProjection getAreaComum(Long id) {
+
+		AreaComumProjection areaComum = areaComumRepository.findProjectedById(id);
+
+		if(areaComum == null) {
+			throw new ErroFluxoException("Área comum não encontrada.");
+		}
+
+		return areaComum;
+
+	}
+
+	public AreaComumResponseDTO editarAreaComum(Long id, AreaComumRequestDTO request) {
+
+		Optional<AreaComumEntity> areaComum = areaComumRepository.findById(id);
+
+		if(!areaComum.isPresent()) {
+			throw new ErroFluxoException("Área comum não encontrada.");
+		}
+
+		areaComum.get().setNome(request.getArea());
+		areaComum.get().setIdCondominio(request.getIdCondominio());
+
+		areaComumRepository.save(areaComum.get());
+
+		AreaComumResponseDTO response = new AreaComumResponseDTO();
+		response.setCodigo("200");
+		response.setMensagem("Área comum editada com sucesso");
+		return response;
+	}
+
 	public AreaComumResponseDTO deletarAreaComum(Long id) {
 
 		Optional<AreaComumEntity> areaComum = areaComumRepository.findById(id);
