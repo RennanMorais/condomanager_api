@@ -88,7 +88,7 @@ public class MoradorService {
 			throw new ErroFluxoException("Condomínio inválido ou não encontrado.");
 		} else if(!predio.isPresent()) {
 			throw new ErroFluxoException("Prédio inválido ou não encontrado.");
-		} else if(!condominio.get().getId().equals(predio.get().getIdCondominio())) {
+		} else if(!condominio.get().getId().equals(predio.get().getCondominio().getId())) {
 			throw new ErroFluxoException("O prédio não faz parte do condomínio. Verifique e tente novamente!");
 		}
 		

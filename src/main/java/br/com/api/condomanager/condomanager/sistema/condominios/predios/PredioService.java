@@ -33,7 +33,7 @@ public class PredioService {
 		Optional<CondominioEntity> condominio = this.condominioRepository.findById(request.getIdCondominio());
 		
 		if(condominio.isPresent()) {
-			predio.setIdCondominio(condominio.get().getId());
+			predio.setCondominio(condominio.get());
 		} else {
 			throw new ErroFluxoException("Condomínio inexistente");
 		}

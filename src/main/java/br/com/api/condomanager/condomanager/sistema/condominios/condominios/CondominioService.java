@@ -7,6 +7,7 @@ import br.com.api.condomanager.condomanager.model.CidadeEntity;
 import br.com.api.condomanager.condomanager.model.EnderecoEntity;
 import br.com.api.condomanager.condomanager.model.EstadoEntity;
 import br.com.api.condomanager.condomanager.repository.CidadeRepository;
+import br.com.api.condomanager.condomanager.repository.EnderecoRepository;
 import br.com.api.condomanager.condomanager.repository.EstadoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,6 +31,9 @@ public class CondominioService {
 
 	@Autowired
 	CidadeRepository cidadeRepository;
+
+	@Autowired
+	EnderecoRepository enderecoRepository;
 	
 	public CondominiosResponseDTO cadastrarCondominio(CondominiosRequestDTO request) {
 			
@@ -53,7 +57,8 @@ public class CondominioService {
 		endereco.setCidade(cidade);
 
 		cond.setEndereco(endereco);
-		
+
+		enderecoRepository.save(endereco);
 		condominioRepository.save(cond);
 		
 		CondominiosResponseDTO response = new CondominiosResponseDTO();

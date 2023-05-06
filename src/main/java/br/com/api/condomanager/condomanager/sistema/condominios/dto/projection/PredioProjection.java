@@ -6,6 +6,6 @@ public interface PredioProjection {
 	
 	String getNome();
 	
-	Long getIdCondominio();
+	CondominioProjection getCondominio();
 	
 }

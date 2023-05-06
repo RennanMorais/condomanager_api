@@ -6,8 +6,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UserResponseDto {
-	
-	private String codigo;
 
 	private String nome;
 	
