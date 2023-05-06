@@ -1,44 +1,41 @@
 package br.com.api.condomanager.condomanager.sistema.condominios.areacomum;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
+import br.com.api.condomanager.condomanager.autenticacao.security.MyUserDetails;
 import br.com.api.condomanager.condomanager.model.AreaComumEntity;
 import br.com.api.condomanager.condomanager.model.CondominioEntity;
 import br.com.api.condomanager.condomanager.repository.AreaComumRepository;
 import br.com.api.condomanager.condomanager.repository.CondominioRepository;
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.AreaComumRequestDTO;
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.AreaComumResponseDTO;
+import br.com.api.condomanager.condomanager.sistema.condominios.dto.projection.AreaComumProjection;
 import br.com.api.condomanager.condomanager.sistema.exceptions.CondomanagerException;
 import br.com.api.condomanager.condomanager.sistema.exceptions.ErroFluxoException;
 import br.com.api.condomanager.condomanager.util.Util;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AreaComumService {
 	
 	@Autowired
-	AreaComumRepository areaComumRepository;
+	private AreaComumRepository areaComumRepository;
 	
 	@Autowired
-	CondominioRepository condominioRepository;
-	
-	@Autowired
-	Util utils;
+	private CondominioRepository condominioRepository;
 	
 	public AreaComumResponseDTO cadastrarAreaComum(AreaComumRequestDTO request) {
 
 		AreaComumEntity area = new AreaComumEntity();
-		area.setCodigo(utils.gerarCodigo("area"));
-		area.setArea(request.getArea());
+		area.setNome(request.getArea());
 		
-		CondominioEntity condominio = this.condominioRepository.findByCodigo(String.valueOf(request.getCodigoCondominio()));
+		CondominioEntity condominio = this.condominioRepository.findById(request.getIdCondominio()).get();
 		
 		if(condominio != null) {
-			area.setCondominio(condominio.getNome());
-			area.setIdCondominio(condominio.getId());
+			area.setCondominio(condominio);
 		} else {
 			throw new CondomanagerException("Condomínio inexistente");
 		}
@@ -46,36 +43,71 @@ public class AreaComumService {
 		areaComumRepository.save(area);
 		
 		AreaComumResponseDTO response = new AreaComumResponseDTO();
-		response.setCodigo(area.getCodigo());
-		response.setArea(area.getArea());
-		response.setCondominio(area.getCondominio());
+		response.setCodigo("200");
+		response.setMensagem("Área comum cadastrada com sucesso!");
 		
 		return response;
 
 	}
 	
-	public List<AreaComumResponseDTO> listarAreaComum() {
+	public List<AreaComumProjection> listarAreaComum() {
 		
-		List<AreaComumEntity> listAreaComum = new ArrayList<>();
-		listAreaComum = areaComumRepository.findAll();
+		List<AreaComumProjection> listaAreas = new ArrayList<>();
+		listaAreas = areaComumRepository.findAllProjectedBy();
 		
-		if(!listAreaComum.isEmpty()) {
-			List<AreaComumResponseDTO> response = new ArrayList<>();
-			
-			for(AreaComumEntity areaItem : listAreaComum) { 
-				AreaComumResponseDTO area = new AreaComumResponseDTO();
-				area.setCodigo(areaItem.getCodigo());
-				area.setArea(areaItem.getArea());
-				area.setCondominio(areaItem.getCondominio());
-				
-				response.add(area);
-			}
-			
-			return response;
+		if(!listaAreas.isEmpty()) {
+			return listaAreas;
 		}
 		
 		throw new ErroFluxoException("Nenhuma área comum cadastrada!");
 		
+	}
+
+	public AreaComumProjection getAreaComum(Long id) {
+
+		AreaComumProjection areaComum = areaComumRepository.findProjectedById(id);
+
+		if(areaComum == null) {
+			throw new ErroFluxoException("Área comum não encontrada.");
+		}
+
+		return areaComum;
+
+	}
+
+	public AreaComumResponseDTO editarAreaComum(Long id, AreaComumRequestDTO request) {
+
+		Optional<AreaComumEntity> areaComum = areaComumRepository.findById(id);
+
+		if(!areaComum.isPresent()) {
+			throw new ErroFluxoException("Área comum não encontrada.");
+		}
+
+		areaComum.get().setNome(request.getArea());
+		areaComum.get().getCondominio().setId(request.getIdCondominio());
+
+		areaComumRepository.save(areaComum.get());
+
+		AreaComumResponseDTO response = new AreaComumResponseDTO();
+		response.setCodigo("200");
+		response.setMensagem("Área comum editada com sucesso");
+		return response;
+	}
+
+	public AreaComumResponseDTO deletarAreaComum(Long id) {
+
+		Optional<AreaComumEntity> areaComum = areaComumRepository.findById(id);
+
+		if(!areaComum.isPresent()) {
+			throw new ErroFluxoException("Área comum não encontrada.");
+		}
+
+		areaComumRepository.delete(areaComum.get());
+
+		AreaComumResponseDTO response = new AreaComumResponseDTO();
+		response.setCodigo("200");
+		response.setMensagem("Área comum exclída com sucesso");
+		return response;
 	}
 	
 }

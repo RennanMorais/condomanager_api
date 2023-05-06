@@ -11,6 +11,7 @@ import javax.security.sasl.AuthenticationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AuthorizationServiceException;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -53,6 +54,12 @@ public class ExceptionHandler extends ResponseEntityExceptionHandler {
 	
 	@org.springframework.web.bind.annotation.ExceptionHandler(InvalidLoginException.class)
 	public ResponseEntity<Object> handleInvalidLoginException(InvalidLoginException e) {
+		ExceptionResponse exceptionResponse = new ExceptionResponse(String.valueOf(HttpStatus.UNAUTHORIZED.value()), e.getMessage());
+		return new ResponseEntity<>(exceptionResponse, HttpStatus.UNAUTHORIZED);
+	}
+
+	@org.springframework.web.bind.annotation.ExceptionHandler(AuthorizationServiceException.class)
+	public ResponseEntity<Object> handleAuthorizationServiceException(AuthorizationServiceException e) {
 		ExceptionResponse exceptionResponse = new ExceptionResponse(String.valueOf(HttpStatus.UNAUTHORIZED.value()), e.getMessage());
 		return new ResponseEntity<>(exceptionResponse, HttpStatus.UNAUTHORIZED);
 	}

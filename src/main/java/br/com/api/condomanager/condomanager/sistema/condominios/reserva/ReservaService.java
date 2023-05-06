@@ -40,9 +40,6 @@ public class ReservaService {
 	@Autowired
 	AreaComumRepository areaComumRepository;
 	
-	@Autowired
-	Util utils;
-	
 	public ReservaResponseDTO reservar(ReservaRequestDTO request) {
 		
 			
@@ -51,33 +48,28 @@ public class ReservaService {
 		AreaComumEntity areaComum;
 		
 		try {
-			condominio = this.buscarDadosCondominio(request.getCodigoCondominio());
-			usuario = this.buscarUsuario(request.getCodigoMorador());
-			areaComum = this.buscarNomeAreaComum(request.getCodigoArea());
+			condominio = this.buscarDadosCondominio(request.getIdCondominio());
+			usuario = this.buscarUsuario(request.getIdMorador());
+			areaComum = this.buscarNomeAreaComum(request.getIdAreaComum());
 		} catch (Exception e) {
 			throw new ErroFluxoException("Falha ao consultar dados.");
 		}
 		
 		ReservaEntity reserva = new ReservaEntity();
-		reserva.setCodigo(utils.gerarCodigo("reserv"));
 		reserva.setIdCondominio(condominio.getId());
-		reserva.setCondominio(condominio.getNome());
 		reserva.setIdMorador(usuario.getId());
-		reserva.setMorador(usuario.getName());
-		reserva.setIdArea(areaComum.getId());
-		reserva.setArea(areaComum.getArea());
+		reserva.setIdAreaComum(areaComum.getId());
 		reserva.setEvento(request.getEvento());
 		
 		Date dataFormatada = DateUtil.toDate(request.getData());
 		this.reservaDataCheck(condominio.getId(), areaComum.getId(), dataFormatada);
 		
 		reserva.setData(dataFormatada);
-		reserva.setStatus(ReservaStatusEnum.PENDENTE.getDescricao());
+		reserva.setIdStatus(ReservaStatusEnum.PENDENTE.getCodigo());
 		
 		reservaRepository.save(reserva);
 		
 		ReservaResponseDTO response = new ReservaResponseDTO();
-		response.setCodigo(reserva.getCodigo());
 		response.setEvento(reserva.getEvento());
 		response.setData(DateUtil.dateToString(reserva.getData()));
 		
@@ -93,15 +85,12 @@ public class ReservaService {
 			throw new ErroFluxoException("Nennuma reserva registrada.");
 		}
 		
+		
+		//alterar for para projection e verificar novos campos do response dto
 		for(ReservaEntity r : reservas) {
 			ReservasDadosResponseDTO response = new ReservasDadosResponseDTO();
-			response.setCodigo(r.getCodigo());
-			response.setCondominio(r.getCondominio());
-			response.setMorador(r.getMorador());
-			response.setArea(r.getArea());
 			response.setEvento(r.getEvento());
 			response.setData(DateUtil.dateToString(r.getData()));
-			response.setStatus(r.getStatus());
 			listaResponse.add(response);
 		}
 		
@@ -118,34 +107,34 @@ public class ReservaService {
 		return true;
 	}
 	
-	private CondominioEntity buscarDadosCondominio(Long codigoCondominio) {
+	private CondominioEntity buscarDadosCondominio(Long idCondominio) {
 		
-		CondominioEntity condominio = condominioRepository.findByCodigo(String.valueOf(codigoCondominio));
+		Optional<CondominioEntity> condominio = condominioRepository.findById(idCondominio);
 		
-		if(condominio != null) {
-			return condominio;
+		if(condominio.isPresent()) {
+			return condominio.get();
 		}
 		
 		throw new ErroFluxoException("Condominio não encontrado");
 	}
 	
-	private UserEntity buscarUsuario(Long codigoUsuario) {
+	private UserEntity buscarUsuario(Long idUsuario) {
 		
-		UserEntity usuario = usuarioRepository.findByCodigo(String.valueOf(codigoUsuario));
+		Optional<UserEntity> usuario = usuarioRepository.findById(idUsuario);
 		
-		if(usuario != null) {
-			return usuario;
+		if(usuario.isPresent()) {
+			return usuario.get();
 		}
 		
 		throw new ErroFluxoException("Usuário não encontrado");
 	}
 	
-	private AreaComumEntity buscarNomeAreaComum(Long codigoArea) {
+	private AreaComumEntity buscarNomeAreaComum(Long idAreaComum) {
 		
-		AreaComumEntity area = areaComumRepository.findByCodigo(String.valueOf(codigoArea));
+		Optional<AreaComumEntity> area = areaComumRepository.findById(idAreaComum);
 		
-		if(area != null) {
-			return area;
+		if(area.isPresent()) {
+			return area.get();
 		}
 		
 		throw new ErroFluxoException("Falha ao consultar nome da área comum.");
@@ -157,8 +146,8 @@ public class ReservaService {
 			Optional<ReservaEntity> reserva = reservaRepository.findById(id);
 			if(reserva.get() != null) {
 				
-				if(ReservaStatusEnum.APROVADO.getDescricao().equals(reserva.get().getStatus())
-						|| ReservaStatusEnum.CANCELADO.getDescricao().equals(reserva.get().getStatus())) {
+				if(ReservaStatusEnum.APROVADO.getCodigo().equals(reserva.get().getIdStatus())
+						|| ReservaStatusEnum.CANCELADO.getCodigo().equals(reserva.get().getIdStatus())) {
 					AprovarReservaResponseDTO response = new AprovarReservaResponseDTO();
 					response.setCodigo("400");
 					response.setMensagem("Não é possivel aprovar uma reserva com status Aprovada ou Cancelada.");
@@ -166,12 +155,12 @@ public class ReservaService {
 					return response;
 				}
 				
-				reserva.get().setStatus(ReservaStatusEnum.APROVADO.getDescricao());
+				reserva.get().setIdStatus(ReservaStatusEnum.APROVADO.getCodigo());
 				reservaRepository.save(reserva.get());
 				
 				AprovarReservaResponseDTO response = new AprovarReservaResponseDTO();
 				response.setCodigo("200");
-				response.setMensagem("Reserva do "+ reserva.get().getArea() +" do evento "+ reserva.get().getEvento() + " foi aprovada com sucesso.");
+				response.setMensagem("Reserva do evento "+ reserva.get().getEvento() + " foi aprovada com sucesso.");
 				
 				return response;
 			}
@@ -188,8 +177,8 @@ public class ReservaService {
 			Optional<ReservaEntity> reserva = reservaRepository.findById(id);
 			if(reserva.get() != null) {
 				
-				if(ReservaStatusEnum.APROVADO.getDescricao().equals(reserva.get().getStatus())
-						|| ReservaStatusEnum.CANCELADO.getDescricao().equals(reserva.get().getStatus())) {
+				if(ReservaStatusEnum.APROVADO.getCodigo().equals(reserva.get().getIdStatus())
+						|| ReservaStatusEnum.CANCELADO.getCodigo().equals(reserva.get().getIdStatus())) {
 					AprovarReservaResponseDTO response = new AprovarReservaResponseDTO();
 					response.setCodigo("400");
 					response.setMensagem("Não é possivel aprovar uma reserva com status Aprovada ou Cancelada.");
@@ -197,12 +186,12 @@ public class ReservaService {
 					return response;
 				}
 				
-				reserva.get().setStatus(ReservaStatusEnum.CANCELADO.getDescricao());
+				reserva.get().setIdStatus(ReservaStatusEnum.CANCELADO.getCodigo());
 				reservaRepository.save(reserva.get());
 				
 				AprovarReservaResponseDTO response = new AprovarReservaResponseDTO();
 				response.setCodigo("200");
-				response.setMensagem("Reserva do "+ reserva.get().getArea() +" do evento "+ reserva.get().getEvento() + " foi cancelada com sucesso.");
+				response.setMensagem("Reserva do evento "+ reserva.get().getEvento() + " foi cancelada com sucesso.");
 				
 				return response;
 			}

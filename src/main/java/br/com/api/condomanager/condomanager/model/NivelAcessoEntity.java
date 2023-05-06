@@ -11,22 +11,16 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "pets")
+@Table(name="nivelacesso")
 @Getter
 @Setter
-public class PetEntity {
+public class NivelAcessoEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name = "nome")
-	private String nome;
-	
-	@Column(name = "tipo")
-	private String tipo;
-	
-	@Column(name = "id_morador")
-	private Long idMorador;
+	@Column(name = "nivel")
+	private String nivel;
 	
 }

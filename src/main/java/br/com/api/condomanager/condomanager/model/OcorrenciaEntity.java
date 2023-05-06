@@ -22,9 +22,6 @@ public class OcorrenciaEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name = "codigo")
-    private String codigo;
-	
 	@Column(name = "data")
     private Date data;
 	
@@ -34,22 +31,13 @@ public class OcorrenciaEntity {
 	@Column(name = "idCondominio")
     private Long idCondominio;
 	
-	@Column(name = "condominio")
-    private String condominio;
-	
 	@Column(name = "idMorador")
 	private Long idMorador;
 	
-	@Column(name = "morador")
-	private String morador;
+	@Column(name = "id_status_ocorrencia")
+    private Long idStatus;
 	
-	@Column(name = "contato")
-    private String contato;
-	
-	@Column(name = "status")
-    private String status;
-	
-	@Column(name = "feedback")
-    private String feedback;
+	@Column(name = "resposta")
+    private String resposta;
 	
 }

@@ -7,10 +7,9 @@ import lombok.Setter;
 @Setter
 public class VieculosResponseDTO {
 
-	private String codigo;
 	private String marca;
 	private String modelo;
 	private String placa;
-	private String tipoVeiculo;
+	private Long tipoVeiculo;
 	
 }

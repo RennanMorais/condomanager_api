@@ -2,6 +2,7 @@ package br.com.api.condomanager.condomanager.sistema.condominios.veiculos;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,42 +37,35 @@ public class VeiculoService {
 	@Autowired
 	UsuarioRepository usuarioRepository;
 	
-	@Autowired
-	Util utils;
-	
 	public VeiculoResponseDTO cadastrarVeiculo(VeiculoRequestDTO request) {
 		
-		CondominioEntity condominio = condominioRepository.findByCodigo(String.valueOf(request.getCodigoCondominio()));
-		UserEntity usuario = usuarioRepository.findByCodigo(String.valueOf(request.getCodigoMorador()));
+		Optional<CondominioEntity> condominio = condominioRepository.findById(request.getIdCondominio());
+		Optional<UserEntity> usuario = usuarioRepository.findById(request.getIdMorador());
 		
-		if(condominio == null) {
+		if(!condominio.isPresent()) {
 			throw new ErroFluxoException("Condomínio não encontrado!");
-		} else if(usuario == null) {
+		} else if(!usuario.isPresent()) {
 			throw new ErroFluxoException("Usuário não encontrado!");
 		}
 		
 		this.validarVeiculoPlaca(request.getPlaca());
 		
 		VeiculoEntity veiculo = new VeiculoEntity();
-		veiculo.setCodigo(utils.gerarCodigo("veic"));
-		veiculo.setIdCondominio(condominio.getId());
-		veiculo.setCondominio(condominio.getNome());
-		veiculo.setIdMorador(usuario.getId());
-		veiculo.setMorador(usuario.getName());
-		veiculo.setIdPredio(usuario.getIdPredio());
-		veiculo.setPredio(usuario.getPredio());
+		veiculo.setIdCondominio(condominio.get().getId());
+		veiculo.setIdMorador(usuario.get().getId());
+		veiculo.setIdPredio(usuario.get().getIdPredio());
 		veiculo.setMarca(request.getMarca());
 		veiculo.setModelo(request.getModelo());
 		veiculo.setPlaca(request.getPlaca());
 		
 		if(request.getTipoVeiculo().equals(TipoVeiculoEnum.CARRO.getTipo())) {
-			veiculo.setTipo(TipoVeiculoEnum.CARRO.getDescricao());
+			veiculo.setIdTipo(TipoVeiculoEnum.CARRO.getTipo());
 		} else if(request.getTipoVeiculo().equals(TipoVeiculoEnum.MOTO.getTipo())) {
-			veiculo.setTipo(TipoVeiculoEnum.MOTO.getDescricao());
+			veiculo.setIdTipo(TipoVeiculoEnum.MOTO.getTipo());
 		} else if(request.getTipoVeiculo().equals(TipoVeiculoEnum.VAN.getTipo())) {
-			veiculo.setTipo(TipoVeiculoEnum.VAN.getDescricao());
+			veiculo.setIdTipo(TipoVeiculoEnum.VAN.getTipo());
 		} else {
-			veiculo.setTipo(TipoVeiculoEnum.OUTROS.getDescricao());
+			veiculo.setIdTipo(TipoVeiculoEnum.OUTROS.getTipo());
 		}
 		
 		VeiculoResponseDTO response = new VeiculoResponseDTO();
@@ -91,11 +85,10 @@ public class VeiculoService {
 		
 		for(VeiculoEntity v : veiculos) {
 			VieculosResponseDTO veiculoItem = new VieculosResponseDTO();
-			veiculoItem.setCodigo(v.getCodigo());
 			veiculoItem.setMarca(v.getMarca());
 			veiculoItem.setModelo(v.getModelo());
 			veiculoItem.setPlaca(v.getPlaca());
-			veiculoItem.setTipoVeiculo(v.getTipo());
+			veiculoItem.setTipoVeiculo(v.getIdTipo());
 			response.add(veiculoItem);
 		}
 		

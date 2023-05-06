@@ -8,8 +8,6 @@ import lombok.Setter;
 public class AssembleiaResponseDTO {
 	
 	private String codigo;
-    private String condominio;
-    private String titulo;
-    private String data;
+    private String mensagem;
     
 }

@@ -5,9 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import br.com.api.condomanager.condomanager.model.OcorrenciaEntity;
 
 public interface OcorrenciaRepository extends JpaRepository<OcorrenciaEntity, Long> {
-
-	boolean existsByCodigo(String codigo);
-
-	OcorrenciaEntity findByCodigo(String codigo);
 	
 }

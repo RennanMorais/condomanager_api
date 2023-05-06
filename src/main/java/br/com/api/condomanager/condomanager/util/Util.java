@@ -2,7 +2,12 @@ package br.com.api.condomanager.condomanager.util;
 
 import java.security.SecureRandom;
 
+import br.com.api.condomanager.condomanager.autenticacao.security.MyUserDetails;
+import br.com.api.condomanager.condomanager.enums.AcessoEnum;
+import br.com.api.condomanager.condomanager.model.UserEntity;
+import br.com.api.condomanager.condomanager.sistema.exceptions.ErroFluxoException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AuthorizationServiceException;
 import org.springframework.stereotype.Service;
 
 import br.com.api.condomanager.condomanager.repository.AreaComumRepository;
@@ -15,38 +20,30 @@ import br.com.api.condomanager.condomanager.repository.ReservaRepository;
 import br.com.api.condomanager.condomanager.repository.UsuarioRepository;
 import br.com.api.condomanager.condomanager.repository.VeiculoRepository;
 import br.com.api.condomanager.condomanager.sistema.exceptions.DadosPessoaisException;
-import br.com.api.condomanager.condomanager.sistema.exceptions.ErroFluxoException;
+
+import javax.swing.text.html.parser.Entity;
 
 @Service
 public class Util {
-	
+
 	@Autowired
-	UsuarioRepository usuarioRepository;
-	
+	private UsuarioRepository usuarioRepository;
+
 	@Autowired
-	AreaComumRepository areaComumRepository;
-	
-	@Autowired
-	AssembleiaRepository assembleiaRepository;
-	
-	@Autowired
-	CondominioRepository condominioRepository;
-	
-	@Autowired
-	OcorrenciaRepository ocorrenciaRepository;
-	
-	@Autowired
-	PetRepository petRepository;
-	
-	@Autowired
-	PredioRepository predioRepository;
-	
-	@Autowired
-	ReservaRepository reservaRepository;
-	
-	@Autowired
-	VeiculoRepository veiculoRepository;
-	
+	private MyUserDetails userDetails;
+
+	public void validarAdmin(String emailoggedUser) {
+		UserEntity user = usuarioRepository.findByEmail(emailoggedUser);
+
+		if(user != null) {
+			if(!user.getIdNivelAcesso().equals(AcessoEnum.ADMINISTRADOR.getNivel())) {
+				throw new AuthorizationServiceException("Usuário não autorizado para utilizar esse serviço!");
+			}
+		} else {
+			throw new ErroFluxoException("Falha ao consultar dados do usuário.");
+		}
+	}
+
 	public boolean validarCpf(String cpf) {
 		
 		int multiplicador1 = 10;
@@ -93,7 +90,7 @@ public class Util {
 		
 	}
 	
-	public String gerarCodigo(String tipo) {
+	public String gerarCodigo() {
 		
 		SecureRandom sr = new SecureRandom();
 		
@@ -107,79 +104,7 @@ public class Util {
 		
 		String codigo = pt1.concat(pt2).concat(pt3);
 		
-		if(!this.validarCodigo(codigo, tipo)) {
-			throw new ErroFluxoException("Erro no serviço de gerar código, verifique as informações e tente novamente.");
-		}
-		
 		return codigo;
-	}
-	
-	private boolean validarCodigo(String codigo, String tipo) {
-		
-		if("user".equals(tipo)) {
-			while(usuarioRepository.existsByCodigo(codigo)) {
-				this.gerarCodigo(tipo);
-			}
-			return true;
-		}
-		
-		if("area".equals(tipo)) {
-			while(areaComumRepository.existsByCodigo(codigo)) {
-				this.gerarCodigo(tipo);
-			}
-			return true;
-		}
-		
-		if("assembl".equals(tipo)) {
-			while(assembleiaRepository.existsByCodigo(codigo)) {
-				this.gerarCodigo(tipo);
-			}
-			return true;
-		}
-		
-		if("cond".equals(tipo)) {
-			while(condominioRepository.existsByCodigo(codigo)) {
-				this.gerarCodigo(tipo);
-			}
-			return true;
-		}
-		
-		if("ocorr".equals(tipo)) {
-			while(ocorrenciaRepository.existsByCodigo(codigo)) {
-				this.gerarCodigo(tipo);
-			}
-			return true;
-		}
-		
-		if("pet".equals(tipo)) {
-			while(petRepository.existsByCodigo(codigo)) {
-				this.gerarCodigo(tipo);
-			}
-			return true;
-		}
-		
-		if("pred".equals(tipo)) {
-			while(predioRepository.existsByCodigo(codigo)) {
-				this.gerarCodigo(tipo);
-			}
-			return true;
-		}
-		
-		if("reserv".equals(tipo)) {
-			while(reservaRepository.existsByCodigo(codigo)) {
-				this.gerarCodigo(tipo);
-			}
-			return true;
-		}
-		
-		if("veic".equals(tipo)) {
-			while(veiculoRepository.existsByCodigo(codigo)) {
-				this.gerarCodigo(tipo);
-			}
-			return true;
-		}
-		
-		return false;
 	}
 	
 }

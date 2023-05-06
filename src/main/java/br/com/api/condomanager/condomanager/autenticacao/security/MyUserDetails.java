@@ -25,14 +25,14 @@ public class MyUserDetails implements UserDetailsService {
     }
 
     return org.springframework.security.core.userdetails.User
-        .withUsername(email)//
-        .password(user.getPassword())
-        .authorities(user.getNomeAccess())//
-        .accountExpired(false)//
-        .accountLocked(false)//
-        .credentialsExpired(false)//
-        .disabled(false)//
-        .build();
+            .withUsername(email)
+            .password(user.getSenha())
+            .authorities(user.getIdNivelAcesso().toString())
+            .accountExpired(false)
+            .accountLocked(false)
+            .credentialsExpired(false)
+            .disabled(false)
+            .build();
   }
   
   public String getLoginUser() {

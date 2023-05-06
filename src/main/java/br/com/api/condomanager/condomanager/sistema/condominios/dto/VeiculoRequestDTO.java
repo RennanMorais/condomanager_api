@@ -11,13 +11,13 @@ import lombok.Setter;
 public class VeiculoRequestDTO {
 
 	@NotNull(message = "{campo.nulo.vazio}")
-	private Long codigoCondominio;
+	private Long idCondominio;
 	
 	@NotNull(message = "{campo.nulo.vazio}")
-	private Long codigoPredio;
+	private Long idPredio;
 	
 	@NotNull(message = "{campo.nulo.vazio}")
-	private Long codigoMorador;
+	private Long idMorador;
 	
 	@NotNull(message = "{campo.nulo.vazio}")
 	private Long tipoVeiculo;

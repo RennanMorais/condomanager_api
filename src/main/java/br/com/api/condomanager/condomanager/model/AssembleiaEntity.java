@@ -1,5 +1,6 @@
 package br.com.api.condomanager.condomanager.model;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -24,9 +25,6 @@ public class AssembleiaEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name = "codigo")
-    private String codigo;
-	
     @Column(name = "titulo")
     private String titulo;
     
@@ -36,16 +34,13 @@ public class AssembleiaEntity {
     @Column(name = "data")
     @Temporal(TemporalType.DATE)
     private Date data;
+    
+    @Column(name = "hora")
+    private LocalDateTime hora;
 
-    @Column(name = "idCondominio")
+    @Column(name = "id_condominio")
     private Long idCondominio;
 
-    @Column(name = "local_condominio")
-    private String condominio;
-
-    @Column(name = "idAreaComum")
-    private Long idArea;
-
-    @Column(name = "local")
-    private String localAreaComum;
+    @Column(name = "id_areacomum")
+    private Long idAreaComum;
 }

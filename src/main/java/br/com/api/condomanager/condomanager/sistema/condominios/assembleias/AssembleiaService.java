@@ -1,9 +1,13 @@
 package br.com.api.condomanager.condomanager.sistema.condominios.assembleias;
 
-import java.util.ArrayList;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
+import br.com.api.condomanager.condomanager.sistema.condominios.dto.AreaComumRequestDTO;
+import br.com.api.condomanager.condomanager.sistema.condominios.dto.AreaComumResponseDTO;
+import br.com.api.condomanager.condomanager.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,9 +19,9 @@ import br.com.api.condomanager.condomanager.repository.AssembleiaRepository;
 import br.com.api.condomanager.condomanager.repository.CondominioRepository;
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.AssembleiaRequestDTO;
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.AssembleiaResponseDTO;
+import br.com.api.condomanager.condomanager.sistema.condominios.dto.projection.AssembleiaProjection;
 import br.com.api.condomanager.condomanager.sistema.exceptions.ErroFluxoException;
 import br.com.api.condomanager.condomanager.util.DateUtil;
-import br.com.api.condomanager.condomanager.util.Util;
 
 @Service
 public class AssembleiaService {
@@ -30,9 +34,6 @@ public class AssembleiaService {
 	
 	@Autowired
 	AreaComumRepository areaComumRepository;
-	
-	@Autowired
-	Util utils;
 
     public AssembleiaResponseDTO agendarAssembleia(AssembleiaRequestDTO dto) {
     	
@@ -40,20 +41,18 @@ public class AssembleiaService {
     	this.assembleiaDataCheck(dataFormatada);
     	
     	AssembleiaEntity assembleia = new AssembleiaEntity();
-    	assembleia.setCodigo(utils.gerarCodigo("assembl"));
     	assembleia.setTitulo(dto.getTitulo());
     	assembleia.setDescricao(dto.getDescricao() == null ? "":dto.getDescricao());
     	assembleia.setData(DateUtil.toDate(dto.getData()));
+    	assembleia.setHora(LocalDateTime.now());
     	
-    	CondominioEntity cond = condominioRepository.findByCodigo(String.valueOf(dto.getCodigoCondominio()));
-    	AreaComumEntity area = areaComumRepository.findByCodigo(String.valueOf(dto.getCodigoArea()));
+    	Optional<CondominioEntity> cond = condominioRepository.findById(dto.getIdCondominio());
+    	Optional<AreaComumEntity> area = areaComumRepository.findById(dto.getIdAreaComum());
     	
-    	if(cond != null & area != null) {
-    		if(cond.getId().equals(area.getIdCondominio())) {
-    			assembleia.setIdCondominio(cond.getId());
-            	assembleia.setCondominio(cond.getNome());
-            	assembleia.setIdArea(area.getId());
-            	assembleia.setLocalAreaComum(area.getArea());
+    	if(cond.isPresent() & area.isPresent()) {
+    		if(cond.get().getId().equals(area.get().getCondominio().getId())) {
+    			assembleia.setIdCondominio(cond.get().getId());
+            	assembleia.setIdAreaComum(area.get().getId());
             	assembleiaRepository.save(assembleia);
         	} else {
         		throw new ErroFluxoException("A área comum não pertence a este condominio.");
@@ -63,10 +62,8 @@ public class AssembleiaService {
     	}
     	
     	AssembleiaResponseDTO response = new AssembleiaResponseDTO();
-    	response.setCodigo(assembleia.getCodigo());
-    	response.setCondominio(cond.getNome());
-    	response.setTitulo(assembleia.getTitulo());
-    	response.setData(DateUtil.dateToString(assembleia.getData()));
+    	response.setCodigo("200");
+		response.setMensagem("Assembleia agendada com sucesso!");
     	
         return response;
     }
@@ -81,26 +78,66 @@ public class AssembleiaService {
 		return true;
 	}
     
-    public List<AssembleiaResponseDTO> buscarAssembleias() {
+    public List<AssembleiaProjection> buscarAssembleias() {
     	
-    	List<AssembleiaEntity> assembleias = assembleiaRepository.findAll();
-    	List<AssembleiaResponseDTO> response = new ArrayList<>();
+    	List<AssembleiaProjection> assembleias = assembleiaRepository.findAllProjectedBy();
     	
-    	if(assembleias != null) {
-    		for(AssembleiaEntity a : assembleias) {
-        		AssembleiaResponseDTO assResponse = new AssembleiaResponseDTO();
-        		assResponse.setCodigo(a.getCodigo());
-        		assResponse.setCondominio(a.getCondominio());
-        		assResponse.setTitulo(a.getTitulo());
-        		assResponse.setData(DateUtil.dateToString(a.getData()));
-        		response.add(assResponse);
-        	}
-    	} else {
+    	if(assembleias == null || assembleias.isEmpty()) {
     		throw new ErroFluxoException("Nenhuma assembléia encontrada");
     	}
     	
-    	return response;
+    	return assembleias;
     	
     }
+
+	public AssembleiaProjection getAssembleia(Long id) {
+
+		AssembleiaProjection assembleia = assembleiaRepository.findProjectedById(id);
+
+		if(assembleia == null) {
+			throw new ErroFluxoException("Agendamento não encontrado!");
+		}
+
+		return assembleia;
+	}
+
+	public AssembleiaResponseDTO editarAssembleia(Long id, AssembleiaRequestDTO request) {
+
+		Optional<AssembleiaEntity> assembleia = assembleiaRepository.findById(id);
+
+		if(!assembleia.isPresent()) {
+			throw new ErroFluxoException("Área comum não encontrada.");
+		}
+
+		assembleia.get().setData(DateUtil.toDate(request.getData()));
+		assembleia.get().setDescricao(request.getDescricao());
+		assembleia.get().setTitulo(request.getTitulo());
+		assembleia.get().setIdAreaComum(request.getIdAreaComum());
+		assembleia.get().setIdCondominio(request.getIdCondominio());
+
+		assembleiaRepository.save(assembleia.get());
+
+		AssembleiaResponseDTO response = new AssembleiaResponseDTO();
+		response.setCodigo("200");
+		response.setMensagem("Assembléia editada com sucesso");
+		return response;
+	}
+
+	public AssembleiaResponseDTO deletarAssembleia(Long id) {
+
+		Optional<AssembleiaEntity> assembleia = assembleiaRepository.findById(id);
+
+		if(!assembleia.isPresent()) {
+			throw new ErroFluxoException("Agendamento não encontrado!");
+		}
+
+		assembleiaRepository.delete(assembleia.get());
+
+		AssembleiaResponseDTO response = new AssembleiaResponseDTO();
+		response.setCodigo("200");
+		response.setMensagem("Assembleia deletada com sucesso!");
+
+		return response;
+	}
 
 }

@@ -1,8 +1,7 @@
 package br.com.api.condomanager.condomanager.sistema.condominios.predios;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +12,7 @@ import br.com.api.condomanager.condomanager.repository.CondominioRepository;
 import br.com.api.condomanager.condomanager.repository.PredioRepository;
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.PredioRequestDTO;
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.PredioResponseDTO;
+import br.com.api.condomanager.condomanager.sistema.condominios.dto.projection.PredioProjection;
 import br.com.api.condomanager.condomanager.sistema.exceptions.ErroFluxoException;
 import br.com.api.condomanager.condomanager.util.Util;
 
@@ -24,27 +24,16 @@ public class PredioService {
 	
 	@Autowired
 	CondominioRepository condominioRepository;
-	
-	@Autowired
-	Util utils;
 
 	public PredioResponseDTO cadastrarPredio(PredioRequestDTO request) {
 		
 		PredioEntity predio = new PredioEntity();
-		predio.setCodigo(utils.gerarCodigo("pred"));
 		predio.setNome(request.getNome());
 		
-		CondominioEntity condominio;
+		Optional<CondominioEntity> condominio = this.condominioRepository.findById(request.getIdCondominio());
 		
-		try {
-			condominio = this.condominioRepository.findByCodigo(String.valueOf(request.getCodigoCondominio()));
-		} catch(NoSuchElementException e) {
-			throw new ErroFluxoException("Condomínio invalido.");
-		}
-		
-		if(condominio != null) {
-			predio.setCondominio(condominio.getNome());
-			predio.setIdCondominio(condominio.getId());
+		if(condominio.isPresent()) {
+			predio.setCondominio(condominio.get());
 		} else {
 			throw new ErroFluxoException("Condomínio inexistente");
 		}
@@ -52,34 +41,38 @@ public class PredioService {
 		predioRepository.save(predio);
 		
 		PredioResponseDTO response = new PredioResponseDTO();
-		response.setCodigo(predio.getCodigo());
-		response.setNome(predio.getNome());
-		response.setCondominio(predio.getCondominio());
+		response.setCodigo("200");
+		response.setMensagem("Predio cadastrado com sucesso!");
 		
 		return response;
 	}
 	
-	public List<PredioResponseDTO> getPredios() {
+	public List<PredioProjection> getPredios() {
 		
-		List<PredioEntity> listPredios = new ArrayList<>();
-		listPredios = predioRepository.findAll();
+		List<PredioProjection> listaPredios = predioRepository.findAllProjectedBy();
 		
-		if(!listPredios.isEmpty()) {
-			List<PredioResponseDTO> response = new ArrayList<>();
-			
-			for(PredioEntity predioItem : listPredios) {
-				PredioResponseDTO predio = new PredioResponseDTO();
-				predio.setCodigo(predioItem.getCodigo());
-				predio.setNome(predioItem.getNome());
-				predio.setCondominio(predioItem.getCondominio());
-				response.add(predio);
-			}
-			
-			return response;
+		if(listaPredios != null) {
+			return listaPredios;
 		}
 		
 		throw new ErroFluxoException("Nenhum prédio cadastrado!");
 		
+	}
+	
+	public PredioResponseDTO deletarPredio(Long idPredio) {
+		
+		Optional<PredioEntity> predio = predioRepository.findById(idPredio);
+		
+		if(!predio.isPresent()) {
+			throw new ErroFluxoException("Prédio não encontrado!");
+		}
+		
+		predioRepository.delete(predio.get());
+		
+		PredioResponseDTO response = new PredioResponseDTO();
+		response.setCodigo("200");
+		response.setMensagem("Predio deletado com sucesso!");
+		return response;
 	}
 	
 }
