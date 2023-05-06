@@ -1,5 +1,7 @@
 package br.com.api.condomanager.condomanager.sistema.condominios.dto.projection;
 
+import br.com.api.condomanager.condomanager.model.EnderecoEntity;
+
 public interface CondominioProjection {
 	
 	Long getId();
@@ -10,16 +12,6 @@ public interface CondominioProjection {
 
 	String getEmail();
 
-	String getEndereco();
-
-	String getNumero();
-	
-	String getComplemento();
-
-	String getBairro();
-
-	String getIdEstado();
-
-	String getIdCidade();
+	EnderecoProjection getEndereco();
 	
 }

@@ -3,6 +3,11 @@ package br.com.api.condomanager.condomanager.sistema.condominios.condominios;
 import java.util.List;
 import java.util.Optional;
 
+import br.com.api.condomanager.condomanager.model.CidadeEntity;
+import br.com.api.condomanager.condomanager.model.EnderecoEntity;
+import br.com.api.condomanager.condomanager.model.EstadoEntity;
+import br.com.api.condomanager.condomanager.repository.CidadeRepository;
+import br.com.api.condomanager.condomanager.repository.EstadoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -13,13 +18,18 @@ import br.com.api.condomanager.condomanager.sistema.condominios.dto.CondominiosR
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.CondominiosResponseDTO;
 import br.com.api.condomanager.condomanager.sistema.condominios.dto.projection.CondominioProjection;
 import br.com.api.condomanager.condomanager.sistema.exceptions.ErroFluxoException;
-import br.com.api.condomanager.condomanager.util.Util;
 
 @Service
 public class CondominioService {
 	
 	@Autowired
 	CondominioRepository condominioRepository;
+
+	@Autowired
+	EstadoRepository estadoRepository;
+
+	@Autowired
+	CidadeRepository cidadeRepository;
 	
 	public CondominiosResponseDTO cadastrarCondominio(CondominiosRequestDTO request) {
 			
@@ -29,12 +39,20 @@ public class CondominioService {
 		cond.setNome(request.getNome());
 		cond.setCnpj(request.getCnpj());
 		cond.setEmail(request.getEmail());
-		cond.setEndereco(request.getEndereco().getEndereco());
-		cond.setNumero(request.getEndereco().getNumero());
-		cond.setBairro(request.getEndereco().getBairro());
-		cond.setComplemento(request.getEndereco().getComplemento());
-		cond.setIdCidade(request.getEndereco().getIdCidade());
-		cond.setIdEstado(request.getEndereco().getIdEstado());
+
+		EnderecoEntity endereco = new EnderecoEntity();
+		endereco.setEndereco(request.getEndereco().getEndereco());
+		endereco.setComplemento(request.getEndereco().getComplemento());
+		endereco.setNumero(request.getEndereco().getNumero());
+		endereco.setBairro(request.getEndereco().getBairro());
+
+		EstadoEntity estado = this.buscarEstado(request.getEndereco().getIdEstado());
+		CidadeEntity cidade = this.buscarCidade(request.getEndereco().getIdCidade());
+
+		endereco.setEstado(estado);
+		endereco.setCidade(cidade);
+
+		cond.setEndereco(endereco);
 		
 		condominioRepository.save(cond);
 		
@@ -88,12 +106,20 @@ public class CondominioService {
 		cond.get().setNome(request.getNome());
 		cond.get().setCnpj(request.getCnpj());
 		cond.get().setEmail(request.getEmail());
-		cond.get().setEndereco(request.getEndereco().getEndereco());
-		cond.get().setNumero(request.getEndereco().getNumero());
-		cond.get().setBairro(request.getEndereco().getBairro());
-		cond.get().setComplemento(request.getEndereco().getComplemento());
-		cond.get().setIdCidade(request.getEndereco().getIdCidade());
-		cond.get().setIdEstado(request.getEndereco().getIdEstado());
+
+		EnderecoEntity endereco = new EnderecoEntity();
+		endereco.setEndereco(request.getEndereco().getEndereco());
+		endereco.setComplemento(request.getEndereco().getComplemento());
+		endereco.setNumero(request.getEndereco().getNumero());
+		endereco.setBairro(request.getEndereco().getBairro());
+
+		EstadoEntity estado = this.buscarEstado(request.getEndereco().getIdEstado());
+		CidadeEntity cidade = this.buscarCidade(request.getEndereco().getIdCidade());
+
+		endereco.setEstado(estado);
+		endereco.setCidade(cidade);
+
+		cond.get().setEndereco(endereco);
 
 		condominioRepository.save(cond.get());
 
@@ -119,6 +145,26 @@ public class CondominioService {
 		response.setMensagem("O condominio '"+ cond.get().getNome() +"' foi salvo com sucesso!");
 
 		return response;
+	}
+
+	private EstadoEntity buscarEstado(Long idEstado) {
+		Optional<EstadoEntity> estado = estadoRepository.findById(idEstado);
+
+		if(!estado.isPresent()) {
+			throw new ErroFluxoException("Código do estado inválido.");
+		}
+
+		return estado.get();
+	}
+
+	private CidadeEntity buscarCidade(Long idCidade) {
+		Optional<CidadeEntity> cidade = cidadeRepository.findById(idCidade);
+
+		if(!cidade.isPresent()) {
+			throw new ErroFluxoException("Código da cidade inválido.");
+		}
+
+		return cidade.get();
 	}
 	
 }

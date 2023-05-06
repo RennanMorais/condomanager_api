@@ -1,11 +1,6 @@
 package br.com.api.condomanager.condomanager.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -28,23 +23,9 @@ public class CondominioEntity {
 	
 	@Column(name="email")
 	private String email;
-	
-	@Column(name="endereco")
-	private String endereco;
-	
-	@Column(name="numero")
-	private String numero;
-	
-	@Column(name="complemento")
-	private String complemento;
-	
-	@Column(name="bairro")
-	private String bairro;
-	
-	@Column(name="id_estado")
-	private Long idEstado;
-	
-	@Column(name="id_cidade")
-	private Long idCidade;
+
+	@OneToOne
+	@JoinColumn(name = "id_endereco")
+	private EnderecoEntity endereco;
 	
 }
