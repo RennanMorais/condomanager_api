@@ -24,15 +24,15 @@ import br.com.api.condomanager.condomanager.sistema.exceptions.DadosPessoaisExce
 import javax.swing.text.html.parser.Entity;
 
 @Service
-public abstract class Util {
+public class Util {
 
 	@Autowired
-	private static UsuarioRepository usuarioRepository;
+	private UsuarioRepository usuarioRepository;
 
 	@Autowired
-	private static MyUserDetails userDetails;
+	private MyUserDetails userDetails;
 
-	public static void validarAdmin(String emailoggedUser) {
+	public void validarAdmin(String emailoggedUser) {
 		UserEntity user = usuarioRepository.findByEmail(emailoggedUser);
 
 		if(user != null) {
@@ -44,7 +44,7 @@ public abstract class Util {
 		}
 	}
 
-	public static boolean validarCpf(String cpf) {
+	public boolean validarCpf(String cpf) {
 		
 		int multiplicador1 = 10;
 		int multiplicador2 = 11;
@@ -90,7 +90,7 @@ public abstract class Util {
 		
 	}
 	
-	public static String gerarCodigo() {
+	public String gerarCodigo() {
 		
 		SecureRandom sr = new SecureRandom();
 		
@@ -106,7 +106,5 @@ public abstract class Util {
 		
 		return codigo;
 	}
-
-
 	
 }

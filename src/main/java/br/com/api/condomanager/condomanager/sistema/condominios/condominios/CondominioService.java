@@ -21,9 +21,6 @@ public class CondominioService {
 	@Autowired
 	CondominioRepository condominioRepository;
 	
-	@Autowired
-	Util utils;
-	
 	public CondominiosResponseDTO cadastrarCondominio(CondominiosRequestDTO request) {
 			
 		this.checkCondominio(request.getCnpj());

@@ -35,7 +35,7 @@ public class AreaComumService {
 		CondominioEntity condominio = this.condominioRepository.findById(request.getIdCondominio()).get();
 		
 		if(condominio != null) {
-			area.setIdCondominio(condominio.getId());
+			area.setCondominio(condominio);
 		} else {
 			throw new CondomanagerException("Condomínio inexistente");
 		}
@@ -84,7 +84,7 @@ public class AreaComumService {
 		}
 
 		areaComum.get().setNome(request.getArea());
-		areaComum.get().setIdCondominio(request.getIdCondominio());
+		areaComum.get().getCondominio().setId(request.getIdCondominio());
 
 		areaComumRepository.save(areaComum.get());
 

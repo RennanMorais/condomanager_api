@@ -50,7 +50,7 @@ public class AssembleiaService {
     	Optional<AreaComumEntity> area = areaComumRepository.findById(dto.getIdAreaComum());
     	
     	if(cond.isPresent() & area.isPresent()) {
-    		if(cond.get().getId().equals(area.get().getIdCondominio())) {
+    		if(cond.get().getId().equals(area.get().getCondominio().getId())) {
     			assembleia.setIdCondominio(cond.get().getId());
             	assembleia.setIdAreaComum(area.get().getId());
             	assembleiaRepository.save(assembleia);

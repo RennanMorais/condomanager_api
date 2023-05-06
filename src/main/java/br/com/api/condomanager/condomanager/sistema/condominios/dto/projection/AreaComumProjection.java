@@ -6,5 +6,5 @@ public interface AreaComumProjection {
 	
 	String getNome();
 	
-	Long getIdCondominio();
+	CondominioProjection getCondominio();
 }

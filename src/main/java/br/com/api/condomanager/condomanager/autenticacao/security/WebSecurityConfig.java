@@ -1,5 +1,6 @@
 package br.com.api.condomanager.condomanager.autenticacao.security;
 
+import br.com.api.condomanager.condomanager.enums.AcessoEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -38,9 +39,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
     // Entry points
-    http.authorizeRequests()//
-        .antMatchers("/condomanager/sistema/login").permitAll()//
-        .antMatchers("/condomanager/sistema/cadastro").permitAll()
+    http.authorizeRequests()
+            .antMatchers("/condomanager/sistema/login").permitAll()
+            .antMatchers("/condomanager/sistema/cadastro").permitAll()
         // Disallow everything else..
         .anyRequest().authenticated();
     

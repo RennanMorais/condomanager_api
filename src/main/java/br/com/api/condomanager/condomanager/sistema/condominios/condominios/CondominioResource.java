@@ -23,10 +23,13 @@ public class CondominioResource {
 
 	@Autowired
 	private MyUserDetails userDetails;
+
+	@Autowired
+	private Util util;
 	
 	@PostMapping("/condominio/cadastrar")
 	public ResponseEntity<CondominiosResponseDTO> cadastrarCondominio(@Valid @RequestBody CondominiosRequestDTO request) {
-		Util.validarAdmin(userDetails.getLoginUser().trim());
+		util.validarAdmin(userDetails.getLoginUser().trim());
 		return ResponseEntity.ok(this.condominioService.cadastrarCondominio(request));
 	}
 	
@@ -37,7 +40,7 @@ public class CondominioResource {
 
 	@GetMapping(value = "/condominio/{id}")
 	public ResponseEntity<CondominioProjection> getCondominio(Long id) {
-		Util.validarAdmin(userDetails.getLoginUser().trim());
+		util.validarAdmin(userDetails.getLoginUser().trim());
 		return ResponseEntity.ok(this.condominioService.getCondominio(id));
 	}
 
@@ -45,13 +48,13 @@ public class CondominioResource {
 	public ResponseEntity<CondominiosResponseDTO> editarCondominio(
 			@PathVariable Long id,
 			@RequestBody CondominiosRequestDTO request) {
-		Util.validarAdmin(userDetails.getLoginUser().trim());
+		util.validarAdmin(userDetails.getLoginUser().trim());
 		return ResponseEntity.ok(this.condominioService.editarCondominio(id, request));
 	}
 
 	@DeleteMapping(value = "/condominio/deletar/{id}")
 	public ResponseEntity<CondominiosResponseDTO> deletarCondominio(@PathVariable Long id) {
-		Util.validarAdmin(userDetails.getLoginUser().trim());
+		util.validarAdmin(userDetails.getLoginUser().trim());
 		return ResponseEntity.ok(this.condominioService.deletarCondominio(id));
 	}
 	

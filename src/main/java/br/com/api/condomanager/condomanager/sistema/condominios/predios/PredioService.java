@@ -24,9 +24,6 @@ public class PredioService {
 	
 	@Autowired
 	CondominioRepository condominioRepository;
-	
-	@Autowired
-	Util utils;
 
 	public PredioResponseDTO cadastrarPredio(PredioRequestDTO request) {
 		

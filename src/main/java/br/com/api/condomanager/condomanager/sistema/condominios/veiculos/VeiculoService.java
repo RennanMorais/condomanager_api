@@ -37,9 +37,6 @@ public class VeiculoService {
 	@Autowired
 	UsuarioRepository usuarioRepository;
 	
-	@Autowired
-	Util utils;
-	
 	public VeiculoResponseDTO cadastrarVeiculo(VeiculoRequestDTO request) {
 		
 		Optional<CondominioEntity> condominio = condominioRepository.findById(request.getIdCondominio());

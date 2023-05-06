@@ -35,9 +35,6 @@ public class OcorrenciaService {
 	UsuarioRepository userRepository;
 	
 	@Autowired
-	Util utils;
-	
-	@Autowired
 	MyUserDetails userDetails;
 	
 	public OcorrenciaResponseDTO registrarOcorrencia(OcorrenciaRequestDTO request) {

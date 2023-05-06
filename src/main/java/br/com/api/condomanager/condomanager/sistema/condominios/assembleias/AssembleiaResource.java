@@ -21,6 +21,9 @@ public class AssembleiaResource {
     @Autowired
     private MyUserDetails userDetails;
 
+    @Autowired
+    private Util util;
+
     @PostMapping("/assembleia/agendar")
     public ResponseEntity<AssembleiaResponseDTO> agendarAssembleia(@RequestBody AssembleiaRequestDTO request) {
         return ResponseEntity.ok(this.assembleiaService.agendarAssembleia(request));
@@ -33,19 +36,19 @@ public class AssembleiaResource {
 
     @GetMapping("/assembleia/{id}")
     public ResponseEntity<AssembleiaProjection> getAssembleia(@PathVariable Long id) {
-        Util.validarAdmin(userDetails.getLoginUser().trim());
+        util.validarAdmin(userDetails.getLoginUser().trim());
         return ResponseEntity.ok(this.assembleiaService.getAssembleia(id));
     }
 
     @PutMapping("/assembleia/editar/{id}")
     public ResponseEntity<AssembleiaResponseDTO> agendarAssembleia(@PathVariable Long id, @RequestBody AssembleiaRequestDTO request) {
-        Util.validarAdmin(userDetails.getLoginUser().trim());
+        util.validarAdmin(userDetails.getLoginUser().trim());
         return ResponseEntity.ok(this.assembleiaService.editarAssembleia(id, request));
     }
 
     @DeleteMapping("/assembleia/deletar/{id}")
     public ResponseEntity<AssembleiaResponseDTO> deletarAssembleia(@PathVariable Long id) {
-        Util.validarAdmin(userDetails.getLoginUser().trim());
+        util.validarAdmin(userDetails.getLoginUser().trim());
         return ResponseEntity.ok(this.assembleiaService.deletarAssembleia(id));
     }
 
