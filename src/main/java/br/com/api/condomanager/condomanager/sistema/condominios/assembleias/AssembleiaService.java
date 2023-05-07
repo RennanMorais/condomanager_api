@@ -51,8 +51,8 @@ public class AssembleiaService {
     	
     	if(cond.isPresent() & area.isPresent()) {
     		if(cond.get().getId().equals(area.get().getCondominio().getId())) {
-    			assembleia.setIdCondominio(cond.get().getId());
-            	assembleia.setIdAreaComum(area.get().getId());
+    			assembleia.setCondominio(cond.get());
+            	assembleia.setAreaComum(area.get());
             	assembleiaRepository.save(assembleia);
         	} else {
         		throw new ErroFluxoException("A área comum não pertence a este condominio.");
@@ -106,14 +106,24 @@ public class AssembleiaService {
 		Optional<AssembleiaEntity> assembleia = assembleiaRepository.findById(id);
 
 		if(!assembleia.isPresent()) {
-			throw new ErroFluxoException("Área comum não encontrada.");
+			throw new ErroFluxoException("Agendamento não encontrada.");
 		}
 
 		assembleia.get().setData(DateUtil.toDate(request.getData()));
 		assembleia.get().setDescricao(request.getDescricao());
 		assembleia.get().setTitulo(request.getTitulo());
-		assembleia.get().setIdAreaComum(request.getIdAreaComum());
-		assembleia.get().setIdCondominio(request.getIdCondominio());
+
+		Optional<AreaComumEntity> areaComum = areaComumRepository.findById(request.getIdAreaComum());
+		Optional<CondominioEntity> condominio = condominioRepository.findById(request.getIdCondominio());
+
+		if(!areaComum.isPresent()) {
+			throw new ErroFluxoException("Área comum não encontrada.");
+		} else if(!condominio.isPresent()) {
+			throw new ErroFluxoException("Condominio não encontrado.");
+		}
+
+		assembleia.get().setAreaComum(areaComum.get());
+		assembleia.get().setCondominio(condominio.get());
 
 		assembleiaRepository.save(assembleia.get());
 

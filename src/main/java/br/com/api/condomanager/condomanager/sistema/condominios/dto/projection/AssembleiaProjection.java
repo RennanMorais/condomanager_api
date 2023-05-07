@@ -1,5 +1,8 @@
 package br.com.api.condomanager.condomanager.sistema.condominios.dto.projection;
 
+import br.com.api.condomanager.condomanager.util.DateUtil;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 public interface AssembleiaProjection {
@@ -12,8 +15,8 @@ public interface AssembleiaProjection {
 
     Date getData();
     
-    Long getIdCondominio();
+    CondominioProjection getCondominio();
     
-    Long getIdAreaComum();
-	
+    AreaComumProjection getAreaComum();
+
 }

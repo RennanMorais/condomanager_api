@@ -3,21 +3,16 @@ package br.com.api.condomanager.condomanager.model;
 import java.time.LocalDateTime;
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 
+import br.com.api.condomanager.condomanager.util.DateUtil;
+import br.com.api.condomanager.condomanager.util.validators.DateFormat;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name="assembleias")
-@Getter
 @Setter
 public class AssembleiaEntity {
 	
@@ -38,9 +33,11 @@ public class AssembleiaEntity {
     @Column(name = "hora")
     private LocalDateTime hora;
 
-    @Column(name = "id_condominio")
-    private Long idCondominio;
+    @ManyToOne
+    @JoinColumn(name = "id_condominio")
+    private CondominioEntity condominio;
 
-    @Column(name = "id_areacomum")
-    private Long idAreaComum;
+    @ManyToOne
+    @JoinColumn(name = "id_areacomum")
+    private AreaComumEntity areaComum;
 }
