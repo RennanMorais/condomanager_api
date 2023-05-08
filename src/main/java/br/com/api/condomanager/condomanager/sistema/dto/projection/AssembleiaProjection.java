@@ -1,7 +1,4 @@
-package br.com.api.condomanager.condomanager.sistema.condominios.dto.projection;
-
-import br.com.api.condomanager.condomanager.util.DateUtil;
-import org.springframework.format.annotation.DateTimeFormat;
+package br.com.api.condomanager.condomanager.sistema.dto.projection;
 
 import java.util.Date;
 

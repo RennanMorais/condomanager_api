@@ -1,4 +1,4 @@
-package br.com.api.condomanager.condomanager.sistema.condominios.dto;
+package br.com.api.condomanager.condomanager.sistema.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

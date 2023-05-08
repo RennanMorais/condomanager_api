@@ -13,11 +13,10 @@ import br.com.api.condomanager.condomanager.model.UserEntity;
 import br.com.api.condomanager.condomanager.repository.CondominioRepository;
 import br.com.api.condomanager.condomanager.repository.PredioRepository;
 import br.com.api.condomanager.condomanager.repository.UsuarioRepository;
-import br.com.api.condomanager.condomanager.sistema.condominios.dto.MoradorRequestDTO;
-import br.com.api.condomanager.condomanager.sistema.condominios.dto.MoradorResponseDTO;
+import br.com.api.condomanager.condomanager.sistema.dto.MoradorRequestDTO;
+import br.com.api.condomanager.condomanager.sistema.dto.MoradorResponseDTO;
 import br.com.api.condomanager.condomanager.sistema.exceptions.DadosPessoaisException;
 import br.com.api.condomanager.condomanager.sistema.exceptions.ErroFluxoException;
-import br.com.api.condomanager.condomanager.util.Util;
 
 @Service
 public class MoradorService {

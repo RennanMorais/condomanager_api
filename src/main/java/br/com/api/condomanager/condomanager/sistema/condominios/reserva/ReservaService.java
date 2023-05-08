@@ -17,13 +17,12 @@ import br.com.api.condomanager.condomanager.repository.AreaComumRepository;
 import br.com.api.condomanager.condomanager.repository.CondominioRepository;
 import br.com.api.condomanager.condomanager.repository.ReservaRepository;
 import br.com.api.condomanager.condomanager.repository.UsuarioRepository;
-import br.com.api.condomanager.condomanager.sistema.condominios.dto.AprovarReservaResponseDTO;
-import br.com.api.condomanager.condomanager.sistema.condominios.dto.ReservaRequestDTO;
-import br.com.api.condomanager.condomanager.sistema.condominios.dto.ReservaResponseDTO;
-import br.com.api.condomanager.condomanager.sistema.condominios.dto.ReservasDadosResponseDTO;
+import br.com.api.condomanager.condomanager.sistema.dto.AprovarReservaResponseDTO;
+import br.com.api.condomanager.condomanager.sistema.dto.ReservaRequestDTO;
+import br.com.api.condomanager.condomanager.sistema.dto.ReservaResponseDTO;
+import br.com.api.condomanager.condomanager.sistema.dto.ReservasDadosResponseDTO;
 import br.com.api.condomanager.condomanager.sistema.exceptions.ErroFluxoException;
 import br.com.api.condomanager.condomanager.util.DateUtil;
-import br.com.api.condomanager.condomanager.util.Util;
 
 @Service
 public class ReservaService {

@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.api.condomanager.condomanager.sistema.condominios.dto.AprovarReservaResponseDTO;
-import br.com.api.condomanager.condomanager.sistema.condominios.dto.ReservaRequestDTO;
-import br.com.api.condomanager.condomanager.sistema.condominios.dto.ReservaResponseDTO;
-import br.com.api.condomanager.condomanager.sistema.condominios.dto.ReservasDadosResponseDTO;
+import br.com.api.condomanager.condomanager.sistema.dto.AprovarReservaResponseDTO;
+import br.com.api.condomanager.condomanager.sistema.dto.ReservaRequestDTO;
+import br.com.api.condomanager.condomanager.sistema.dto.ReservaResponseDTO;
+import br.com.api.condomanager.condomanager.sistema.dto.ReservasDadosResponseDTO;
 
 @RequestMapping("/condomanager/sistema")
 @RestController

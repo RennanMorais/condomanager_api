@@ -38,12 +38,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     // No session will be created or used by spring security
     http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-    // Entry points
     http.authorizeRequests()
+            // Endpoints liberados
             .antMatchers("/condomanager/sistema/login").permitAll()
             .antMatchers("/condomanager/sistema/cadastro").permitAll()
-        // Disallow everything else..
-        .anyRequest().authenticated();
+
+            // Endpoints apenas para ADMINISTRADOR
+            .antMatchers("/condomanager/sistema/areacomum/cadastrar").hasAuthority(AcessoEnum.ADMINISTRADOR.getNivel().toString())
+            .antMatchers("/condomanager/sistema/areacomum/{id}").hasAuthority(AcessoEnum.ADMINISTRADOR.getNivel().toString())
+            .antMatchers("/condomanager/sistema/areacomum/editar/{id}").hasAuthority(AcessoEnum.ADMINISTRADOR.getNivel().toString())
+            .antMatchers("/condomanager/sistema/areacomum/deletar/{id}").hasAuthority(AcessoEnum.ADMINISTRADOR.getNivel().toString())
+            .anyRequest().authenticated();
+
     
     http.exceptionHandling().authenticationEntryPoint(authEntryPoint);
     

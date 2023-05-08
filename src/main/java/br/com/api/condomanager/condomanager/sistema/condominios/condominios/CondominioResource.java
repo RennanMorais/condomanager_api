@@ -10,9 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import br.com.api.condomanager.condomanager.sistema.condominios.dto.CondominiosRequestDTO;
-import br.com.api.condomanager.condomanager.sistema.condominios.dto.CondominiosResponseDTO;
-import br.com.api.condomanager.condomanager.sistema.condominios.dto.projection.CondominioProjection;
+import br.com.api.condomanager.condomanager.sistema.dto.CondominiosRequestDTO;
+import br.com.api.condomanager.condomanager.sistema.dto.CondominiosResponseDTO;
+import br.com.api.condomanager.condomanager.sistema.dto.projection.CondominioProjection;
 
 @RequestMapping("/condomanager/sistema")
 @RestController

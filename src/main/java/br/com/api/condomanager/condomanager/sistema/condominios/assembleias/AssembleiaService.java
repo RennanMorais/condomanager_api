@@ -5,9 +5,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import br.com.api.condomanager.condomanager.sistema.condominios.dto.AreaComumRequestDTO;
-import br.com.api.condomanager.condomanager.sistema.condominios.dto.AreaComumResponseDTO;
-import br.com.api.condomanager.condomanager.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,9 +14,9 @@ import br.com.api.condomanager.condomanager.model.CondominioEntity;
 import br.com.api.condomanager.condomanager.repository.AreaComumRepository;
 import br.com.api.condomanager.condomanager.repository.AssembleiaRepository;
 import br.com.api.condomanager.condomanager.repository.CondominioRepository;
-import br.com.api.condomanager.condomanager.sistema.condominios.dto.AssembleiaRequestDTO;
-import br.com.api.condomanager.condomanager.sistema.condominios.dto.AssembleiaResponseDTO;
-import br.com.api.condomanager.condomanager.sistema.condominios.dto.projection.AssembleiaProjection;
+import br.com.api.condomanager.condomanager.sistema.dto.AssembleiaRequestDTO;
+import br.com.api.condomanager.condomanager.sistema.dto.AssembleiaResponseDTO;
+import br.com.api.condomanager.condomanager.sistema.dto.projection.AssembleiaProjection;
 import br.com.api.condomanager.condomanager.sistema.exceptions.ErroFluxoException;
 import br.com.api.condomanager.condomanager.util.DateUtil;
 

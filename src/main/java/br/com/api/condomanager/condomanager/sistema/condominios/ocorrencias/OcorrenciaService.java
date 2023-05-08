@@ -15,12 +15,11 @@ import br.com.api.condomanager.condomanager.model.UserEntity;
 import br.com.api.condomanager.condomanager.repository.CondominioRepository;
 import br.com.api.condomanager.condomanager.repository.OcorrenciaRepository;
 import br.com.api.condomanager.condomanager.repository.UsuarioRepository;
-import br.com.api.condomanager.condomanager.sistema.condominios.dto.FinalizarOcorrenciaRequestDTO;
-import br.com.api.condomanager.condomanager.sistema.condominios.dto.OcorrenciaRequestDTO;
-import br.com.api.condomanager.condomanager.sistema.condominios.dto.OcorrenciaResponseDTO;
+import br.com.api.condomanager.condomanager.sistema.dto.FinalizarOcorrenciaRequestDTO;
+import br.com.api.condomanager.condomanager.sistema.dto.OcorrenciaRequestDTO;
+import br.com.api.condomanager.condomanager.sistema.dto.OcorrenciaResponseDTO;
 import br.com.api.condomanager.condomanager.sistema.exceptions.ErroFluxoException;
 import br.com.api.condomanager.condomanager.util.DateUtil;
-import br.com.api.condomanager.condomanager.util.Util;
 
 @Service
 public class OcorrenciaService {

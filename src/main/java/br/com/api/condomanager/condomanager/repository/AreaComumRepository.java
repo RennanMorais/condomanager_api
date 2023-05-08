@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import br.com.api.condomanager.condomanager.model.AreaComumEntity;
-import br.com.api.condomanager.condomanager.sistema.condominios.dto.projection.AreaComumProjection;
+import br.com.api.condomanager.condomanager.sistema.dto.projection.AreaComumProjection;
 
 @Repository
 public interface AreaComumRepository extends JpaRepository<AreaComumEntity, Long> {
