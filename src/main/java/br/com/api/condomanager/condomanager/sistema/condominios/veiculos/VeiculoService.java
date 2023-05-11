@@ -52,7 +52,7 @@ public class VeiculoService {
 		VeiculoEntity veiculo = new VeiculoEntity();
 		veiculo.setIdCondominio(condominio.get().getId());
 		veiculo.setIdMorador(usuario.get().getId());
-		veiculo.setIdPredio(usuario.get().getIdPredio());
+		//veiculo.setIdPredio(usuario.get().getIdPredio());
 		veiculo.setMarca(request.getMarca());
 		veiculo.setModelo(request.getModelo());
 		veiculo.setPlaca(request.getPlaca());

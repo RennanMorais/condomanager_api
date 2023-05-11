@@ -1,11 +1,6 @@
 package br.com.api.condomanager.condomanager.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -40,19 +35,22 @@ public class UserEntity {
 	
 	@Column(name = "ddd")
 	private String ddd;
+
+	@OneToOne
+	@JoinColumn(name = "id_condominio")
+	private CondominioEntity condominio;
+
+	@OneToOne
+	@JoinColumn(name = "id_predio")
+	private PredioEntity predio;
+
+//	@OneToOne
+//	@JoinColumn(name = "id_apto")
+//	private String idApto;
 	
-	@Column(name = "idCondominio")
-	private Long idCondominio;
+	@Column(name = "nivel_acesso")
+	private Long nivelAcesso;
 	
-	@Column(name = "id_predio")
-	private Long idPredio;
-	
-	@Column(name = "id_apto")
-	private String idApto;
-	
-	@Column(name = "id_nivel_acesso")
-	private Long idNivelAcesso;
-	
-	@Column(name = "id_avatar")
-	private String idAvatar;
+	@Column(name = "avatar")
+	private String avatar;
 }

@@ -36,7 +36,7 @@ public class Util {
 		UserEntity user = usuarioRepository.findByEmail(emailoggedUser);
 
 		if(user != null) {
-			if(!user.getIdNivelAcesso().equals(AcessoEnum.ADMINISTRADOR.getNivel())) {
+			if(!user.getNivelAcesso().equals(AcessoEnum.ADMINISTRADOR.getNivel())) {
 				throw new AuthorizationServiceException("Usuário não autorizado para utilizar esse serviço!");
 			}
 		} else {

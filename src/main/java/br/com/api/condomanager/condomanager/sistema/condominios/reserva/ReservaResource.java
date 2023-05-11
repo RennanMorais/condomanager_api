@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import br.com.api.condomanager.condomanager.sistema.dto.projection.ReservaProjection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,7 +32,7 @@ public class ReservaResource {
 	}
 	
 	@GetMapping("/reservas")
-	public List<ReservasDadosResponseDTO> listarReservas() {
+	public List<ReservaProjection> listarReservas() {
 		return this.reservaService.listarReservas();
 	}
 	

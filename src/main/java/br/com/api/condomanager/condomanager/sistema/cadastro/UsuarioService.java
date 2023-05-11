@@ -35,14 +35,14 @@ public class UsuarioService {
 		user.setSenha(this.encoder.encode(request.getSenha()));
 		user.setTelefone(request.getTelefone());
 		user.setDdd(request.getDdd());
-		user.setIdNivelAcesso(AcessoEnum.ADMINISTRADOR.getNivel());
+		user.setNivelAcesso(AcessoEnum.MORADOR.getNivel());
 		
 		usuarioRepository.save(user);
 		
 		UserResponseDto response = new UserResponseDto();
 		response.setNome(user.getNome());
 		response.setEmail(user.getEmail());
-		response.setNivelAcesso(user.getIdNivelAcesso());
+		response.setNivelAcesso(user.getNivelAcesso());
 		
 		return response;
 	}

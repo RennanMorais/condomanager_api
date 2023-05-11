@@ -120,7 +120,7 @@ public class OcorrenciaService {
 		UserEntity user = userRepository.findByEmail(loginUser.trim());
 		
 		if(user != null) {
-			if(!user.getIdNivelAcesso().equals(AcessoEnum.ADMINISTRADOR.getNivel())) {
+			if(!user.getNivelAcesso().equals(AcessoEnum.ADMINISTRADOR.getNivel())) {
 				throw new ErroFluxoException("Você não tem permissão para realizar atender ocorrências");
 			}
 		}

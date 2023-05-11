@@ -43,7 +43,7 @@ public class MoradorService {
 			usuario.setEmail(moradorRequest.getEmail());
 			usuario.setTelefone(moradorRequest.getTelefone());
 			usuario.setDdd(moradorRequest.getDdd());
-			usuario.setIdNivelAcesso(AcessoEnum.MORADOR.getNivel());
+			usuario.setNivelAcesso(AcessoEnum.MORADOR.getNivel());
 			
 			Optional<CondominioEntity> condominio = condominioRepository.findById(moradorRequest.getIdCondominio());
 			Optional<PredioEntity> predio = predioRepository.findById(moradorRequest.getIdPredio());
@@ -53,16 +53,16 @@ public class MoradorService {
 			}
 			
 			if(validarCondominioPredio(moradorRequest)) {
-				usuario.setIdCondominio(condominio.get().getId());
-				usuario.setIdPredio(predio.get().getId());
+				usuario.setCondominio(condominio.get());
+				usuario.setPredio(predio.get());
 			}
-			
-			usuario.setIdCondominio(condominio.get().getId());
-			usuario.setIdPredio(predio.get().getId());
-			
+
+			usuario.setCondominio(condominio.get());
+			usuario.setPredio(predio.get());
+
 			//TO DO
 			//criar tabela de apartamentos vinculada aos predios
-			usuario.setIdApto(null);
+//			usuario.se(null);
 			
 			usuario.setSenha(this.encoder.encode(moradorRequest.getCpf()));
 			
