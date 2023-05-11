@@ -2,6 +2,8 @@ package br.com.api.condomanager.condomanager.sistema.condominios.morador;
 
 import java.util.Optional;
 
+import br.com.api.condomanager.condomanager.model.ApartamentoEntity;
+import br.com.api.condomanager.condomanager.repository.ApartamentoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -31,6 +33,9 @@ public class MoradorService {
 	PredioRepository predioRepository;
 
 	@Autowired
+	ApartamentoRepository apartamentoRepository;
+
+	@Autowired
 	PasswordEncoder encoder;
 
 	public MoradorResponseDTO cadastrarMorador(MoradorRequestDTO moradorRequest) {
@@ -47,8 +52,9 @@ public class MoradorService {
 			
 			Optional<CondominioEntity> condominio = condominioRepository.findById(moradorRequest.getIdCondominio());
 			Optional<PredioEntity> predio = predioRepository.findById(moradorRequest.getIdPredio());
+			Optional<ApartamentoEntity> apto = apartamentoRepository.findById(moradorRequest.getIdApto());
 			
-			if(!condominio.isPresent() || !predio.isPresent()) {
+			if(!condominio.isPresent() || !predio.isPresent() || apto.isPresent()) {
 				throw new ErroFluxoException("Falha ao consultar dados do condomínio!");
 			}
 			
@@ -59,16 +65,12 @@ public class MoradorService {
 
 			usuario.setCondominio(condominio.get());
 			usuario.setPredio(predio.get());
-
-			//TO DO
-			//criar tabela de apartamentos vinculada aos predios
-//			usuario.se(null);
-			
+			usuario.setApartamento(apto.get());
 			usuario.setSenha(this.encoder.encode(moradorRequest.getCpf()));
 			
 			usuarioRepository.save(usuario);
 		} else {
-			throw new DadosPessoaisException("CPF já cadastrado!");
+			throw new DadosPessoaisException("Já existe um morador cadastrado com este CPF, verifique e tente novamente!");
 		}
 		
 		MoradorResponseDTO moradorResponse = new MoradorResponseDTO();

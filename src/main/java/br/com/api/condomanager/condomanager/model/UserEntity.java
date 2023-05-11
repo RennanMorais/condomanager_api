@@ -44,9 +44,9 @@ public class UserEntity {
 	@JoinColumn(name = "id_predio")
 	private PredioEntity predio;
 
-//	@OneToOne
-//	@JoinColumn(name = "id_apto")
-//	private String idApto;
+	@OneToOne
+	@JoinColumn(name = "id_apto")
+	private ApartamentoEntity apartamento;
 	
 	@Column(name = "nivel_acesso")
 	private Long nivelAcesso;
