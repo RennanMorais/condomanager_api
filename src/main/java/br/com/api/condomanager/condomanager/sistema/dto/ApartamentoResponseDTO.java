@@ -5,9 +5,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ReservaResponseDTO {
+public class ApartamentoResponseDTO {
 
-	private String codigo;
-	private String mensagem;
-	
+    private String codigo;
+    private String mensagem;
+
 }

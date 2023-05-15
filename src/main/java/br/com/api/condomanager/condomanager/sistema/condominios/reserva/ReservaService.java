@@ -70,8 +70,8 @@ public class ReservaService {
 		reservaRepository.save(reserva);
 		
 		ReservaResponseDTO response = new ReservaResponseDTO();
-		response.setEvento(reserva.getEvento());
-		response.setData(DateUtil.dateToString(reserva.getData()));
+		response.setCodigo("200");
+		response.setMensagem("Área reservada com sucesso!");
 		
 		return response;
 	}

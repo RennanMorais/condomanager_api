@@ -13,7 +13,7 @@ import br.com.api.condomanager.condomanager.model.ReservaEntity;
 @Repository
 public interface ReservaRepository extends JpaRepository<ReservaEntity, Long> {
 	
-	@Query("SELECT r FROM ReservaEntity r WHERE r.condominio = :idCondominio AND r.areaComum = :idArea AND r.data = :data")
+	@Query("SELECT r FROM ReservaEntity r WHERE r.condominio.id = :idCondominio AND r.areaComum.id = :idArea AND r.data = :data")
 	ReservaEntity findByDate(Long idCondominio, Long idArea, Date data);
 
 	List<ReservaProjection> findAllProjectedBy();

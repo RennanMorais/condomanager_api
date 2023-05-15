@@ -55,7 +55,7 @@ public class MoradorService {
 			Optional<ApartamentoEntity> apto = apartamentoRepository.findById(moradorRequest.getIdApto());
 			
 			if(!condominio.isPresent() || !predio.isPresent() || apto.isPresent()) {
-				throw new ErroFluxoException("Falha ao consultar dados do condomínio!");
+				throw new ErroFluxoException("Falha ao consultar dados, verifique e tente novamente!");
 			}
 			
 			if(validarCondominioPredio(moradorRequest)) {
