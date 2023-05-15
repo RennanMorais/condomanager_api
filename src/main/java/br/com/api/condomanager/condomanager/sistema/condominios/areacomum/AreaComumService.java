@@ -1,16 +1,14 @@
 package br.com.api.condomanager.condomanager.sistema.condominios.areacomum;
 
-import br.com.api.condomanager.condomanager.autenticacao.security.MyUserDetails;
 import br.com.api.condomanager.condomanager.model.AreaComumEntity;
 import br.com.api.condomanager.condomanager.model.CondominioEntity;
 import br.com.api.condomanager.condomanager.repository.AreaComumRepository;
 import br.com.api.condomanager.condomanager.repository.CondominioRepository;
-import br.com.api.condomanager.condomanager.sistema.condominios.dto.AreaComumRequestDTO;
-import br.com.api.condomanager.condomanager.sistema.condominios.dto.AreaComumResponseDTO;
-import br.com.api.condomanager.condomanager.sistema.condominios.dto.projection.AreaComumProjection;
+import br.com.api.condomanager.condomanager.sistema.dto.AreaComumRequestDTO;
+import br.com.api.condomanager.condomanager.sistema.dto.AreaComumResponseDTO;
+import br.com.api.condomanager.condomanager.sistema.dto.projection.AreaComumProjection;
 import br.com.api.condomanager.condomanager.sistema.exceptions.CondomanagerException;
 import br.com.api.condomanager.condomanager.sistema.exceptions.ErroFluxoException;
-import br.com.api.condomanager.condomanager.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -106,7 +104,7 @@ public class AreaComumService {
 
 		AreaComumResponseDTO response = new AreaComumResponseDTO();
 		response.setCodigo("200");
-		response.setMensagem("Área comum exclída com sucesso");
+		response.setMensagem("Área comum excluída com sucesso");
 		return response;
 	}
 	

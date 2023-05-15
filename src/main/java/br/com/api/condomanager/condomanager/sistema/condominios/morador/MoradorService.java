@@ -2,6 +2,8 @@ package br.com.api.condomanager.condomanager.sistema.condominios.morador;
 
 import java.util.Optional;
 
+import br.com.api.condomanager.condomanager.model.ApartamentoEntity;
+import br.com.api.condomanager.condomanager.repository.ApartamentoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -13,11 +15,10 @@ import br.com.api.condomanager.condomanager.model.UserEntity;
 import br.com.api.condomanager.condomanager.repository.CondominioRepository;
 import br.com.api.condomanager.condomanager.repository.PredioRepository;
 import br.com.api.condomanager.condomanager.repository.UsuarioRepository;
-import br.com.api.condomanager.condomanager.sistema.condominios.dto.MoradorRequestDTO;
-import br.com.api.condomanager.condomanager.sistema.condominios.dto.MoradorResponseDTO;
+import br.com.api.condomanager.condomanager.sistema.dto.MoradorRequestDTO;
+import br.com.api.condomanager.condomanager.sistema.dto.MoradorResponseDTO;
 import br.com.api.condomanager.condomanager.sistema.exceptions.DadosPessoaisException;
 import br.com.api.condomanager.condomanager.sistema.exceptions.ErroFluxoException;
-import br.com.api.condomanager.condomanager.util.Util;
 
 @Service
 public class MoradorService {
@@ -32,6 +33,9 @@ public class MoradorService {
 	PredioRepository predioRepository;
 
 	@Autowired
+	ApartamentoRepository apartamentoRepository;
+
+	@Autowired
 	PasswordEncoder encoder;
 
 	public MoradorResponseDTO cadastrarMorador(MoradorRequestDTO moradorRequest) {
@@ -44,32 +48,29 @@ public class MoradorService {
 			usuario.setEmail(moradorRequest.getEmail());
 			usuario.setTelefone(moradorRequest.getTelefone());
 			usuario.setDdd(moradorRequest.getDdd());
-			usuario.setIdNivelAcesso(AcessoEnum.MORADOR.getNivel());
+			usuario.setNivelAcesso(AcessoEnum.MORADOR.getNivel());
 			
 			Optional<CondominioEntity> condominio = condominioRepository.findById(moradorRequest.getIdCondominio());
 			Optional<PredioEntity> predio = predioRepository.findById(moradorRequest.getIdPredio());
+			Optional<ApartamentoEntity> apto = apartamentoRepository.findById(moradorRequest.getIdApto());
 			
-			if(!condominio.isPresent() || !predio.isPresent()) {
-				throw new ErroFluxoException("Falha ao consultar dados do condomínio!");
+			if(!condominio.isPresent() || !predio.isPresent() || apto.isPresent()) {
+				throw new ErroFluxoException("Falha ao consultar dados, verifique e tente novamente!");
 			}
 			
 			if(validarCondominioPredio(moradorRequest)) {
-				usuario.setIdCondominio(condominio.get().getId());
-				usuario.setIdPredio(predio.get().getId());
+				usuario.setCondominio(condominio.get());
+				usuario.setPredio(predio.get());
 			}
-			
-			usuario.setIdCondominio(condominio.get().getId());
-			usuario.setIdPredio(predio.get().getId());
-			
-			//TO DO
-			//criar tabela de apartamentos vinculada aos predios
-			usuario.setIdApto(null);
-			
+
+			usuario.setCondominio(condominio.get());
+			usuario.setPredio(predio.get());
+			usuario.setApartamento(apto.get());
 			usuario.setSenha(this.encoder.encode(moradorRequest.getCpf()));
 			
 			usuarioRepository.save(usuario);
 		} else {
-			throw new DadosPessoaisException("CPF já cadastrado!");
+			throw new DadosPessoaisException("Já existe um morador cadastrado com este CPF, verifique e tente novamente!");
 		}
 		
 		MoradorResponseDTO moradorResponse = new MoradorResponseDTO();

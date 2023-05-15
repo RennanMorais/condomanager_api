@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import br.com.api.condomanager.condomanager.model.CondominioEntity;
-import br.com.api.condomanager.condomanager.sistema.condominios.dto.projection.CondominioProjection;
+import br.com.api.condomanager.condomanager.sistema.dto.projection.CondominioProjection;
 
 @Repository
 public interface CondominioRepository extends JpaRepository<CondominioEntity, Long> {

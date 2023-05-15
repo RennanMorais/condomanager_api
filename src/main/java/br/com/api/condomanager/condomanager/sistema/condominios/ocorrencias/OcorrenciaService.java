@@ -15,12 +15,11 @@ import br.com.api.condomanager.condomanager.model.UserEntity;
 import br.com.api.condomanager.condomanager.repository.CondominioRepository;
 import br.com.api.condomanager.condomanager.repository.OcorrenciaRepository;
 import br.com.api.condomanager.condomanager.repository.UsuarioRepository;
-import br.com.api.condomanager.condomanager.sistema.condominios.dto.FinalizarOcorrenciaRequestDTO;
-import br.com.api.condomanager.condomanager.sistema.condominios.dto.OcorrenciaRequestDTO;
-import br.com.api.condomanager.condomanager.sistema.condominios.dto.OcorrenciaResponseDTO;
+import br.com.api.condomanager.condomanager.sistema.dto.FinalizarOcorrenciaRequestDTO;
+import br.com.api.condomanager.condomanager.sistema.dto.OcorrenciaRequestDTO;
+import br.com.api.condomanager.condomanager.sistema.dto.OcorrenciaResponseDTO;
 import br.com.api.condomanager.condomanager.sistema.exceptions.ErroFluxoException;
 import br.com.api.condomanager.condomanager.util.DateUtil;
-import br.com.api.condomanager.condomanager.util.Util;
 
 @Service
 public class OcorrenciaService {
@@ -121,7 +120,7 @@ public class OcorrenciaService {
 		UserEntity user = userRepository.findByEmail(loginUser.trim());
 		
 		if(user != null) {
-			if(!user.getIdNivelAcesso().equals(AcessoEnum.ADMINISTRADOR.getNivel())) {
+			if(!user.getNivelAcesso().equals(AcessoEnum.ADMINISTRADOR.getNivel())) {
 				throw new ErroFluxoException("Você não tem permissão para realizar atender ocorrências");
 			}
 		}

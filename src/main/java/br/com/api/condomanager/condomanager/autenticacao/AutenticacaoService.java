@@ -34,7 +34,7 @@ public class AutenticacaoService {
 			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword()));
 			
 			UserEntity user = userRepository.findByEmail(loginDto.getEmail());
-			NivelAcessoEntity nivelAcesso = nivelAcessoRepository.findById(user.getIdNivelAcesso()).get();
+			NivelAcessoEntity nivelAcesso = nivelAcessoRepository.findById(user.getNivelAcesso()).get();
 			
 			if(user == null || nivelAcesso == null) {
 				log.error("ERRO: ".concat(" ".concat(this.getClass().getName())));

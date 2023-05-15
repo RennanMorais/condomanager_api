@@ -1,9 +1,9 @@
 package br.com.api.condomanager.condomanager.sistema.condominios.assembleias;
 
 import br.com.api.condomanager.condomanager.autenticacao.security.MyUserDetails;
-import br.com.api.condomanager.condomanager.sistema.condominios.dto.AssembleiaRequestDTO;
-import br.com.api.condomanager.condomanager.sistema.condominios.dto.AssembleiaResponseDTO;
-import br.com.api.condomanager.condomanager.sistema.condominios.dto.projection.AssembleiaProjection;
+import br.com.api.condomanager.condomanager.sistema.dto.AssembleiaRequestDTO;
+import br.com.api.condomanager.condomanager.sistema.dto.AssembleiaResponseDTO;
+import br.com.api.condomanager.condomanager.sistema.dto.projection.AssembleiaProjection;
 import br.com.api.condomanager.condomanager.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

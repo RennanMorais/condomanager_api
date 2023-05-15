@@ -15,9 +15,9 @@ import org.springframework.stereotype.Service;
 
 import br.com.api.condomanager.condomanager.model.CondominioEntity;
 import br.com.api.condomanager.condomanager.repository.CondominioRepository;
-import br.com.api.condomanager.condomanager.sistema.condominios.dto.CondominiosRequestDTO;
-import br.com.api.condomanager.condomanager.sistema.condominios.dto.CondominiosResponseDTO;
-import br.com.api.condomanager.condomanager.sistema.condominios.dto.projection.CondominioProjection;
+import br.com.api.condomanager.condomanager.sistema.dto.CondominiosRequestDTO;
+import br.com.api.condomanager.condomanager.sistema.dto.CondominiosResponseDTO;
+import br.com.api.condomanager.condomanager.sistema.dto.projection.CondominioProjection;
 import br.com.api.condomanager.condomanager.sistema.exceptions.ErroFluxoException;
 
 @Service
