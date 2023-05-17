@@ -2,12 +2,7 @@ package br.com.api.condomanager.condomanager.model;
 
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -23,19 +18,22 @@ public class OcorrenciaEntity {
 	private Long id;
 	
 	@Column(name = "data")
+	@Temporal(TemporalType.DATE)
     private Date data;
 	
 	@Column(name = "descricao")
 	private String descricao;
+
+	@ManyToOne
+	@JoinColumn(name = "id_condominio")
+    private CondominioEntity condominio;
+
+	@ManyToOne
+	@JoinColumn(name = "id_morador")
+	private UserEntity morador;
 	
-	@Column(name = "idCondominio")
-    private Long idCondominio;
-	
-	@Column(name = "idMorador")
-	private Long idMorador;
-	
-	@Column(name = "id_status_ocorrencia")
-    private Long idStatus;
+	@Column(name = "status")
+    private Long status;
 	
 	@Column(name = "resposta")
     private String resposta;

@@ -1,22 +1,24 @@
 package br.com.api.condomanager.condomanager.sistema.dto.projection;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
-public interface AssembleiaProjection {
+public interface OcorrenciaProjection {
 
-	Long getId();
-
-    String getTitulo();
-
-    String getDescricao();
+    Long getId();
 
     @JsonFormat(pattern = "dd/MM/yyyy")
     Date getData();
-    
+    String getDescricao();
+
     CondominioProjection getCondominio();
-    
-    AreaComumProjection getAreaComum();
+
+    UsuarioProjection getMorador();
+
+    Long getStatus();
+
+    String getResposta();
 
 }

@@ -12,10 +12,6 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class OcorrenciaRequestDTO {
-
-	@DateFormat
-    @NotNull(message = "{campo.nulo.vazio}")
-    private String data;
 	
 	@NotBlank(message = "{campo.nulo.vazio}")
 	private String descricao;

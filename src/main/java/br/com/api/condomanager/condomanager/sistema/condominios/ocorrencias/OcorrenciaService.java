@@ -1,7 +1,10 @@
 package br.com.api.condomanager.condomanager.sistema.condominios.ocorrencias;
 
+import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
+import br.com.api.condomanager.condomanager.sistema.dto.projection.OcorrenciaProjection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -39,7 +42,7 @@ public class OcorrenciaService {
 	public OcorrenciaResponseDTO registrarOcorrencia(OcorrenciaRequestDTO request) {
 		
 		OcorrenciaEntity ocorrencia = new OcorrenciaEntity();
-		ocorrencia.setData(DateUtil.toDate(request.getData()));
+		ocorrencia.setData(new Date());
 		ocorrencia.setDescricao(request.getDescricao());
 		
 		Optional<CondominioEntity> condominio = condominioRepository.findById(request.getIdCondominio());
@@ -48,7 +51,7 @@ public class OcorrenciaService {
 			throw new ErroFluxoException("Código do condomínio invalido ou não encontrado!");
 		}
 		
-		ocorrencia.setIdCondominio(condominio.get().getId());
+		ocorrencia.setCondominio(condominio.get());
 		
 		UserEntity user = userRepository.findByCpf(request.getCpfMorador());
 		
@@ -56,8 +59,8 @@ public class OcorrenciaService {
 			throw new ErroFluxoException("Cpf do morador invalido ou não encontrado!");
 		}
 		
-		ocorrencia.setIdMorador(user.getId());
-		ocorrencia.setIdStatus(OcorrenciaStatusEnum.PENDENTE.getIdStatus());
+		ocorrencia.setMorador(user);
+		ocorrencia.setStatus(OcorrenciaStatusEnum.PENDENTE.getIdStatus());
 		
 		ocorrenciaRepository.save(ocorrencia);
 		
@@ -67,12 +70,35 @@ public class OcorrenciaService {
 		
 		return response;
 	}
+
+	public OcorrenciaProjection buscarOcorrencia(Long id) {
+		OcorrenciaProjection ocorrencia = ocorrenciaRepository.findProjectedById(id);
+
+		if(ocorrencia == null) {
+			throw new ErroFluxoException("Nenhuma ocorrência encontrada, verifique e tente novamente!");
+		}
+
+		return ocorrencia;
+
+	}
+
+	public List<OcorrenciaProjection> listarOcorrencias() {
+
+		List<OcorrenciaProjection> lista = ocorrenciaRepository.findAllProjectedBy();
+
+		if(lista == null || lista.isEmpty()) {
+			throw new ErroFluxoException("Nenhuma ocorrência registrada no sistema.");
+		}
+
+		return lista;
+
+	}
 	
-	public OcorrenciaResponseDTO atenderOcorrencia(Long idOcorrencia) {
+	public OcorrenciaResponseDTO atenderOcorrencia(Long id) {
 		
-		OcorrenciaEntity ocorrencia = this.validarOcorrencia(idOcorrencia, "atender");
+		OcorrenciaEntity ocorrencia = this.validarOcorrencia(id, "atender");
 		
-		ocorrencia.setIdStatus(OcorrenciaStatusEnum.EM_ANDAMENTO.getIdStatus());
+		ocorrencia.setStatus(OcorrenciaStatusEnum.EM_ANDAMENTO.getIdStatus());
 		ocorrenciaRepository.save(ocorrencia);
 		
 		OcorrenciaResponseDTO response = new OcorrenciaResponseDTO(
@@ -82,11 +108,11 @@ public class OcorrenciaService {
 		return response;
 	}
 	
-	public OcorrenciaResponseDTO finalizarOcorrencia(Long codigoOcorrencia, FinalizarOcorrenciaRequestDTO request) {
+	public OcorrenciaResponseDTO finalizarOcorrencia(Long id, FinalizarOcorrenciaRequestDTO request) {
 		
-		OcorrenciaEntity ocorrencia = this.validarOcorrencia(codigoOcorrencia, "finalizar");
+		OcorrenciaEntity ocorrencia = this.validarOcorrencia(id, "finalizar");
 		
-		ocorrencia.setIdStatus(OcorrenciaStatusEnum.FINALIZADO.getIdStatus());
+		ocorrencia.setStatus(OcorrenciaStatusEnum.FINALIZADO.getIdStatus());
 		ocorrencia.setResposta(request.getResposta());
 		ocorrenciaRepository.save(ocorrencia);
 		
@@ -105,13 +131,13 @@ public class OcorrenciaService {
 		}
 		
 		if(chamada.equalsIgnoreCase("atender")) {
-			if(ocorrencia.get().getIdStatus().equals(OcorrenciaStatusEnum.EM_ANDAMENTO.getIdStatus())
-					|| ocorrencia.get().getIdStatus().equals(OcorrenciaStatusEnum.FINALIZADO.getIdStatus())) {
+			if(ocorrencia.get().getStatus().equals(OcorrenciaStatusEnum.EM_ANDAMENTO.getIdStatus())
+					|| ocorrencia.get().getStatus().equals(OcorrenciaStatusEnum.FINALIZADO.getIdStatus())) {
 				throw new ErroFluxoException("Ocorrencia já está em atendimento ou foi finalizada");
 			}
 		} else if(chamada.equalsIgnoreCase("finalizar")) {
-			if(ocorrencia.get().getIdStatus().equals(OcorrenciaStatusEnum.PENDENTE.getIdStatus())
-					|| ocorrencia.get().getIdStatus().equals(OcorrenciaStatusEnum.FINALIZADO.getIdStatus())) {
+			if(ocorrencia.get().getStatus().equals(OcorrenciaStatusEnum.PENDENTE.getIdStatus())
+					|| ocorrencia.get().getStatus().equals(OcorrenciaStatusEnum.FINALIZADO.getIdStatus())) {
 				throw new ErroFluxoException("Ocorrencia ainda está pendente ou já foi finalizada");
 			}
 		}
