@@ -1,5 +1,7 @@
 package br.com.api.condomanager.condomanager.sistema.condominios.veiculos;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,7 +19,7 @@ public class VieculosResource {
 	VeiculoService veiculoService;
 	
 	@PostMapping("/veiculo/cadastrar")
-	public VeiculoResponseDTO cadastrarVeiculo(@RequestBody VeiculoRequestDTO request) {
+	public VeiculoResponseDTO cadastrarVeiculo(@Valid @RequestBody VeiculoRequestDTO request) {
 		return this.veiculoService.cadastrarVeiculo(request);
 	}
 	

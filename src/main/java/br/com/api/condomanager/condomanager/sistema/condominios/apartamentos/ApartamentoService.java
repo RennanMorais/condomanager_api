@@ -49,6 +49,24 @@ public class ApartamentoService {
         return aptos;
 
     }
+    
+    public ApartamentoResponseDTO editarApartamento(Long id, ApartamentoRequestDTO request) {
+    	
+    	Optional<ApartamentoEntity> apto = apartamentoRepository.findById(id);
+    	
+    	if(!apto.isPresent()) {
+    		throw new ErroFluxoException("Apartamento não encontrado!");
+    	}
+    	
+    	apto.get().setNumero(request.getNumero());
+    	apartamentoRepository.save(apto.get());
+    	
+    	ApartamentoResponseDTO response = new ApartamentoResponseDTO();
+        response.setCodigo("200");
+        response.setMensagem("Apartamento editado com sucesso!");
+
+        return response;
+    }
 
     private PredioEntity buscarPredio(Long id) {
         Optional<PredioEntity> predio = predioRepository.findById(id);

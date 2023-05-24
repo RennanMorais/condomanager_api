@@ -54,7 +54,7 @@ public class CondominioResource {
 	@PutMapping(value = "/condominio/editar/{id}")
 	public ResponseEntity<CondominiosResponseDTO> editarCondominio(
 			@PathVariable Long id,
-			@RequestBody CondominiosRequestDTO request) {
+			@Valid @RequestBody CondominiosRequestDTO request) {
 		util.validarAdmin(userDetails.getLoginUser().trim());
 		return ResponseEntity.ok(this.condominioService.editarCondominio(id, request));
 	}

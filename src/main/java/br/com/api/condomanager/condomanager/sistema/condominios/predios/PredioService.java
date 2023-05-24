@@ -58,6 +58,24 @@ public class PredioService {
 		
 	}
 	
+	public PredioResponseDTO editarPredio(Long idPredio, PredioRequestDTO request) {
+    	
+    	Optional<PredioEntity> predio = predioRepository.findById(idPredio);
+    	
+    	if(!predio.isPresent()) {
+    		throw new ErroFluxoException("Apartamento não encontrado!");
+    	}
+    	
+    	predio.get().setNome(null);
+    	predioRepository.save(predio.get());
+    	
+    	PredioResponseDTO response = new PredioResponseDTO();
+        response.setCodigo("200");
+        response.setMensagem("Prédio editado com sucesso!");
+
+        return response;
+    }
+	
 	public PredioResponseDTO deletarPredio(Long idPredio) {
 		
 		Optional<PredioEntity> predio = predioRepository.findById(idPredio);

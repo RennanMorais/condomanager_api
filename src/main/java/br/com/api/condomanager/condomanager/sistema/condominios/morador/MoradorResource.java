@@ -1,5 +1,7 @@
 package br.com.api.condomanager.condomanager.sistema.condominios.morador;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,7 +28,7 @@ public class MoradorResource {
 	private Util util;
 	
 	@PostMapping("/condominio/morador/cadastrar")
-	public ResponseEntity<MoradorResponseDTO> cadastrarMorador(@RequestBody MoradorRequestDTO request) {
+	public ResponseEntity<MoradorResponseDTO> cadastrarMorador(@Valid @RequestBody MoradorRequestDTO request) {
 		util.validarAdmin(userDetails.getLoginUser().trim());
 		return ResponseEntity.ok(moradorService.cadastrarMorador(request));
 	}

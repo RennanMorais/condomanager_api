@@ -46,7 +46,7 @@ public class AreaComumResource {
 	}
 
 	@PutMapping(value = "/areacomum/editar/{id}")
-	public ResponseEntity<AreaComumResponseDTO> editarAreaComum(@PathVariable Long id, @RequestBody AreaComumRequestDTO request) {
+	public ResponseEntity<AreaComumResponseDTO> editarAreaComum(@PathVariable Long id, @Valid @RequestBody AreaComumRequestDTO request) {
 		return ResponseEntity.ok(this.areaComumService.editarAreaComum(id, request));
 	}
 

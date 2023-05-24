@@ -26,7 +26,7 @@ public class OcorrenciaResource {
 	OcorrenciaService service;
 	
 	@PostMapping("/ocorrencia/registrar")
-	public OcorrenciaResponseDTO registrarOcorrencia(@RequestBody OcorrenciaRequestDTO request) {
+	public OcorrenciaResponseDTO registrarOcorrencia(@Valid @RequestBody OcorrenciaRequestDTO request) {
 		return this.service.registrarOcorrencia(request);
 	}
 

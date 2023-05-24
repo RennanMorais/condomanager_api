@@ -2,6 +2,8 @@ package br.com.api.condomanager.condomanager.sistema.condominios.apartamentos;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,7 +25,7 @@ public class ApartamentoResource {
     ApartamentoService service;
 
     @PostMapping("/apartamento/cadastrar")
-    public ResponseEntity<ApartamentoResponseDTO> cadastrarApartamento(@RequestBody ApartamentoRequestDTO request) {
+    public ResponseEntity<ApartamentoResponseDTO> cadastrarApartamento(@Valid @RequestBody ApartamentoRequestDTO request) {
         return ResponseEntity.ok(this.service.cadastrarApartamento(request));
     }
 

@@ -15,6 +15,7 @@ import lombok.Setter;
 public class CondominiosRequestDTO{
 
 	@NotBlank(message = "{campo.nulo.vazio}")
+	@NotNull(message = "{campo.nulo.vazio}")
 	private String nome;
 	
 	@NotNull(message = "{campo.nulo.vazio}")
