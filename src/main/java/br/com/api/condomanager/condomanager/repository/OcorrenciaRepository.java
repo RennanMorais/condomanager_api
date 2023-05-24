@@ -1,11 +1,11 @@
 package br.com.api.condomanager.condomanager.repository;
 
-import br.com.api.condomanager.condomanager.sistema.dto.projection.OcorrenciaProjection;
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import br.com.api.condomanager.condomanager.model.OcorrenciaEntity;
-
-import java.util.List;
+import br.com.api.condomanager.condomanager.sistema.dto.projection.OcorrenciaProjection;
 
 public interface OcorrenciaRepository extends JpaRepository<OcorrenciaEntity, Long> {
 

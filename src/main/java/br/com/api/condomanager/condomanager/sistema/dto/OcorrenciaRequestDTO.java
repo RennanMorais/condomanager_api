@@ -3,7 +3,6 @@ package br.com.api.condomanager.condomanager.sistema.dto;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import br.com.api.condomanager.condomanager.util.validators.DateFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;

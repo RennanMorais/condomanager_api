@@ -13,6 +13,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import br.com.api.condomanager.condomanager.model.UserEntity;
 import br.com.api.condomanager.condomanager.sistema.exceptions.InvalidTokenException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
@@ -41,11 +42,20 @@ public class JwtTokenProvider {
 		secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
 	}
 
-	public String gerarToken(String email, String nome,String acesso) {
+	public String gerarToken(UserEntity user) {
 
-		Claims claims = Jwts.claims().setSubject(email);
-		claims.put("nome", nome);
-		claims.put("auth", acesso);
+		String hashLogin = Base64.getEncoder().encodeToString(
+				user.toString()
+				.concat(user.getNome())
+				.concat(user.getEmail())
+				.concat(user.getCpf()).getBytes());
+
+		Claims claims = Jwts.claims().setSubject(user.getEmail());
+		claims.put("nome", user.getNome());
+		claims.put("auth", user.getNivelAcesso());
+		claims.put("cpf", user.getCpf());
+		claims.put("telefone", user.getDdd()+user.getTelefone());
+		claims.put("hash", hashLogin);
 
 		Date now = new Date();
 		Date validity = new Date(now.getTime() + validityInMilliseconds);

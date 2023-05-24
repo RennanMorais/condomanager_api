@@ -1,8 +1,8 @@
 package br.com.api.condomanager.condomanager.sistema.dto.projection;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 public interface AssembleiaProjection {
 

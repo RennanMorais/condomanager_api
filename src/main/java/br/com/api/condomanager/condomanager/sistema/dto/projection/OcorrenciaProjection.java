@@ -1,9 +1,8 @@
 package br.com.api.condomanager.condomanager.sistema.dto.projection;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import org.springframework.format.annotation.DateTimeFormat;
-
 import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 public interface OcorrenciaProjection {
 

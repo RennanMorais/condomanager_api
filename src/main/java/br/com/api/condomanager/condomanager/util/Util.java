@@ -2,26 +2,16 @@ package br.com.api.condomanager.condomanager.util;
 
 import java.security.SecureRandom;
 
-import br.com.api.condomanager.condomanager.autenticacao.security.MyUserDetails;
-import br.com.api.condomanager.condomanager.enums.AcessoEnum;
-import br.com.api.condomanager.condomanager.model.UserEntity;
-import br.com.api.condomanager.condomanager.sistema.exceptions.ErroFluxoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AuthorizationServiceException;
 import org.springframework.stereotype.Service;
 
-import br.com.api.condomanager.condomanager.repository.AreaComumRepository;
-import br.com.api.condomanager.condomanager.repository.AssembleiaRepository;
-import br.com.api.condomanager.condomanager.repository.CondominioRepository;
-import br.com.api.condomanager.condomanager.repository.OcorrenciaRepository;
-import br.com.api.condomanager.condomanager.repository.PetRepository;
-import br.com.api.condomanager.condomanager.repository.PredioRepository;
-import br.com.api.condomanager.condomanager.repository.ReservaRepository;
+import br.com.api.condomanager.condomanager.autenticacao.security.MyUserDetails;
+import br.com.api.condomanager.condomanager.enums.AcessoEnum;
+import br.com.api.condomanager.condomanager.model.UserEntity;
 import br.com.api.condomanager.condomanager.repository.UsuarioRepository;
-import br.com.api.condomanager.condomanager.repository.VeiculoRepository;
 import br.com.api.condomanager.condomanager.sistema.exceptions.DadosPessoaisException;
-
-import javax.swing.text.html.parser.Entity;
+import br.com.api.condomanager.condomanager.sistema.exceptions.ErroFluxoException;
 
 @Service
 public class Util {

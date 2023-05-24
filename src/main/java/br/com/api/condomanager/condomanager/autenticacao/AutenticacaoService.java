@@ -31,8 +31,6 @@ public class AutenticacaoService {
 
 	public LoginResponseDto autenticar(LoginRequestDto loginDto) throws LoginException {
 		try {
-			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword()));
-			
 			UserEntity user = userRepository.findByEmail(loginDto.getEmail());
 			NivelAcessoEntity nivelAcesso = nivelAcessoRepository.findById(user.getNivelAcesso()).get();
 			
@@ -41,10 +39,12 @@ public class AutenticacaoService {
 				throw new LoginException("Falha ao consultar dados do usuário");
 			}
 			
+			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword()));
+			
 			LoginResponseDto response = new LoginResponseDto();
 			AcessoDTO acesso = new AcessoDTO();
 			acesso.setNivel(nivelAcesso.getNivel());
-			acesso.setAccessToken(jwtTokenProvider.gerarToken(loginDto.getEmail(), user.getNome(), nivelAcesso.getNivel()));
+			acesso.setAccessToken(jwtTokenProvider.gerarToken(user));
 			response.setAcesso(acesso);
 			
 			return response;

@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import br.com.api.condomanager.condomanager.sistema.dto.projection.OcorrenciaProjection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -21,8 +20,8 @@ import br.com.api.condomanager.condomanager.repository.UsuarioRepository;
 import br.com.api.condomanager.condomanager.sistema.dto.FinalizarOcorrenciaRequestDTO;
 import br.com.api.condomanager.condomanager.sistema.dto.OcorrenciaRequestDTO;
 import br.com.api.condomanager.condomanager.sistema.dto.OcorrenciaResponseDTO;
+import br.com.api.condomanager.condomanager.sistema.dto.projection.OcorrenciaProjection;
 import br.com.api.condomanager.condomanager.sistema.exceptions.ErroFluxoException;
-import br.com.api.condomanager.condomanager.util.DateUtil;
 
 @Service
 public class OcorrenciaService {
