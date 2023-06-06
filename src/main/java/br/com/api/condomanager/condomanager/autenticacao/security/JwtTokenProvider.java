@@ -1,5 +1,6 @@
 package br.com.api.condomanager.condomanager.autenticacao.security;
 
+import java.security.SecureRandom;
 import java.util.Base64;
 import java.util.Date;
 
@@ -44,18 +45,7 @@ public class JwtTokenProvider {
 
 	public String gerarToken(UserEntity user) {
 
-		String hashLogin = Base64.getEncoder().encodeToString(
-				user.toString()
-				.concat(user.getNome())
-				.concat(user.getEmail())
-				.concat(user.getCpf()).getBytes());
-
-		Claims claims = Jwts.claims().setSubject(user.getEmail());
-		claims.put("nome", user.getNome());
-		claims.put("auth", user.getNivelAcesso());
-		claims.put("cpf", user.getCpf());
-		claims.put("telefone", user.getDdd()+user.getTelefone());
-		claims.put("hash", hashLogin);
+		Claims claims = this.gerarClaims(user);
 
 		Date now = new Date();
 		Date validity = new Date(now.getTime() + validityInMilliseconds);
@@ -92,6 +82,27 @@ public class JwtTokenProvider {
 		} catch (JwtException | IllegalArgumentException e) {
 			throw new InvalidTokenException("Token inválido ou expirado.");
 		}
+	}
+	
+	private Claims gerarClaims(UserEntity user) {
+		
+		SecureRandom rand = new SecureRandom();
+		
+		String hashLogin = Base64.getEncoder().encodeToString(
+				user.toString()
+				.concat(user.getNome())
+				.concat(user.getEmail())
+				.concat(String.valueOf(rand.nextLong(999999999999999999L)))
+				.concat(user.getCpf()).getBytes());
+		
+		Claims claims = Jwts.claims().setSubject(user.getEmail());
+		claims.put("nome", user.getNome());
+		claims.put("auth", user.getNivelAcesso());
+		claims.put("cpf", user.getCpf());
+		claims.put("data", new Date());
+		claims.put("hash", hashLogin);
+		
+		return claims;
 	}
 
 }

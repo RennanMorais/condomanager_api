@@ -31,7 +31,12 @@ public class PredioResource {
 		return ResponseEntity.ok(this.predioservice.cadastrarPredio(request));
 	}
 	
-	@GetMapping(value = "/predio/listar")
+	@GetMapping(value = "/predios/condominio/{id}")
+	public ResponseEntity<List<PredioProjection>> getPrediosPorCondominio(@PathVariable Long id) {
+		return ResponseEntity.ok(this.predioservice.getPrediosPorCondominio(id));
+	}
+	
+	@GetMapping(value = "/predios/listar")
 	public ResponseEntity<List<PredioProjection>> getPredios() {
 		return ResponseEntity.ok(this.predioservice.getPredios());
 	}

@@ -46,6 +46,25 @@ public class PredioService {
 		return response;
 	}
 	
+	
+	//Verificar
+	public List<PredioProjection> getPrediosPorCondominio(Long id) {
+		
+		Optional<CondominioEntity> condominio = this.condominioRepository.findById(id);
+		
+		if(!condominio.isPresent()) {
+			throw new ErroFluxoException("Condomínio inexistente");
+		}
+		
+		List<PredioProjection> predios = this.predioRepository.findAllProjectedByCondominio(condominio.get());
+		
+		if(predios == null) {
+			throw new ErroFluxoException("Condomínio inexistente");
+		}
+		
+		return predios;
+	}
+	
 	public List<PredioProjection> getPredios() {
 		
 		List<PredioProjection> listaPredios = predioRepository.findAllProjectedBy();
