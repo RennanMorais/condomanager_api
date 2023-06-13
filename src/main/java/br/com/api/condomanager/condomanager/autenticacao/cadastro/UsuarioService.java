@@ -1,5 +1,6 @@
-package br.com.api.condomanager.condomanager.sistema.cadastro;
+package br.com.api.condomanager.condomanager.autenticacao.cadastro;
 
+import br.com.api.condomanager.condomanager.autenticacao.dto.UserRequestDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -7,8 +8,7 @@ import org.springframework.stereotype.Service;
 import br.com.api.condomanager.condomanager.enums.AcessoEnum;
 import br.com.api.condomanager.condomanager.model.UserEntity;
 import br.com.api.condomanager.condomanager.repository.UsuarioRepository;
-import br.com.api.condomanager.condomanager.sistema.cadastro.dto.UserRequestDto;
-import br.com.api.condomanager.condomanager.sistema.cadastro.dto.UserResponseDto;
+import br.com.api.condomanager.condomanager.autenticacao.dto.UserResponseDto;
 import br.com.api.condomanager.condomanager.sistema.exceptions.DadosPessoaisException;
 
 @Service

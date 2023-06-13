@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -26,7 +28,8 @@ public class PetEntity {
 	@Column(name = "tipo")
 	private String tipo;
 	
-	@Column(name = "id_morador")
-	private Long idMorador;
+	@ManyToOne
+	@JoinColumn(name = "id_morador")
+	private UserEntity morador;
 	
 }

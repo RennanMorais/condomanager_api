@@ -14,4 +14,6 @@ public interface ApartamentoRepository extends JpaRepository<ApartamentoEntity, 
 
     List<ApartamentoProjection> findAllProjectedByPredio(PredioEntity predio);
 
+    ApartamentoProjection findProjectedById(Long id);
+
 }

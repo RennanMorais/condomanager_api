@@ -35,6 +35,9 @@ public class JwtTokenProvider {
 	@Value("${security.jwt.token.expire-length:3600000}")
 	private long validityInMilliseconds = 3600000; // 1h
 
+	@Value("${api.key}")
+	private String apiKey;
+
 	@Autowired
 	private MyUserDetails myUserDetails;
 
@@ -86,21 +89,12 @@ public class JwtTokenProvider {
 	
 	private Claims gerarClaims(UserEntity user) {
 		
-		SecureRandom rand = new SecureRandom();
-		
-		String hashLogin = Base64.getEncoder().encodeToString(
-				user.toString()
-				.concat(user.getNome())
-				.concat(user.getEmail())
-				.concat(String.valueOf(rand.nextLong(999999999999999999L)))
-				.concat(user.getCpf()).getBytes());
-		
 		Claims claims = Jwts.claims().setSubject(user.getEmail());
 		claims.put("nome", user.getNome());
 		claims.put("auth", user.getNivelAcesso());
 		claims.put("cpf", user.getCpf());
 		claims.put("data", new Date());
-		claims.put("hash", hashLogin);
+		claims.put("api-key",apiKey);
 		
 		return claims;
 	}

@@ -68,6 +68,32 @@ public class ApartamentoService {
         return response;
     }
 
+    public ApartamentoProjection buscarAptoPorId(Long id) {
+        ApartamentoProjection apto = apartamentoRepository.findProjectedById(id);
+
+        if(apto == null) {
+            throw new ErroFluxoException("Apartamento não encontrado, verifique e tente novamente!");
+        }
+
+        return apto;
+    }
+
+    public ApartamentoResponseDTO deletarApartamento(Long id) {
+        Optional<ApartamentoEntity> apto = apartamentoRepository.findById(id);
+
+        if(!apto.isPresent()) {
+            throw new ErroFluxoException("Apartamento não encontrado, verifique e tente novamente!");
+        }
+
+        this.apartamentoRepository.delete(apto.get());
+
+        ApartamentoResponseDTO response = new ApartamentoResponseDTO();
+        response.setCodigo("200");
+        response.setMensagem("Apartamento excluído com sucesso!");
+
+        return response;
+    }
+
     private PredioEntity buscarPredio(Long id) {
         Optional<PredioEntity> predio = predioRepository.findById(id);
 

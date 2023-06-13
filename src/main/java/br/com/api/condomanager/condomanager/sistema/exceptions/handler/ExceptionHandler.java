@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import br.com.api.condomanager.condomanager.sistema.cadastro.ExceptionResponse;
+import br.com.api.condomanager.condomanager.autenticacao.cadastro.ExceptionResponse;
 import br.com.api.condomanager.condomanager.sistema.exceptions.ErroFluxoException;
 import br.com.api.condomanager.condomanager.sistema.exceptions.InvalidLoginException;
 import br.com.api.condomanager.condomanager.util.ErrorDto;

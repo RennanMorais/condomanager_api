@@ -3,7 +3,7 @@ package br.com.api.condomanager.condomanager.sistema.dto;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import br.com.api.condomanager.condomanager.sistema.cadastro.dto.UserRequestDto;
+import br.com.api.condomanager.condomanager.autenticacao.dto.UserRequestDto;
 import lombok.Getter;
 import lombok.Setter;
 
