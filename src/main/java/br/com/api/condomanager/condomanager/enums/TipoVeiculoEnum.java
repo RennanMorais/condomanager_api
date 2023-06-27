@@ -12,6 +12,7 @@ public enum TipoVeiculoEnum {
 	
 	TipoVeiculoEnum(String descricao, Long tipo) {
 		this.descricao = descricao;
+		this.tipo = tipo;
 	}
 	
 	public String getDescricao() {

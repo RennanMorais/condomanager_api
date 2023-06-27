@@ -1,6 +1,5 @@
 package br.com.api.condomanager.condomanager.autenticacao.security;
 
-import java.security.SecureRandom;
 import java.util.Base64;
 import java.util.Date;
 
@@ -83,7 +82,7 @@ public class JwtTokenProvider {
 			Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
 			return true;
 		} catch (JwtException | IllegalArgumentException e) {
-			throw new InvalidTokenException("Token inválido ou expirado.");
+			throw new InvalidTokenException("Token inválido");
 		}
 	}
 	
@@ -91,6 +90,7 @@ public class JwtTokenProvider {
 		
 		Claims claims = Jwts.claims().setSubject(user.getEmail());
 		claims.put("nome", user.getNome());
+		claims.put("email", user.getEmail());
 		claims.put("auth", user.getNivelAcesso());
 		claims.put("cpf", user.getCpf());
 		claims.put("data", new Date());

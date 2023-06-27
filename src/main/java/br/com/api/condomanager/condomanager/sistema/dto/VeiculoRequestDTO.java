@@ -9,12 +9,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class VeiculoRequestDTO {
-
-	@NotNull(message = "{campo.nulo.vazio}")
-	private Long idCondominio;
-	
-	@NotNull(message = "{campo.nulo.vazio}")
-	private Long idPredio;
 	
 	@NotNull(message = "{campo.nulo.vazio}")
 	private Long idMorador;

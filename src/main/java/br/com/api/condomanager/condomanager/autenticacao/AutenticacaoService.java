@@ -37,6 +37,8 @@ public class AutenticacaoService {
 			if(user == null || nivelAcesso == null) {
 				log.error("ERRO: ".concat(" ".concat(this.getClass().getName())));
 				throw new LoginException("Falha ao consultar dados do usuário");
+			} else if(nivelAcesso.getId().equals(4L)) {
+				throw new LoginException("Usuário desativado, entre em contato com o administrador");
 			}
 			
 			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword()));

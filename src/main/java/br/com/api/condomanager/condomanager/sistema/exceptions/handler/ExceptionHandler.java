@@ -36,19 +36,19 @@ public class ExceptionHandler extends ResponseEntityExceptionHandler {
 
 	@org.springframework.web.bind.annotation.ExceptionHandler(LoginException.class)
 	public ResponseEntity<Object> handleLoginException(LoginException e) {
-		ExceptionResponse exceptionResponse = new ExceptionResponse(String.valueOf(HttpStatus.BAD_REQUEST.value()), e.getMessage());
-		return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
+		ExceptionResponse exceptionResponse = new ExceptionResponse(String.valueOf(HttpStatus.UNAUTHORIZED.value()), e.getMessage());
+		return new ResponseEntity<>(exceptionResponse, HttpStatus.UNAUTHORIZED);
 	}
 	
 	@org.springframework.web.bind.annotation.ExceptionHandler({ AuthenticationException.class })
     public ResponseEntity<CodeErrorDto> handleAuthenticationException(Exception ex) {
-		CodeErrorDto erro = new CodeErrorDto(HttpStatus.UNAUTHORIZED.toString(), "Token Inválido ou expirado.");
+		CodeErrorDto erro = new CodeErrorDto(HttpStatus.UNAUTHORIZED.toString(), "Token Inválido");
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(erro);
     }
 	
 	@org.springframework.web.bind.annotation.ExceptionHandler({ InsufficientAuthenticationException.class })
     public ResponseEntity<CodeErrorDto> handleAuthenticationException(InsufficientAuthenticationException ex) {
-		CodeErrorDto erro = new CodeErrorDto(String.valueOf(HttpStatus.UNAUTHORIZED.value()), "Token Inválido ou expirado.");
+		CodeErrorDto erro = new CodeErrorDto(String.valueOf(HttpStatus.UNAUTHORIZED.value()), "Token Inválido");
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(erro);
     }
 	
