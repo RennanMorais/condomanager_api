@@ -1,6 +1,5 @@
 package br.com.api.condomanager.condomanager.autenticacao.security;
 
-import br.com.api.condomanager.condomanager.enums.AcessoEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -44,10 +43,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers("/condomanager/sistema/cadastro").permitAll()
 
             // Endpoints apenas para ADMINISTRADOR
-            .antMatchers("/condomanager/sistema/areacomum/cadastrar").hasAuthority(AcessoEnum.ADMINISTRADOR.getNivel().toString())
-            .antMatchers("/condomanager/sistema/areacomum/{id}").hasAuthority(AcessoEnum.ADMINISTRADOR.getNivel().toString())
-            .antMatchers("/condomanager/sistema/areacomum/editar/{id}").hasAuthority(AcessoEnum.ADMINISTRADOR.getNivel().toString())
-            .antMatchers("/condomanager/sistema/areacomum/deletar/{id}").hasAuthority(AcessoEnum.ADMINISTRADOR.getNivel().toString())
             .anyRequest().authenticated();
 
     

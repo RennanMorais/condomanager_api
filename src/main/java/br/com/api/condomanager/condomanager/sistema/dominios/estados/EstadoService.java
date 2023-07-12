@@ -1,12 +1,13 @@
 package br.com.api.condomanager.condomanager.sistema.dominios.estados;
 
-import br.com.api.condomanager.condomanager.repository.EstadoRepository;
-import br.com.api.condomanager.condomanager.sistema.dto.projection.EstadoProjection;
-import br.com.api.condomanager.condomanager.sistema.exceptions.ErroFluxoException;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import br.com.api.condomanager.condomanager.repository.EstadoRepository;
+import br.com.api.condomanager.condomanager.sistema.dto.projection.EstadoProjection;
+import br.com.api.condomanager.condomanager.sistema.exceptions.ErroFluxoException;
 
 @Service
 public class EstadoService {

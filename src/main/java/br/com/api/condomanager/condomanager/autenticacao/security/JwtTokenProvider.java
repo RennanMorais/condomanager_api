@@ -13,6 +13,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import br.com.api.condomanager.condomanager.model.UserEntity;
 import br.com.api.condomanager.condomanager.sistema.exceptions.InvalidTokenException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
@@ -33,6 +34,9 @@ public class JwtTokenProvider {
 	@Value("${security.jwt.token.expire-length:3600000}")
 	private long validityInMilliseconds = 3600000; // 1h
 
+	@Value("${api.key}")
+	private String apiKey;
+
 	@Autowired
 	private MyUserDetails myUserDetails;
 
@@ -41,11 +45,9 @@ public class JwtTokenProvider {
 		secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
 	}
 
-	public String gerarToken(String email, String nome,String acesso) {
+	public String gerarToken(UserEntity user) {
 
-		Claims claims = Jwts.claims().setSubject(email);
-		claims.put("nome", nome);
-		claims.put("auth", acesso);
+		Claims claims = this.gerarClaims(user);
 
 		Date now = new Date();
 		Date validity = new Date(now.getTime() + validityInMilliseconds);
@@ -80,8 +82,21 @@ public class JwtTokenProvider {
 			Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
 			return true;
 		} catch (JwtException | IllegalArgumentException e) {
-			throw new InvalidTokenException("Token inválido ou expirado.");
+			throw new InvalidTokenException("Token inválido");
 		}
+	}
+	
+	private Claims gerarClaims(UserEntity user) {
+		
+		Claims claims = Jwts.claims().setSubject(user.getEmail());
+		claims.put("nome", user.getNome());
+		claims.put("email", user.getEmail());
+		claims.put("auth", user.getNivelAcesso());
+		claims.put("cpf", user.getCpf());
+		claims.put("data", new Date());
+		claims.put("api-key",apiKey);
+		
+		return claims;
 	}
 
 }

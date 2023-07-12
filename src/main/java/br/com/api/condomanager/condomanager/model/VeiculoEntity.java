@@ -1,11 +1,6 @@
 package br.com.api.condomanager.condomanager.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -31,14 +26,9 @@ public class VeiculoEntity {
 	
 	@Column(name = "placa")
 	private String placa;
-	
-	@Column(name = "id_condominio")
-	private Long idCondominio;
-	
-	@Column(name = "id_predio")
-	private Long idPredio;
-	
-	@Column(name = "id_morador")
-	private Long idMorador;
+
+	@ManyToOne
+	@JoinColumn(name = "id_morador")
+	private UserEntity morador;
 	
 }

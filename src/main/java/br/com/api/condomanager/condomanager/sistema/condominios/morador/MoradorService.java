@@ -2,16 +2,16 @@ package br.com.api.condomanager.condomanager.sistema.condominios.morador;
 
 import java.util.Optional;
 
-import br.com.api.condomanager.condomanager.model.ApartamentoEntity;
-import br.com.api.condomanager.condomanager.repository.ApartamentoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import br.com.api.condomanager.condomanager.enums.AcessoEnum;
+import br.com.api.condomanager.condomanager.model.ApartamentoEntity;
 import br.com.api.condomanager.condomanager.model.CondominioEntity;
 import br.com.api.condomanager.condomanager.model.PredioEntity;
 import br.com.api.condomanager.condomanager.model.UserEntity;
+import br.com.api.condomanager.condomanager.repository.ApartamentoRepository;
 import br.com.api.condomanager.condomanager.repository.CondominioRepository;
 import br.com.api.condomanager.condomanager.repository.PredioRepository;
 import br.com.api.condomanager.condomanager.repository.UsuarioRepository;

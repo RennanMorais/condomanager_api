@@ -46,6 +46,25 @@ public class PredioService {
 		return response;
 	}
 	
+	
+	//Verificar
+	public List<PredioProjection> getPrediosPorCondominio(Long id) {
+		
+		Optional<CondominioEntity> condominio = this.condominioRepository.findById(id);
+		
+		if(!condominio.isPresent()) {
+			throw new ErroFluxoException("Condomínio inexistente");
+		}
+		
+		List<PredioProjection> predios = this.predioRepository.findAllProjectedByCondominio(condominio.get());
+		
+		if(predios == null) {
+			throw new ErroFluxoException("Condomínio inexistente");
+		}
+		
+		return predios;
+	}
+	
 	public List<PredioProjection> getPredios() {
 		
 		List<PredioProjection> listaPredios = predioRepository.findAllProjectedBy();
@@ -57,6 +76,24 @@ public class PredioService {
 		throw new ErroFluxoException("Nenhum prédio cadastrado!");
 		
 	}
+	
+	public PredioResponseDTO editarPredio(Long idPredio, PredioRequestDTO request) {
+    	
+    	Optional<PredioEntity> predio = predioRepository.findById(idPredio);
+    	
+    	if(!predio.isPresent()) {
+    		throw new ErroFluxoException("Apartamento não encontrado!");
+    	}
+    	
+    	predio.get().setNome(null);
+    	predioRepository.save(predio.get());
+    	
+    	PredioResponseDTO response = new PredioResponseDTO();
+        response.setCodigo("200");
+        response.setMensagem("Prédio editado com sucesso!");
+
+        return response;
+    }
 	
 	public PredioResponseDTO deletarPredio(Long idPredio) {
 		

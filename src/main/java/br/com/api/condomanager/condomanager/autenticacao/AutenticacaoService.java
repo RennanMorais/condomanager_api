@@ -31,20 +31,22 @@ public class AutenticacaoService {
 
 	public LoginResponseDto autenticar(LoginRequestDto loginDto) throws LoginException {
 		try {
-			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword()));
-			
 			UserEntity user = userRepository.findByEmail(loginDto.getEmail());
 			NivelAcessoEntity nivelAcesso = nivelAcessoRepository.findById(user.getNivelAcesso()).get();
 			
 			if(user == null || nivelAcesso == null) {
 				log.error("ERRO: ".concat(" ".concat(this.getClass().getName())));
 				throw new LoginException("Falha ao consultar dados do usuário");
+			} else if(nivelAcesso.getId().equals(4L)) {
+				throw new LoginException("Usuário desativado, entre em contato com o administrador");
 			}
+			
+			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword()));
 			
 			LoginResponseDto response = new LoginResponseDto();
 			AcessoDTO acesso = new AcessoDTO();
 			acesso.setNivel(nivelAcesso.getNivel());
-			acesso.setAccessToken(jwtTokenProvider.gerarToken(loginDto.getEmail(), user.getNome(), nivelAcesso.getNivel()));
+			acesso.setAccessToken(jwtTokenProvider.gerarToken(user));
 			response.setAcesso(acesso);
 			
 			return response;

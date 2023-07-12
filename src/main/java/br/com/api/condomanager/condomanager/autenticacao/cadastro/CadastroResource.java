@@ -1,16 +1,15 @@
-package br.com.api.condomanager.condomanager.sistema.cadastro;
+package br.com.api.condomanager.condomanager.autenticacao.cadastro;
 
 import javax.validation.Valid;
 
+import br.com.api.condomanager.condomanager.autenticacao.dto.UserRequestDto;
+import br.com.api.condomanager.condomanager.autenticacao.dto.UserResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import br.com.api.condomanager.condomanager.sistema.cadastro.dto.UserRequestDto;
-import br.com.api.condomanager.condomanager.sistema.cadastro.dto.UserResponseDto;
 
 @RequestMapping("/condomanager/sistema")
 @RestController

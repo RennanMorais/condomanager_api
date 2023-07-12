@@ -1,12 +1,8 @@
 package br.com.api.condomanager.condomanager.sistema.dto.projection;
 
-import br.com.api.condomanager.condomanager.model.AreaComumEntity;
-import br.com.api.condomanager.condomanager.model.CondominioEntity;
-import br.com.api.condomanager.condomanager.model.UserEntity;
-import com.fasterxml.jackson.annotation.JsonFormat;
-
-import javax.persistence.*;
 import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 public interface ReservaProjection {
 

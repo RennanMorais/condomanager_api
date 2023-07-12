@@ -1,16 +1,22 @@
 package br.com.api.condomanager.condomanager.sistema.condominios.ocorrencias;
 
-import br.com.api.condomanager.condomanager.sistema.dto.projection.OcorrenciaProjection;
+import java.util.List;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import br.com.api.condomanager.condomanager.sistema.dto.FinalizarOcorrenciaRequestDTO;
 import br.com.api.condomanager.condomanager.sistema.dto.OcorrenciaRequestDTO;
 import br.com.api.condomanager.condomanager.sistema.dto.OcorrenciaResponseDTO;
-
-import javax.validation.Valid;
-import java.util.List;
+import br.com.api.condomanager.condomanager.sistema.dto.projection.OcorrenciaProjection;
 
 @RestController
 @RequestMapping("/condomanager/sistema")
@@ -20,7 +26,7 @@ public class OcorrenciaResource {
 	OcorrenciaService service;
 	
 	@PostMapping("/ocorrencia/registrar")
-	public OcorrenciaResponseDTO registrarOcorrencia(@RequestBody OcorrenciaRequestDTO request) {
+	public OcorrenciaResponseDTO registrarOcorrencia(@Valid @RequestBody OcorrenciaRequestDTO request) {
 		return this.service.registrarOcorrencia(request);
 	}
 

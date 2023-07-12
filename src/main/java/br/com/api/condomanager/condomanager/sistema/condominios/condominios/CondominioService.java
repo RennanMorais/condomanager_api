@@ -3,18 +3,18 @@ package br.com.api.condomanager.condomanager.sistema.condominios.condominios;
 import java.util.List;
 import java.util.Optional;
 
-import br.com.api.condomanager.condomanager.model.CidadeEntity;
-import br.com.api.condomanager.condomanager.model.EnderecoEntity;
-import br.com.api.condomanager.condomanager.model.EstadoEntity;
-import br.com.api.condomanager.condomanager.repository.CidadeRepository;
-import br.com.api.condomanager.condomanager.repository.EnderecoRepository;
-import br.com.api.condomanager.condomanager.repository.EstadoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import br.com.api.condomanager.condomanager.model.CidadeEntity;
 import br.com.api.condomanager.condomanager.model.CondominioEntity;
+import br.com.api.condomanager.condomanager.model.EnderecoEntity;
+import br.com.api.condomanager.condomanager.model.EstadoEntity;
+import br.com.api.condomanager.condomanager.repository.CidadeRepository;
 import br.com.api.condomanager.condomanager.repository.CondominioRepository;
+import br.com.api.condomanager.condomanager.repository.EnderecoRepository;
+import br.com.api.condomanager.condomanager.repository.EstadoRepository;
 import br.com.api.condomanager.condomanager.sistema.dto.CondominiosRequestDTO;
 import br.com.api.condomanager.condomanager.sistema.dto.CondominiosResponseDTO;
 import br.com.api.condomanager.condomanager.sistema.dto.projection.CondominioProjection;

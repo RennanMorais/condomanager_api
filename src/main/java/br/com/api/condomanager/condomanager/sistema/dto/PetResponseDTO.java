@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class PetResponseDTO {
 	
-	private String nome;
-	private String tipo;
+	private String codigo;
+	private String mensagem;
 	
 }
