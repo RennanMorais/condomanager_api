@@ -96,9 +96,7 @@ public class JwtTokenProvider {
 		claims.put("nome", user.getNome());
 		claims.put("email", user.getEmail());
 		claims.put("auth", user.getNivelAcesso());
-		claims.put("cpf", user.getCpf());
 		claims.put("data", new Date());
-		claims.put("api-key",apiKey);
 		
 		return claims;
 	}

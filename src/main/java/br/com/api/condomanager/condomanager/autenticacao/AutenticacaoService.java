@@ -32,12 +32,14 @@ public class AutenticacaoService {
 	public LoginResponseDto autenticar(LoginRequestDto loginDto) throws LoginException {
 		try {
 			UserEntity user = userRepository.findByEmail(loginDto.getEmail());
+			if(user == null) {
+				log.error("ERRO: ".concat(" ".concat(this.getClass().getName())));
+				throw new LoginException("Usuário não cadastrado!");
+			}
+			
 			NivelAcessoEntity nivelAcesso = nivelAcessoRepository.findById(user.getNivelAcesso()).get();
 			
-			if(user == null || nivelAcesso == null) {
-				log.error("ERRO: ".concat(" ".concat(this.getClass().getName())));
-				throw new LoginException("Falha ao consultar dados do usuário");
-			} else if(nivelAcesso.getId().equals(4L)) {
+			if(nivelAcesso.getId().equals(4L)) {
 				throw new LoginException("Usuário desativado, entre em contato com o administrador");
 			}
 			
