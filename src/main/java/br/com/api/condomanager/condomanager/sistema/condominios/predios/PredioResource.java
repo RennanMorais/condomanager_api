@@ -27,12 +27,12 @@ public class PredioResource {
 	PredioService predioservice;
 	
 	@PostMapping("/predio/cadastrar")
-	public ResponseEntity<PredioResponseDTO> cadastrarPredio(@Valid @RequestBody PredioRequestDTO request) {
+	public ResponseEntity<PredioResponseDTO> cadastrarPredio(@Valid @RequestBody PredioRequestDTO request) throws InterruptedException {
 		return ResponseEntity.ok(this.predioservice.cadastrarPredio(request));
 	}
 	
 	@GetMapping(value = "/predios/condominio/{id}")
-	public ResponseEntity<List<PredioProjection>> getPrediosPorCondominio(@PathVariable Long id) {
+	public ResponseEntity<List<PredioProjection>> getPrediosPorCondominio(@PathVariable Long id) throws InterruptedException {
 		return ResponseEntity.ok(this.predioservice.getPrediosPorCondominio(id));
 	}
 	
