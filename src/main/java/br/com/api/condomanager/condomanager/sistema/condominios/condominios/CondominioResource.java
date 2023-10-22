@@ -46,7 +46,7 @@ public class CondominioResource {
 	}
 
 	@GetMapping(value = "/condominio/{id}")
-	public ResponseEntity<CondominioProjection> getCondominio(Long id) {
+	public ResponseEntity<CondominioProjection> getCondominio(@PathVariable Long id) {
 		util.validarAdmin(userDetails.getLoginUser().trim());
 		return ResponseEntity.ok(this.condominioService.getCondominio(id));
 	}

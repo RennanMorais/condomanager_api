@@ -16,4 +16,6 @@ public interface PredioRepository extends JpaRepository<PredioEntity, Long> {
 	
 	List<PredioProjection> findAllProjectedByCondominio(CondominioEntity condominio);
 	
+	PredioProjection findProjectionById(Long id);
+	
 }

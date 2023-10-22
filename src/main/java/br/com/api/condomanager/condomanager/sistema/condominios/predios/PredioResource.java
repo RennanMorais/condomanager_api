@@ -41,7 +41,12 @@ public class PredioResource {
 		return ResponseEntity.ok(this.predioservice.getPredios());
 	}
 	
-	@PutMapping(value = "/predio/listar/{id}")
+	@GetMapping(value = "/predios/buscar/{id}")
+	public ResponseEntity<PredioProjection> getPredio(@PathVariable Long id) {
+		return ResponseEntity.ok(this.predioservice.getPredio(id));
+	}
+	
+	@PutMapping(value = "/predio/editar/{id}")
 	public ResponseEntity<PredioResponseDTO> editarPredio(@PathVariable Long id, @Valid @RequestBody PredioRequestDTO request) {
 		return ResponseEntity.ok(this.predioservice.editarPredio(id, request));
 	}

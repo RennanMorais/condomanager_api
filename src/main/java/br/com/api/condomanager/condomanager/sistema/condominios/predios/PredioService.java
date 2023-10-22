@@ -81,6 +81,18 @@ public class PredioService {
 		
 	}
 	
+	public PredioProjection getPredio(Long id) {
+		
+		PredioProjection listaPredios = predioRepository.findProjectionById(id);
+		
+		if(listaPredios != null) {
+			return listaPredios;
+		}
+		
+		throw new ErroFluxoException("Nenhum prédio cadastrado!");
+		
+	}
+	
 	public PredioResponseDTO editarPredio(Long idPredio, PredioRequestDTO request) {
     	
     	Optional<PredioEntity> predio = predioRepository.findById(idPredio);
@@ -89,7 +101,7 @@ public class PredioService {
     		throw new ErroFluxoException("Apartamento não encontrado!");
     	}
     	
-    	predio.get().setNome(null);
+    	predio.get().setNome(request.getNome());
     	predioRepository.save(predio.get());
     	
     	PredioResponseDTO response = new PredioResponseDTO();

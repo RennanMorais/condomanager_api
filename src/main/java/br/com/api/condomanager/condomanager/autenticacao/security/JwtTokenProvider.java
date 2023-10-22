@@ -51,8 +51,7 @@ public class JwtTokenProvider {
 
 		Claims claims = this.gerarClaims(user);
 
-		Date now = new Date();
-		Date validity = new Date(now.getTime() + validityInMilliseconds);
+		Date validity = new Date(new Date().getTime() + validityInMilliseconds);
 		Map<String, Object> header = new HashMap<>();
 		header.put("api-key", apiKey);
 
