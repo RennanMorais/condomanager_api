@@ -63,11 +63,9 @@ public class OcorrenciaService {
 		
 		ocorrenciaRepository.save(ocorrencia);
 		
-		OcorrenciaResponseDTO response = new OcorrenciaResponseDTO(
+		return new OcorrenciaResponseDTO(
 				String.valueOf(HttpStatus.ACCEPTED.value()), 
 				"Ocorrência registrada com sucesso, aguarde o atendimento.");
-		
-		return response;
 	}
 
 	public OcorrenciaProjection buscarOcorrencia(Long id) {
@@ -100,11 +98,9 @@ public class OcorrenciaService {
 		ocorrencia.setStatus(OcorrenciaStatusEnum.EM_ANDAMENTO.getIdStatus());
 		ocorrenciaRepository.save(ocorrencia);
 		
-		OcorrenciaResponseDTO response = new OcorrenciaResponseDTO(
+		return new OcorrenciaResponseDTO(
 				String.valueOf(HttpStatus.OK.value()), 
 				"Ocorrência agora está em andamento");
-		
-		return response;
 	}
 	
 	public OcorrenciaResponseDTO finalizarOcorrencia(Long id, FinalizarOcorrenciaRequestDTO request) {
@@ -115,11 +111,9 @@ public class OcorrenciaService {
 		ocorrencia.setResposta(request.getResposta());
 		ocorrenciaRepository.save(ocorrencia);
 		
-		OcorrenciaResponseDTO response = new OcorrenciaResponseDTO(
+		return new OcorrenciaResponseDTO(
 				String.valueOf(HttpStatus.OK.value()), 
 				"Ocorrência finalizada, verifique a mensagem de feedback.");
-		
-		return response;
 	}
 
 	private OcorrenciaEntity validarOcorrencia(Long idOcorrencia, String chamada) {

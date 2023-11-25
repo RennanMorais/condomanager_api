@@ -28,6 +28,7 @@ public class ApartamentoService {
         ApartamentoEntity apto = new ApartamentoEntity();
         apto.setNumero(request.getNumero());
         apto.setPredio(this.buscarPredio(request.getIdPredio()));
+        apto.setDispAluguel(request.getDispAluguel());
 
         apartamentoRepository.save(apto);
 
@@ -59,6 +60,7 @@ public class ApartamentoService {
     	}
     	
     	apto.get().setNumero(request.getNumero());
+    	apto.get().setDispAluguel(request.getDispAluguel());
     	apartamentoRepository.save(apto.get());
     	
     	ApartamentoResponseDTO response = new ApartamentoResponseDTO();
