@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.api.condomanager.condomanager.autenticacao.dto.CodigoAcessoRequestDTO;
+import br.com.api.condomanager.condomanager.autenticacao.dto.CodigoAcessoResponseDTO;
 import br.com.api.condomanager.condomanager.autenticacao.dto.LoginRequestDto;
 import br.com.api.condomanager.condomanager.autenticacao.dto.LoginResponseDto;
 
@@ -23,5 +25,15 @@ public class LoginResource {
 	@PostMapping(value = "/login", produces = "application/json")
 	public ResponseEntity<LoginResponseDto> autenticar(@RequestBody @Valid LoginRequestDto loginDto) throws LoginException {
 		return ResponseEntity.ok(authService.autenticar(loginDto));
+	}
+	
+	@PostMapping(value = "/login/recuperar/senha", produces = "application/json")
+	public ResponseEntity<CodigoAcessoResponseDTO> gerarCodigoAcesso(@RequestBody @Valid CodigoAcessoRequestDTO request) throws LoginException {
+		return ResponseEntity.ok(authService.gerarCodigoEsqueceuSenha(request));
+	}
+	
+	@PostMapping(value = "/login/recuperar/validar/codigo", produces = "application/json")
+	public ResponseEntity<CodigoAcessoResponseDTO> validarCodigoVerificacao(@RequestBody @Valid CodigoAcessoRequestDTO request) throws LoginException {
+		return ResponseEntity.ok(authService.enviarCodigoVerificacao(request));
 	}
 }
