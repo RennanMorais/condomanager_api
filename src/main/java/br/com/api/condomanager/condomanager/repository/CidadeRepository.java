@@ -12,5 +12,7 @@ import br.com.api.condomanager.condomanager.sistema.dto.projection.CidadeProject
 public interface CidadeRepository extends JpaRepository<CidadeEntity, Long> {
 
     List<CidadeProjection> findAllProjectedBy();
+    
+    List<CidadeProjection> findAllProjectedByEstado(Long uf);
 
 }

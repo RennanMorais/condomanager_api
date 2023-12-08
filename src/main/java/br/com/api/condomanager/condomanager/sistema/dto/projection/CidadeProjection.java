@@ -4,5 +4,6 @@ public interface CidadeProjection {
 
     Long getId();
     String getNome();
+    Long getEstado();
 
 }

@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AuthorizationServiceException;
 import org.springframework.stereotype.Service;
 
-import br.com.api.condomanager.condomanager.autenticacao.security.MyUserDetails;
 import br.com.api.condomanager.condomanager.enums.AcessoEnum;
 import br.com.api.condomanager.condomanager.model.UserEntity;
 import br.com.api.condomanager.condomanager.repository.UsuarioRepository;
@@ -18,9 +17,6 @@ public class Util {
 
 	@Autowired
 	private UsuarioRepository usuarioRepository;
-
-	@Autowired
-	private MyUserDetails userDetails;
 
 	public void validarAdmin(String emailoggedUser) {
 		UserEntity user = usuarioRepository.findByEmail(emailoggedUser);
@@ -80,21 +76,9 @@ public class Util {
 		
 	}
 	
-	public String gerarCodigo() {
-		
+	public static String gerarCodigo() {
 		SecureRandom sr = new SecureRandom();
-		
-		String dataMilli = String.valueOf(System.currentTimeMillis());
-		int tamanhoDtMili = dataMilli.length();
-		int indexbegin = tamanhoDtMili - 9;
-		
-		String pt1 = String.valueOf(sr.nextInt(999));
-		String pt2 = String.valueOf(sr.nextInt(999));
-		String pt3 = String.valueOf(dataMilli.substring(indexbegin, tamanhoDtMili));
-		
-		String codigo = pt1.concat(pt2).concat(pt3);
-		
-		return codigo;
+		return String.valueOf(sr.nextInt(000000, 999999));
 	}
 	
 }

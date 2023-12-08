@@ -92,7 +92,7 @@ public class CondominioService {
 	}
 
 	public CondominioProjection getCondominio(Long id) {
-		CondominioProjection condominio = condominioRepository.findProjectedById(id);
+		CondominioProjection condominio = condominioRepository.findProjectionById(id);
 
 		if(condominio == null) {
 			throw new ErroFluxoException("Condomínio não encontrado!");

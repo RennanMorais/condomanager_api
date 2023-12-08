@@ -5,5 +5,6 @@ public interface ApartamentoProjection {
     Long getId();
     String getNumero();
     PredioProjection getPredio();
+    Boolean getDispAluguel();
 
 }

@@ -25,5 +25,16 @@ public class CidadeService {
 
         return cidades;
     }
+    
+    public List<CidadeProjection> listarCidadesPorEstado(Long id) {
+
+        List<CidadeProjection> cidades = cidadeRepository.findAllProjectedByEstado(id);
+
+        if(cidades == null || cidades.isEmpty()) {
+            throw new ErroFluxoException("Erro no serviço consultar cidades");
+        }
+
+        return cidades;
+    }
 
 }

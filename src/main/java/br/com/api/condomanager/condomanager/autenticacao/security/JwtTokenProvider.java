@@ -2,6 +2,8 @@ package br.com.api.condomanager.condomanager.autenticacao.security;
 
 import java.util.Base64;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
@@ -49,12 +51,13 @@ public class JwtTokenProvider {
 
 		Claims claims = this.gerarClaims(user);
 
-		Date now = new Date();
-		Date validity = new Date(now.getTime() + validityInMilliseconds);
+		Date validity = new Date(new Date().getTime() + validityInMilliseconds);
+		Map<String, Object> header = new HashMap<>();
+		header.put("api-key", apiKey);
 
 		return Jwts.builder()
+				.setHeader(header)
 				.setClaims(claims)
-				.setIssuedAt(now)
 				.setExpiration(validity)
 				.signWith(SignatureAlgorithm.HS256, secretKey)
 				.compact();
@@ -92,9 +95,7 @@ public class JwtTokenProvider {
 		claims.put("nome", user.getNome());
 		claims.put("email", user.getEmail());
 		claims.put("auth", user.getNivelAcesso());
-		claims.put("cpf", user.getCpf());
 		claims.put("data", new Date());
-		claims.put("api-key",apiKey);
 		
 		return claims;
 	}

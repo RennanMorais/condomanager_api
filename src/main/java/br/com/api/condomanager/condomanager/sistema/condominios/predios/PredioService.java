@@ -3,6 +3,8 @@ package br.com.api.condomanager.condomanager.sistema.condominios.predios;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.PersistenceException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +16,9 @@ import br.com.api.condomanager.condomanager.sistema.dto.PredioRequestDTO;
 import br.com.api.condomanager.condomanager.sistema.dto.PredioResponseDTO;
 import br.com.api.condomanager.condomanager.sistema.dto.projection.PredioProjection;
 import br.com.api.condomanager.condomanager.sistema.exceptions.ErroFluxoException;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 public class PredioService {
 	
@@ -77,6 +81,18 @@ public class PredioService {
 		
 	}
 	
+	public PredioProjection getPredio(Long id) {
+		
+		PredioProjection listaPredios = predioRepository.findProjectionById(id);
+		
+		if(listaPredios != null) {
+			return listaPredios;
+		}
+		
+		throw new ErroFluxoException("Nenhum prédio cadastrado!");
+		
+	}
+	
 	public PredioResponseDTO editarPredio(Long idPredio, PredioRequestDTO request) {
     	
     	Optional<PredioEntity> predio = predioRepository.findById(idPredio);
@@ -85,7 +101,7 @@ public class PredioService {
     		throw new ErroFluxoException("Apartamento não encontrado!");
     	}
     	
-    	predio.get().setNome(null);
+    	predio.get().setNome(request.getNome());
     	predioRepository.save(predio.get());
     	
     	PredioResponseDTO response = new PredioResponseDTO();
@@ -103,7 +119,12 @@ public class PredioService {
 			throw new ErroFluxoException("Prédio não encontrado!");
 		}
 		
-		predioRepository.delete(predio.get());
+		try {
+			this.predioRepository.delete(predio.get());
+		} catch(IllegalArgumentException | PersistenceException e) {
+			log.error("Falha ao deletar predio do banco de dados.");
+			throw new ErroFluxoException("Falha ao deletar pet no banco de dados.");
+		}
 		
 		PredioResponseDTO response = new PredioResponseDTO();
 		response.setCodigo("200");

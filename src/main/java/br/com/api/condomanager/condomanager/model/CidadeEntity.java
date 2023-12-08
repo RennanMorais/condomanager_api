@@ -5,8 +5,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -25,9 +23,8 @@ public class CidadeEntity {
     @Column(name="nome")
     private String nome;
 
-    @OneToOne
-    @JoinColumn(name = "uf")
-    private EstadoEntity estado;
+    @Column(name="uf")
+    private Long estado;
 
     @Column(name="ibge")
     private Long ibge;

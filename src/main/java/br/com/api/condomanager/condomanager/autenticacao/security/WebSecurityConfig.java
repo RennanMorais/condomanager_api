@@ -41,7 +41,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             // Endpoints liberados
             .antMatchers("/condomanager/sistema/login").permitAll()
             .antMatchers("/condomanager/sistema/cadastro").permitAll()
-
+            .antMatchers("/condomanager/sistema/login/recuperar/senha").permitAll()
+            .antMatchers("/condomanager/sistema/login/recuperar/validar/codigo").permitAll()
+            
             // Endpoints apenas para ADMINISTRADOR
             .anyRequest().authenticated();
 

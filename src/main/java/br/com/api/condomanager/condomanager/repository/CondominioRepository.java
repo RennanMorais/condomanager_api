@@ -15,6 +15,6 @@ public interface CondominioRepository extends JpaRepository<CondominioEntity, Lo
 	
 	List<CondominioProjection> findAllProjectedBy();
 
-	CondominioProjection findProjectedById(Long id);
+	CondominioProjection findProjectionById(Long id);
 	
 }

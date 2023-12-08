@@ -28,5 +28,8 @@ public class ApartamentoEntity {
     @ManyToOne
     @JoinColumn(name = "id_predio")
     private PredioEntity predio;
+    
+    @Column(name = "dispaluguel")
+    private Boolean dispAluguel = false;
 
 }
