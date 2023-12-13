@@ -78,7 +78,13 @@ public class Util {
 	
 	public static String gerarCodigo() {
 		SecureRandom sr = new SecureRandom();
-		return String.valueOf(sr.nextInt(000000, 999999));
+		String p1 = String.valueOf(sr.nextLong(0, 9));
+		String p2 = String.valueOf(sr.nextLong(0, 9));
+		String p3 = String.valueOf(sr.nextLong(0, 9));
+		String p4 = String.valueOf(sr.nextLong(0, 9));
+		String p5 = String.valueOf(sr.nextLong(0, 9));
+		String p6 = String.valueOf(sr.nextLong(0, 9));
+		return p1.concat(p2).concat(p3).concat(p4).concat(p5).concat(p6);
 	}
 	
 }

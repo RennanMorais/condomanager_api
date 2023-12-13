@@ -98,10 +98,17 @@ public class PredioService {
     	Optional<PredioEntity> predio = predioRepository.findById(idPredio);
     	
     	if(!predio.isPresent()) {
-    		throw new ErroFluxoException("Apartamento não encontrado!");
+    		throw new ErroFluxoException("Prédio não encontrado!");
     	}
     	
+    	Optional<CondominioEntity> condominio = this.condominioRepository.findById(request.getIdCondominio());
+		
+		if(!condominio.isPresent()) {
+			throw new ErroFluxoException("Condomínio inexistente");
+		}
+    	
     	predio.get().setNome(request.getNome());
+    	predio.get().setCondominio(condominio.get());;
     	predioRepository.save(predio.get());
     	
     	PredioResponseDTO response = new PredioResponseDTO();

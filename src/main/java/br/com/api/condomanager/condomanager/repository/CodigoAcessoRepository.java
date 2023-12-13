@@ -11,6 +11,8 @@ public interface CodigoAcessoRepository extends JpaRepository<CodigoAcessoEntity
 	//@Query("SELECT e FROM CodigoAcessoEntity e WHERE e.email = :email ORDER BY e.criado DESC")
 	CodigoAcessoEntity findFirstByEmailOrderByCriadoDesc(String email);
 	
+	CodigoAcessoEntity findFirstByEmailOrderByVerificadodataDesc(String email);
+	
 	CodigoAcessoEntity findByCodigo(String codigo);
 	
 }

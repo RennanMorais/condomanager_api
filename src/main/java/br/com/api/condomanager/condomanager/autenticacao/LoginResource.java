@@ -14,6 +14,8 @@ import br.com.api.condomanager.condomanager.autenticacao.dto.CodigoAcessoRequest
 import br.com.api.condomanager.condomanager.autenticacao.dto.CodigoAcessoResponseDTO;
 import br.com.api.condomanager.condomanager.autenticacao.dto.LoginRequestDto;
 import br.com.api.condomanager.condomanager.autenticacao.dto.LoginResponseDto;
+import br.com.api.condomanager.condomanager.autenticacao.dto.RedefinirSenhaDTO;
+import br.com.api.condomanager.condomanager.autenticacao.dto.RedefinirSenhaResponseDTO;
 
 @RequestMapping("/condomanager/sistema")
 @RestController
@@ -35,5 +37,10 @@ public class LoginResource {
 	@PostMapping(value = "/login/recuperar/validar/codigo", produces = "application/json")
 	public ResponseEntity<CodigoAcessoResponseDTO> validarCodigoVerificacao(@RequestBody @Valid CodigoAcessoRequestDTO request) throws LoginException {
 		return ResponseEntity.ok(authService.enviarCodigoVerificacao(request));
+	}
+	
+	@PostMapping(value = "/login/redefinir/senha", produces = "application/json")
+	public ResponseEntity<RedefinirSenhaResponseDTO> redefinirSenha(@RequestBody @Valid RedefinirSenhaDTO request) throws LoginException {
+		return ResponseEntity.ok(authService.redefinirSenha(request));
 	}
 }

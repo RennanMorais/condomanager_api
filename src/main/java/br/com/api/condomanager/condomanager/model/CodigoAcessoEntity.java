@@ -33,9 +33,6 @@ public class CodigoAcessoEntity {
 	@Column(name="expiracao")
 	private LocalDateTime expiracao;
 	
-	@Column(name="verificado")
-	private LocalDateTime verificado;
-	
 	@ManyToOne
 	@JoinColumn(name = "id_morador")
 	private UserEntity morador;
@@ -44,6 +41,18 @@ public class CodigoAcessoEntity {
 	private String email;
 	
 	@Column(name="ativo")
-	private Boolean ativo;
+	private Boolean ativo = false;
+	
+	@Column(name="verificado")
+	private Boolean verificado = false;
+	
+	@Column(name="verificadodata")
+	private LocalDateTime verificadodata;
+	
+	@Column(name="redefsenha")
+	private Boolean redefiniuSenha = false;
+	
+	@Column(name="redefsenhadata")
+	private LocalDateTime redefiniuSenhaData;
 	
 }
