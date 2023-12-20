@@ -130,7 +130,7 @@ public class PredioService {
 			this.predioRepository.delete(predio.get());
 		} catch(IllegalArgumentException | PersistenceException e) {
 			log.error("Falha ao deletar predio do banco de dados.");
-			throw new ErroFluxoException("Falha ao deletar pet no banco de dados.");
+			throw new ErroFluxoException("Falha ao deletar o predio no banco de dados.");
 		}
 		
 		PredioResponseDTO response = new PredioResponseDTO();

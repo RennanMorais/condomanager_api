@@ -12,4 +12,6 @@ public interface CondominioProjection {
 
 	EnderecoProjection getEndereco();
 	
+	Boolean getPrincipal();
+	
 }

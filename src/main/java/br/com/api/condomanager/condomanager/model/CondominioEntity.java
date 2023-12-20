@@ -35,4 +35,7 @@ public class CondominioEntity {
 	@JoinColumn(name = "id_endereco")
 	private EnderecoEntity endereco;
 	
+	@Column(name="principal")
+	private Boolean principal = false;
+	
 }
