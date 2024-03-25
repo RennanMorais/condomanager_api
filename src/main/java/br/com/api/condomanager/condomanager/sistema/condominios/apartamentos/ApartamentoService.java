@@ -48,7 +48,7 @@ public class ApartamentoService {
     	
         ApartamentoEntity apto = new ApartamentoEntity();
         apto.setNumero(request.getNumero());
-        apto.setPredio(this.buscarPredio(request.getIdPredio()));
+        apto.setPredio(request.getIdPredio());
         apto.setDispAluguel(request.getDispAluguel());
         apto.setIdPavimento(idPavimento);
 
