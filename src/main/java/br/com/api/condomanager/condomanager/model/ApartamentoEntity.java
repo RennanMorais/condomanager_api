@@ -32,4 +32,6 @@ public class ApartamentoEntity {
     @Column(name = "dispaluguel")
     private Boolean dispAluguel = false;
 
+    @Column(name = "id_pavimento")
+    private Long idPavimento;
 }

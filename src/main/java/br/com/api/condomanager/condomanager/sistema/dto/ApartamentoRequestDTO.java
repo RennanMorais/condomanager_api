@@ -17,6 +17,10 @@ public class ApartamentoRequestDTO {
     @NotNull(message = "{campo.nulo.vazio}")
     private Long idPredio;
     
+    @NotBlank(message = "{campo.nulo.vazio}")
+    @NotNull(message = "{campo.nulo.vazio}")
+    private String pavimento;
+    
     @NotNull(message = "{campo.nulo.vazio}")
     private Boolean dispAluguel;
 

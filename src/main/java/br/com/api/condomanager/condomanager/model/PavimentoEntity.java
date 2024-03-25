@@ -8,7 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -16,24 +15,23 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name="predios")
+@Table(name = "pavimentos")
 @Getter
 @Setter
-public class PredioEntity {
+public class PavimentoEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name = "nome")
-	private String nome;
+	@Column(name = "pavimento")
+	private String pavimento;
 	
-	@ManyToOne
-	@JoinColumn(name = "id_condominio")
-	private CondominioEntity condominio;
+	@Column(name = "id_predio")
+    private Long predio;
 	
 	@OneToMany
-	@JoinColumn(name = "id_predio")
-	private List<PavimentoEntity> pavimentos;
+	@JoinColumn(name = "id_pavimento")
+	private List<ApartamentoEntity> apartamentos;
 	
 }
