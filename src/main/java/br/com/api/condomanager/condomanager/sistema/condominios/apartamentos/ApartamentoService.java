@@ -12,8 +12,9 @@ import br.com.api.condomanager.condomanager.model.PredioEntity;
 import br.com.api.condomanager.condomanager.repository.ApartamentoRepository;
 import br.com.api.condomanager.condomanager.repository.PavimentoRepository;
 import br.com.api.condomanager.condomanager.repository.PredioRepository;
-import br.com.api.condomanager.condomanager.sistema.dto.ApartamentoRequestDTO;
-import br.com.api.condomanager.condomanager.sistema.dto.ApartamentoResponseDTO;
+import br.com.api.condomanager.condomanager.sistema.condominios.apartamentos.domain.ApartamentoRequestDTO;
+import br.com.api.condomanager.condomanager.sistema.condominios.apartamentos.domain.ApartamentoResponseDTO;
+import br.com.api.condomanager.condomanager.sistema.condominios.apartamentos.domain.DisponibilidadeAluguelDTO;
 import br.com.api.condomanager.condomanager.sistema.dto.projection.ApartamentoProjection;
 import br.com.api.condomanager.condomanager.sistema.exceptions.ErroFluxoException;
 
@@ -54,11 +55,9 @@ public class ApartamentoService {
 
         apartamentoRepository.save(apto);
 
-        ApartamentoResponseDTO response = new ApartamentoResponseDTO();
-        response.setCodigo("200");
-        response.setMensagem("Apartamento cadastrado com sucesso!");
-
-        return response;
+        return ApartamentoResponseDTO.builder()
+        		.codigo("200")
+        		.mensagem("Apartamento cadastrado com sucesso!").build();
     }
 
     public List<ApartamentoProjection> listarApartamentos(Long idPredio) {
@@ -75,21 +74,15 @@ public class ApartamentoService {
     
     public ApartamentoResponseDTO editarApartamento(Long id, ApartamentoRequestDTO request) {
     	
-    	Optional<ApartamentoEntity> apto = apartamentoRepository.findById(id);
+    	ApartamentoEntity apto = this.validarAoartamento(id);
     	
-    	if(!apto.isPresent()) {
-    		throw new ErroFluxoException("Apartamento não encontrado!");
-    	}
-    	
-    	apto.get().setNumero(request.getNumero());
-    	apto.get().setDispAluguel(request.getDispAluguel());
-    	apartamentoRepository.save(apto.get());
-    	
-    	ApartamentoResponseDTO response = new ApartamentoResponseDTO();
-        response.setCodigo("200");
-        response.setMensagem("Apartamento editado com sucesso!");
+    	apto.setNumero(request.getNumero());
+    	apto.setDispAluguel(request.getDispAluguel());
+    	apartamentoRepository.save(apto);
 
-        return response;
+        return ApartamentoResponseDTO.builder()
+        		.codigo("200")
+        		.mensagem("Apartamento editado com sucesso!").build();
     }
 
     public ApartamentoProjection buscarAptoPorId(Long id) {
@@ -103,19 +96,35 @@ public class ApartamentoService {
     }
 
     public ApartamentoResponseDTO deletarApartamento(Long id) {
-        Optional<ApartamentoEntity> apto = apartamentoRepository.findById(id);
+    	
+    	ApartamentoEntity apto = this.validarAoartamento(id);
+        this.apartamentoRepository.delete(apto);
+
+        return ApartamentoResponseDTO.builder()
+    			.codigo("00")
+    			.mensagem("Apartamento excluído com sucesso!").build();
+    }
+    
+    public ApartamentoResponseDTO alterarDisponibilidadeAluguel(DisponibilidadeAluguelDTO request) {
+    	
+    	ApartamentoEntity apto = this.validarAoartamento(request.getIdApartamento());
+    	
+    	apto.setDispAluguel(request.getDispAluguel());
+    	this.apartamentoRepository.save(apto);
+    	
+    	return ApartamentoResponseDTO.builder()
+    			.codigo("00")
+    			.mensagem("Disponibilidade de aluguel alterada com sucesso!").build();
+    }
+    
+    private ApartamentoEntity validarAoartamento(Long id) {
+    	Optional<ApartamentoEntity> apto = apartamentoRepository.findById(id);
 
         if(!apto.isPresent()) {
             throw new ErroFluxoException("Apartamento não encontrado, verifique e tente novamente!");
         }
-
-        this.apartamentoRepository.delete(apto.get());
-
-        ApartamentoResponseDTO response = new ApartamentoResponseDTO();
-        response.setCodigo("200");
-        response.setMensagem("Apartamento excluído com sucesso!");
-
-        return response;
+        
+        return apto.get();
     }
 
     private PredioEntity buscarPredio(Long id) {
