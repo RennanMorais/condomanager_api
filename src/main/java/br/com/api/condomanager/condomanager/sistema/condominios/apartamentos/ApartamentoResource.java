@@ -15,8 +15,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.api.condomanager.condomanager.sistema.dto.ApartamentoRequestDTO;
-import br.com.api.condomanager.condomanager.sistema.dto.ApartamentoResponseDTO;
+import br.com.api.condomanager.condomanager.sistema.condominios.apartamentos.domain.ApartamentoRequestDTO;
+import br.com.api.condomanager.condomanager.sistema.condominios.apartamentos.domain.ApartamentoResponseDTO;
+import br.com.api.condomanager.condomanager.sistema.condominios.apartamentos.domain.DisponibilidadeAluguelDTO;
 import br.com.api.condomanager.condomanager.sistema.dto.projection.ApartamentoProjection;
 
 @RestController
@@ -49,6 +50,11 @@ public class ApartamentoResource {
     @DeleteMapping("/apartamento/deletar/{id}")
     public ResponseEntity<ApartamentoResponseDTO> deletarApartamento(@PathVariable Long id) {
         return ResponseEntity.ok(this.service.deletarApartamento(id));
+    }
+    
+    @PostMapping("/apartamento/aluguel")
+    public ResponseEntity<ApartamentoResponseDTO> alterarDisponibilidadeAluguel(@Valid @RequestBody DisponibilidadeAluguelDTO request) {
+        return ResponseEntity.ok(this.service.alterarDisponibilidadeAluguel(request));
     }
 
 }

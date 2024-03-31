@@ -14,6 +14,10 @@ public interface CondominioRepository extends JpaRepository<CondominioEntity, Lo
 	CondominioEntity findByCnpj(String cnpj);
 	
 	List<CondominioProjection> findAllProjectedBy();
+	
+	CondominioProjection findProjectionByPrincipal(Boolean principal);
+	
+	CondominioEntity findByPrincipal(Boolean principal);
 
 	CondominioProjection findProjectionById(Long id);
 	

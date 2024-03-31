@@ -15,11 +15,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.api.condomanager.condomanager.autenticacao.security.MyUserDetails;
 import br.com.api.condomanager.condomanager.sistema.dto.CondominiosRequestDTO;
 import br.com.api.condomanager.condomanager.sistema.dto.CondominiosResponseDTO;
 import br.com.api.condomanager.condomanager.sistema.dto.projection.CondominioProjection;
-import br.com.api.condomanager.condomanager.util.Util;
 
 @RequestMapping("/condomanager/sistema")
 @RestController
@@ -27,16 +25,9 @@ public class CondominioResource {
 
 	@Autowired
 	private CondominioService condominioService;
-
-	@Autowired
-	private MyUserDetails userDetails;
-
-	@Autowired
-	private Util util;
 	
 	@PostMapping("/condominio/cadastrar")
 	public ResponseEntity<CondominiosResponseDTO> cadastrarCondominio(@Valid @RequestBody CondominiosRequestDTO request) {
-		util.validarAdmin(userDetails.getLoginUser().trim());
 		return ResponseEntity.ok(this.condominioService.cadastrarCondominio(request));
 	}
 	
@@ -47,7 +38,6 @@ public class CondominioResource {
 
 	@GetMapping(value = "/condominio/{id}")
 	public ResponseEntity<CondominioProjection> getCondominio(@PathVariable Long id) {
-		util.validarAdmin(userDetails.getLoginUser().trim());
 		return ResponseEntity.ok(this.condominioService.getCondominio(id));
 	}
 
@@ -55,14 +45,22 @@ public class CondominioResource {
 	public ResponseEntity<CondominiosResponseDTO> editarCondominio(
 			@PathVariable Long id,
 			@Valid @RequestBody CondominiosRequestDTO request) {
-		util.validarAdmin(userDetails.getLoginUser().trim());
 		return ResponseEntity.ok(this.condominioService.editarCondominio(id, request));
 	}
 
 	@DeleteMapping(value = "/condominio/deletar/{id}")
 	public ResponseEntity<CondominiosResponseDTO> deletarCondominio(@PathVariable Long id) {
-		util.validarAdmin(userDetails.getLoginUser().trim());
 		return ResponseEntity.ok(this.condominioService.deletarCondominio(id));
+	}
+	
+	@GetMapping(value = "/condominio/principal")
+	public ResponseEntity<CondominioProjection> buscarCondominioPrincipal() {
+		return ResponseEntity.ok(this.condominioService.buscarCondominioPrincipal());
+	}
+	
+	@PutMapping(value = "/condominio/principal/alterar/{id}")
+	public ResponseEntity<CondominiosResponseDTO> editarCondominio(@PathVariable Long id) {
+		return ResponseEntity.ok(this.condominioService.alterarCondominioPrincipal(id));
 	}
 	
 }

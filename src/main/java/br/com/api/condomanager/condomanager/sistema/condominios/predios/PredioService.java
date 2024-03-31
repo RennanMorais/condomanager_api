@@ -1,5 +1,6 @@
 package br.com.api.condomanager.condomanager.sistema.condominios.predios;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,8 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.api.condomanager.condomanager.model.CondominioEntity;
+import br.com.api.condomanager.condomanager.model.PavimentoEntity;
 import br.com.api.condomanager.condomanager.model.PredioEntity;
 import br.com.api.condomanager.condomanager.repository.CondominioRepository;
+import br.com.api.condomanager.condomanager.repository.PavimentoRepository;
 import br.com.api.condomanager.condomanager.repository.PredioRepository;
 import br.com.api.condomanager.condomanager.sistema.dto.PredioRequestDTO;
 import br.com.api.condomanager.condomanager.sistema.dto.PredioResponseDTO;
@@ -27,6 +30,9 @@ public class PredioService {
 	
 	@Autowired
 	CondominioRepository condominioRepository;
+	
+	@Autowired
+	PavimentoRepository pavimentoRepository;
 
 	public PredioResponseDTO cadastrarPredio(PredioRequestDTO request) {
 		
@@ -42,6 +48,8 @@ public class PredioService {
 		}
 		
 		predioRepository.save(predio);
+		
+		this.inserirPavimentos(request.getQtdPavimentos(), predio.getId());
 		
 		PredioResponseDTO response = new PredioResponseDTO();
 		response.setCodigo("200");
@@ -98,10 +106,17 @@ public class PredioService {
     	Optional<PredioEntity> predio = predioRepository.findById(idPredio);
     	
     	if(!predio.isPresent()) {
-    		throw new ErroFluxoException("Apartamento não encontrado!");
+    		throw new ErroFluxoException("Prédio não encontrado!");
     	}
     	
+    	Optional<CondominioEntity> condominio = this.condominioRepository.findById(request.getIdCondominio());
+		
+		if(!condominio.isPresent()) {
+			throw new ErroFluxoException("Condomínio inexistente");
+		}
+    	
     	predio.get().setNome(request.getNome());
+    	predio.get().setCondominio(condominio.get());;
     	predioRepository.save(predio.get());
     	
     	PredioResponseDTO response = new PredioResponseDTO();
@@ -123,13 +138,35 @@ public class PredioService {
 			this.predioRepository.delete(predio.get());
 		} catch(IllegalArgumentException | PersistenceException e) {
 			log.error("Falha ao deletar predio do banco de dados.");
-			throw new ErroFluxoException("Falha ao deletar pet no banco de dados.");
+			throw new ErroFluxoException("Falha ao deletar o predio no banco de dados.");
 		}
 		
 		PredioResponseDTO response = new PredioResponseDTO();
 		response.setCodigo("200");
 		response.setMensagem("Predio deletado com sucesso!");
 		return response;
+	}
+	
+	private void inserirPavimentos(Integer qtdPav, Long idPredio) {
+		
+		Optional<PredioEntity> predio = predioRepository.findById(idPredio);
+		
+		if(!predio.isPresent()) {
+			throw new ErroFluxoException("Prédio não encontrado!");
+		}
+		
+		for(Integer i = 0; i <= qtdPav; i++) {
+			
+			PavimentoEntity pavimento = new PavimentoEntity();
+			if(i == 0) {
+				pavimento.setPavimento("T");
+				pavimento.setPredio(idPredio);
+			} else {
+				pavimento.setPavimento(String.valueOf(i));
+				pavimento.setPredio(idPredio);
+			}
+			this.pavimentoRepository.save(pavimento);
+		}
 	}
 	
 }

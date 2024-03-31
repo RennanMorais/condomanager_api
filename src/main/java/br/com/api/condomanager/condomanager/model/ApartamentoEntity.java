@@ -25,11 +25,12 @@ public class ApartamentoEntity {
     @Column(name = "numero")
     private String numero;
 
-    @ManyToOne
-    @JoinColumn(name = "id_predio")
-    private PredioEntity predio;
+    @Column(name = "id_predio")
+    private Long predio;
     
     @Column(name = "dispaluguel")
     private Boolean dispAluguel = false;
 
+    @Column(name = "id_pavimento")
+    private Long idPavimento;
 }

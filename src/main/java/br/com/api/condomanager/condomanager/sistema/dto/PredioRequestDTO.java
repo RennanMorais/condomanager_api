@@ -16,4 +16,7 @@ public class PredioRequestDTO {
 	@NotNull(message = "{campo.nulo.vazio}")
 	private Long idCondominio;
 	
+	@NotNull(message = "{campo.nulo.vazio}")
+	private Integer qtdPavimentos;
+	
 }

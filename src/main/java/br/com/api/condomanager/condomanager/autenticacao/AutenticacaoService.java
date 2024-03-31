@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -16,6 +17,8 @@ import br.com.api.condomanager.condomanager.autenticacao.dto.CodigoAcessoRequest
 import br.com.api.condomanager.condomanager.autenticacao.dto.CodigoAcessoResponseDTO;
 import br.com.api.condomanager.condomanager.autenticacao.dto.LoginRequestDto;
 import br.com.api.condomanager.condomanager.autenticacao.dto.LoginResponseDto;
+import br.com.api.condomanager.condomanager.autenticacao.dto.RedefinirSenhaDTO;
+import br.com.api.condomanager.condomanager.autenticacao.dto.RedefinirSenhaResponseDTO;
 import br.com.api.condomanager.condomanager.autenticacao.security.JwtTokenProvider;
 import br.com.api.condomanager.condomanager.model.CodigoAcessoEntity;
 import br.com.api.condomanager.condomanager.model.NivelAcessoEntity;
@@ -38,6 +41,7 @@ public class AutenticacaoService {
 	private final JwtTokenProvider jwtTokenProvider;
 	private final AuthenticationManager authenticationManager;
 	private final CodigoAcessoRepository codigoAcessoRepository;
+	private final PasswordEncoder encoder;
 	
 
 	public LoginResponseDto autenticar(LoginRequestDto loginDto) throws LoginException {
@@ -113,13 +117,46 @@ public class AutenticacaoService {
 			throw new CondomanagerException("Código de verificação expirado");
 		}
 		
-		codAcesso.setVerificado(LocalDateTime.now());
+		codAcesso.setVerificadodata(LocalDateTime.now());
+		codAcesso.setVerificado(true);		
 		codAcesso.setAtivo(false);
 		this.codigoAcessoRepository.save(codAcesso);
 		
 		CodigoAcessoResponseDTO response = new CodigoAcessoResponseDTO();
 		response.setCodigo(String.valueOf(HttpStatus.OK.value()));
 		response.setMensagem("Código de verificação validado com sucesso");
+		
+		return response;
+	}
+	
+	public RedefinirSenhaResponseDTO redefinirSenha(RedefinirSenhaDTO request) {
+		
+		CodigoAcessoEntity codAcesso = this.codigoAcessoRepository.findFirstByEmailOrderByCriadoDesc(request.getEmail());
+		
+		if(codAcesso == null || Boolean.FALSE.equals(codAcesso.getVerificado())) {
+			throw new CondomanagerException("Código de verificação não validado");
+		} else if(Boolean.TRUE.equals(codAcesso.getRedefiniuSenha())) {
+			throw new CondomanagerException("Não foi possivel redefinir a senha, realize a verificação novamente");
+		}
+		
+		codAcesso.setAtivo(false);
+		codAcesso.setRedefiniuSenhaData(LocalDateTime.now());
+		codAcesso.setRedefiniuSenha(true);
+		this.codigoAcessoRepository.save(codAcesso);
+		
+		UserEntity usuario = this.userRepository.findByEmail(request.getEmail());
+		
+		if(usuario == null) {
+			throw new CondomanagerException("Usuário inválido");
+		}
+		
+		usuario.setSenha(this.encoder.encode(request.getNovaSenha()));
+		
+		this.userRepository.save(usuario);
+		
+		RedefinirSenhaResponseDTO response = new RedefinirSenhaResponseDTO();
+		response.setCodigo(String.valueOf(HttpStatus.OK.value()));
+		response.setMensagem("Senha redefinida com sucesso!");
 		
 		return response;
 	}
